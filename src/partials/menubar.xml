@@ -1,0 +1,12 @@
+<MenuBar>
+	<Menu name="Dropdom">
+		<Menu name="About Dropdom" shell="win -a"/>
+		<Menu type="divider"/>
+		<Menu name="Quit Dropdom" shell="win -c"/>
+	</Menu>
+	<Menu name="Help">
+		<Menu name="Help" click="open-help"/>
+		<Menu type="divider"/>
+		<Menu name="License" shell="win -al"/>
+	</Menu>
+</MenuBar>
