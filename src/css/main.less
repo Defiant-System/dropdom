@@ -51,33 +51,40 @@ content {
 			top: 173px;
 			left: 29px;
 			right: 29px;
-			height: 507px;
+			height: 562px;
 			border-radius: 7px;
 
 			.tile {
-				background-image: url(~/img/elements.webp);
+				background: url(~/img/elements.webp);
 				background-size: 504px;
 				border-radius: 5px;
 				position: absolute;
 				top: calc( calc( var( --y ) * 62px ) + 3px );
 				left: calc( calc( var( --x ) * 62px ) + 3px );
+				height: 60px;
 
-				&.blue-4    { width: 245px; height: 62px; background-position: 0px 0px;  }
-				&.rainbow-4 { width: 245px; height: 62px; background-position: -247px 0px;  }
-				&.green-4   { width: 245px; height: 62px; background-position: 0px -62px;  }
-				&.red-4     { width: 245px; height: 62px; background-position: -247px -62px;  }
-				&.purple-4  { width: 245px; height: 62px; background-position: 0px -124px;  }
-				&.orange-4  { width: 245px; height: 62px; background-position: -247px -124px;  }
+				&.blue-4    { width: 246px; background-position: 0px 0px;  }
+				&.rainbow-4 { width: 246px; background-position: -247px 0px;  }
+				&.green-4   { width: 246px; background-position: 0px -60px;  }
+				&.red-4     { width: 246px; background-position: -247px -60px;  }
+				&.purple-4  { width: 246px; background-position: 0px -124px;  }
+				&.orange-4  { width: 246px; background-position: -247px -124px;  }
 
-				&.blue-3    { width: 184px; height: 62px; background-position: 0px -186px;  }
-				&.rainbow-3 { width: 184px; height: 62px; background-position: -186px -186px;  }
+				&.blue-3    { width: 184px; background-position: 0px -186px;  }
+				&.rainbow-3 { width: 184px; background-position: -186px -186px;  }
+
+				&.blue-2    { width: 122px; background-position: -372px -372px;  }
+
+				&.blue-1    { width: 60px; background-position: -372px -372px;  }
+				&.rainbow-1 { width: 60px; background-position: -433px -372px;  }
+				&.green-1   { width: 60px; background-position: 0px -435px;  }
 			}
 		}
 
 		.preview {
 			background: rgba(#000,.35);
 			position: absolute;
-			bottom: 79px;
+			bottom: 83px;
 			left: 29px;
 			right: 29px;
 			height: 31px;
