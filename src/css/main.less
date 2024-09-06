@@ -57,18 +57,30 @@ content {
 			.tile {
 				background: url(~/img/elements.webp);
 				background-size: 504px;
-				border-radius: 5px;
+				border-radius: 3px;
 				position: absolute;
 				top: calc( calc( var( --y ) * 62px ) + 3px );
 				left: calc( calc( var( --x ) * 62px ) + 3px );
 				height: 60px;
 
-				&.blue-4    { width: 246px; background-position: 0px 0px;  }
+				&:before {
+					content: "";
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					border: 1px solid #830;
+					border-top-color: #fb0;
+					border-radius: inherit;
+				}
+
+				&.blue-4    { width: 246px; background: url(~/icons/blue-4.png) 50% 50%/contain no-repeat; }
 				&.rainbow-4 { width: 246px; background-position: -247px 0px;  }
-				&.green-4   { width: 246px; background-position: 0px -60px;  }
-				&.red-4     { width: 246px; background-position: -247px -60px;  }
-				&.purple-4  { width: 246px; background-position: 0px -124px;  }
-				&.orange-4  { width: 246px; background-position: -247px -124px;  }
+				&.green-4   { width: 246px; background: url(~/icons/green-4.png) 50% 50%/contain no-repeat; }
+				&.red-4     { width: 246px; background: url(~/icons/red-4.png) 50% 50%/contain no-repeat; }
+				&.purple-4  { width: 246px; background: url(~/icons/purple-4.png) 50% 50%/contain no-repeat; }
+				&.orange-4  { width: 246px; background: url(~/icons/orange-4.png) 50% 50%/contain no-repeat; }
 
 				&.blue-3    { width: 184px; background-position: 0px -186px;  }
 				&.rainbow-3 { width: 184px; background-position: -186px -186px;  }
