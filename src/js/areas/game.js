@@ -40,7 +40,7 @@
 				let doc = Self.els.doc,
 					cols = Self.els.columns,
 					grid = 55,
-					el = $(event.target),
+					el = $(event.target).addClass("dragged"),
 					offset = el.offset(".board"),
 					click = {
 						y: event.clientY,
@@ -72,7 +72,7 @@
 				break;
 			case "mouseup":
 				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
-				Drag.el.css({ left: val });
+				Drag.el.removeClass("dragged").css({ left: val });
 
 				// hide show columns
 				Self.drag.cols.addClass("hidden");
