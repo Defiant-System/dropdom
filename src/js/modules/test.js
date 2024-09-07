@@ -15,5 +15,7 @@ let State = [
 let Test = {
 	init(APP) {
 		Arena.draw(State);
+
+		Arena.getPiece(0, 9);
 	}
 };

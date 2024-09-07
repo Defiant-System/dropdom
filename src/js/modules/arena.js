@@ -37,10 +37,13 @@ let Arena = {
 				}
 			});
 		});
-
-		// out.push(`<span class="tile blue-4" style="--x: 0; --y: 9;"></span>`);
-		// out.push(`<span class="tile green-2" style="--x: 5; --y: 9;"></span>`);
-
 		this.els.board.append(out.join(""));
+
+		// update internal matrix
+		this.matrix = matrix;
+	},
+	getPiece(x, y) {
+		let piece = this.matrix[y][x];
+		console.log( piece );
 	}
 };
