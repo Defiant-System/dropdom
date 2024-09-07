@@ -1,4 +1,5 @@
 
+@import "./modules/arena.js"
 @import "./modules/test.js"
 
 
@@ -11,6 +12,9 @@ const dropdom = {
 		Object.keys(this)
 			.filter(i => typeof this[i].init === "function")
 			.map(i => this[i].init(this));
+
+		// init objects
+		Arena.init();
 
 		// DEV-ONLY-START
 		Test.init(this);
