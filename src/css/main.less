@@ -18,7 +18,7 @@ content {
 		bottom: 0;
 
 		.green {
-			background: url(~/img/leafs.webp) 31% 50%/cover no-repeat;
+			background: url(~/img/leafs.webp) 41% 50%/cover no-repeat;
 			position: absolute;
 			left: 0;
 			right: 0;
@@ -39,29 +39,39 @@ content {
 			background: rgba(#000,.35);
 			position: absolute;
 			top: 79px;
-			left: 29px;
-			right: 29px;
+			left: 23px;
+			right: 23px;
 			height: 83px;
 			border-radius: 7px;
 		}
 
 		.board {
-			background: rgba(#000,.35);
+			background: rgba(#000,.75);
 			position: absolute;
 			top: 173px;
-			left: 29px;
-			right: 29px;
-			height: 562px;
+			left: 23px;
+			right: 23px;
+			height: 505px;
 			border-radius: 7px;
 
-			.tile {
-				background: url(~/img/elements.webp);
-				background-size: 504px;
-				border-radius: 3px;
+			&:before {
+				content: "";
+				background: url(~/img/block.png);
+				background-size: 55px;
 				position: absolute;
-				top: calc( calc( var( --y ) * 62px ) + 3px );
-				left: calc( calc( var( --x ) * 62px ) + 3px );
-				height: 60px;
+				top: 5px;
+				left: 5px;
+				right: 5px;
+				bottom: 5px;
+			}
+
+			.tile {
+				background: 50% 50%/contain no-repeat;
+				position: absolute;
+				top: calc( calc( var( --y ) * 55px ) + 6px );
+				left: calc( calc( var( --x ) * 55px ) + 6px );
+				height: 54px;
+				border-radius: 4px;
 
 				&:before {
 					content: "";
@@ -75,21 +85,33 @@ content {
 					border-radius: inherit;
 				}
 
-				&.blue-4    { width: 246px; background: url(~/icons/blue-4.png) 50% 50%/contain no-repeat; }
-				&.rainbow-4 { width: 246px; background-position: -247px 0px;  }
-				&.green-4   { width: 246px; background: url(~/icons/green-4.png) 50% 50%/contain no-repeat; }
-				&.red-4     { width: 246px; background: url(~/icons/red-4.png) 50% 50%/contain no-repeat; }
-				&.purple-4  { width: 246px; background: url(~/icons/purple-4.png) 50% 50%/contain no-repeat; }
-				&.orange-4  { width: 246px; background: url(~/icons/orange-4.png) 50% 50%/contain no-repeat; }
+				&.blue-4    { width: 219px; background-image: url(~/icons/blue-4.png); }
+				&.green-4   { width: 219px; background-image: url(~/icons/green-4.png); }
+				&.red-4     { width: 219px; background-image: url(~/icons/red-4.png); }
+				&.purple-4  { width: 219px; background-image: url(~/icons/purple-4.png); }
+				&.orange-4  { width: 219px; background-image: url(~/icons/orange-4.png); }
+				&.rainbow-4 { width: 219px; background-image: url(~/icons/rainbow-4.png); }
 
-				&.blue-3    { width: 184px; background-position: 0px -186px;  }
-				&.rainbow-3 { width: 184px; background-position: -186px -186px;  }
+				&.blue-3    { width: 164px; background-image: url(~/icons/blue-3.png); }
+				&.green-3   { width: 164px; background-image: url(~/icons/green-3.png); }
+				&.red-3     { width: 164px; background-image: url(~/icons/red-3.png); }
+				&.purple-3  { width: 164px; background-image: url(~/icons/purple-3.png); }
+				&.orange-3  { width: 164px; background-image: url(~/icons/orange-3.png); }
+				&.rainbow-3 { width: 164px; background-image: url(~/icons/rainbow-3.png); }
 
-				&.blue-2    { width: 122px; background-position: -372px -372px;  }
+				&.blue-2    { width: 109px; background-image: url(~/icons/blue-2.png); }
+				&.green-2   { width: 109px; background-image: url(~/icons/green-2.png); }
+				&.red-2     { width: 109px; background-image: url(~/icons/red-2.png); }
+				&.purple-2  { width: 109px; background-image: url(~/icons/purple-2.png); }
+				&.orange-2  { width: 109px; background-image: url(~/icons/orange-2.png); }
+				&.rainbow-2 { width: 109px; background-image: url(~/icons/rainbow-2.png); }
 
-				&.blue-1    { width: 60px; background-position: -372px -372px;  }
-				&.rainbow-1 { width: 60px; background-position: -433px -372px;  }
-				&.green-1   { width: 60px; background-position: 0px -435px;  }
+				&.blue-1    { width: 54px; background-image: url(~/icons/blue-1.png); }
+				&.green-1   { width: 54px; background-image: url(~/icons/green-1.png); }
+				&.red-1     { width: 54px; background-image: url(~/icons/red-1.png); }
+				&.purple-1  { width: 54px; background-image: url(~/icons/purple-1.png); }
+				&.orange-1  { width: 54px; background-image: url(~/icons/orange-1.png); }
+				&.rainbow-1 { width: 54px; background-image: url(~/icons/rainbow-1.png); }
 			}
 		}
 
@@ -97,10 +119,24 @@ content {
 			background: rgba(#000,.35);
 			position: absolute;
 			bottom: 83px;
-			left: 29px;
-			right: 29px;
+			left: 21px;
+			right: 21px;
 			height: 31px;
-			border-radius: 7px;
+			border-radius: 17px;
+
+			span {
+				background: #444;
+				position: absolute;
+				top: 9px;
+				left: calc( calc( var( --x ) * 55px ) + 8px );
+				height: 13px;
+				border-radius: 13px;
+
+				&.t4 { width: 219px; }
+				&.t3 { width: 164px; }
+				&.t2 { width: 109px; }
+				&.t1 { width: 54px; }
+			}
 		}
 	}
 }
