@@ -9,6 +9,19 @@ content {
 	bottom: 0;
 	font-family: "Racing Sans One", sans-serif;
 
+	&.cover {
+		&:before {
+			content: "";
+			background: transparent;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			cursor: none;
+		}
+	}
+
 	.game-view {
 		background: #222 url(~/img/tile.webp);
 		background-size: 23%;
@@ -44,7 +57,7 @@ content {
 			right: 23px;
 			height: 83px;
 			text-align: center;
-			font-size: 37px;
+			font-size: 34px;
 			color: #feeb46;
 			text-shadow: 0 2px 5px rgba(#000,.65),
 						0 2px 1px rgba(#cf6d0a,.75);
@@ -94,7 +107,7 @@ content {
 					left: 31px;
 					width: 179px;
 					height: 47px;
-					padding: 3px 0;
+					padding-top: 6px;
 					border-radius: 7px;
 				}
 
@@ -105,7 +118,7 @@ content {
 					right: 31px;
 					width: 179px;
 					height: 47px;
-					padding: 3px 0;
+					padding-top: 6px;
 					border-radius: 7px;
 					box-shadow: 0 2px 5px rgba(#000,.65),
 								inset 0 0 5px rgba(#000,.35);
@@ -147,7 +160,7 @@ content {
 				pointer-events: none;
 			}
 
-			.hover {
+			.columns {
 				background: rgba(#fff,.35);
 				position: absolute;
 				top: 4px;
@@ -156,6 +169,11 @@ content {
 				width: calc( var( --w ) * 55px );
 				z-index: 2;
 				mix-blend-mode: soft-light;
+				pointer-events: none;
+
+				&.hidden {
+					display: none;
+				}
 			}
 
 			.tile {
