@@ -48,7 +48,8 @@ let Arena = {
 		this.els.rows.cssSequence("add-row", "transitionend", el => {
 			// remove top row
 			let out = this.matrix.shift(),
-				gameOver = !(out.reduce((a,c) => a + c, 0) === 0);
+				// gameOver = !(out.reduce((a,c) => a + c, 0) === 0),
+				free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
 
 			// reset rows element
 			el.removeClass("add-row");
@@ -59,8 +60,10 @@ let Arena = {
 				tEl.css({ "--y": tY });
 			});
 
-			if (gameOver) dropdom.dispatch({ type: "game-over" });
-			else if (i > 1) setTimeout(() => this.addRows(i-1), 100);
+			this.els.board.toggleClass("danger", free > 2);
+
+			if (free === 0) dropdom.dispatch({ type: "game-over" });
+			else if (i > 1) setTimeout(() => this.addRows(i-1), 500);
 		});
 	},
 	deleteRows(rows) {

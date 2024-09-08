@@ -31,6 +31,7 @@ const dropdom = {
 				break;
 			// custom events
 			case "game-over":
+				Self.content.find(".board").removeClass("danger");
 				Self.content.find(".game-view").addClass("game-over");
 				break;
 			case "open-help":
