@@ -18,7 +18,12 @@ content {
 			left: 0;
 			right: 0;
 			bottom: 0;
+			z-index: 19;
 			cursor: none;
+		}
+
+		.tile:not(.dragged) {
+			pointer-events: none;
 		}
 	}
 
@@ -218,7 +223,7 @@ content {
 					background: linear-gradient(90deg, transparent, rgba(#fff,.5), transparent);
 				}
 
-				// &:after,
+				&:hover,
 				&.dragged {
 					z-index: 4;
 

@@ -89,10 +89,10 @@
 				// bind event handler
 				Self.drag.doc.off("mousemove mouseup", Self.doDrag);
 
-				setTimeout(() => {
-					Arena.drop();
-					Arena.draw();
-				}, 500);
+				// setTimeout(() => {
+				// 	Arena.drop();
+				// 	Arena.draw();
+				// }, 500);
 				break;
 		}
 	}

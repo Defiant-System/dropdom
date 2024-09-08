@@ -1,4 +1,9 @@
 
+let NewRows = [
+		["b41", "b42", "b43", "b44", 0, "r21", "r22", 0],
+		[0, "o31", "o32", "o33", 0, "r21", "r22", 0],
+	];
+
 let Arena = {
 	init() {
 		// fast references
@@ -13,6 +18,9 @@ let Arena = {
 			matrix.push(new Array(w).fill(0));
 		}
 		return matrix;
+	},
+	addRow(index) {
+		
 	},
 	draw(matrix) {
 		// if no args, draw arena matrix
