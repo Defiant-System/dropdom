@@ -17,10 +17,18 @@ let Test = {
 		Arena.draw(State);
 
 		return;
+
 		setTimeout(() => {
-			let piece = Arena.getPiece(3, 9);
+			// let piece = Arena.getPiece(3, 9);
+			// Arena.merge(piece.matrix, 1, 9);
+
+			let piece = Arena.getPiece(5, 9);
+			Arena.merge(piece.matrix, 4, 9);
+
+			// let track = Arena.getTrack(0, 9);
+			// let track = Arena.getTrack(6, 9);
+			// console.log(track);
 			// Arena.getPiece(6, 9);
-			Arena.merge(piece, 1, 9);
 			// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 
 			Arena.draw();

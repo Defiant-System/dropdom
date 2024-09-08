@@ -49,15 +49,32 @@ let Arena = {
 			this.matrix[y][x+i] = c;
 		});
 	},
+	getTrack(x, y) {
+		let piece = this.getPiece(x, y),
+			minX = 0,
+			maxX = 8;
+		for (let i=x; i>-1; i--) {
+			let c = this.matrix[y][i];
+			if (c === 0) minX = i;
+			else break;
+		}
+		for (let i=x; i<9; i++) {
+			let c = this.matrix[y][i];
+			if (c === 0) maxX = i;
+			else break;
+		}
+		maxX -= piece.s - 1;
+		return { minX, maxX, x, y, ...piece };
+	},
 	getPiece(x, y) {
 		let col = this.matrix[y][x],
 			[c,s,p] = col.split("").map(i => i == +i ? +i : i),
-			piece = [];
+			matrix = [];
 		for (let i=0; i<s; i++) {
 			let ix = i + x - p + 1;
-			piece.push(this.matrix[y][ix]);
+			matrix.push(this.matrix[y][ix]);
 			this.matrix[y][ix] = 0;
 		}
-		return piece;
+		return { c, s, p, matrix };
 	}
 };

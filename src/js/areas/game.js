@@ -42,24 +42,20 @@
 					grid = 55,
 					el = $(event.target).addClass("dragged"),
 					offset = el.offset(".board"),
+					// piece
+					pX = +el.cssProp("--x"),
+					pY = +el.cssProp("--y"),
+					piece = Arena.getTrack(pX, pY),
+					limit = {
+						minX: (piece.minX * grid) + 5,
+						maxX: (piece.maxX * grid) + 5,
+					},
 					click = {
 						y: event.clientY,
 						x: event.clientX,
 					},
-					limit = {
-						minX: 5,
-						maxX: +el.parent().prop("offsetWidth") - el.width() - 5,
-					},
 					cX = Math.round(offset.left / grid),
-					cW = +el.prop("className").match(/tile \w+-(\d)/)[1],
-					// piece
-					pX = +el.cssProp("--x"),
-					pY = +el.cssProp("--y"),
-					piece = {
-						matrix: Arena.getPiece(pX, pY),
-						x: pX,
-						y: pY,
-					};
+					cW = +el.prop("className").match(/tile \w+-(\d)/)[1];
 				// drag details
 				Self.drag = { doc, cols, el, grid, piece, offset, click, limit };
 
@@ -84,7 +80,7 @@
 				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 
 				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
-				Drag.el.removeClass("dragged").css({ left: val });
+				Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
 
 				// hide show columns
 				Self.drag.cols.addClass("hidden");
