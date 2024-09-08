@@ -22,6 +22,9 @@ let Arena = {
 	addRow(index) {
 
 	},
+	deleteRow() {
+
+	},
 	draw(matrix) {
 		// if no args, draw arena matrix
 		matrix = matrix || this.matrix;
@@ -70,7 +73,7 @@ let Arena = {
 				let piece = this.getPiece(x, y);
 				if (piece.s) x += piece.s - 1;
 
-				for (let t=piece.y; t<yl; t++) {
+				for (let t=piece.y; t<yl+1; t++) {
 					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
 					if (check) {
 						piece = this.getPiece(piece.x, piece.y, true);
