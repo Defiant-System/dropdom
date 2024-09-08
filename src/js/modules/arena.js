@@ -1,7 +1,15 @@
 
 let NewRows = [
 		["b41", "b42", "b43", "b44", 0, "r21", "r22", 0],
-		[0, "o31", "o32", "o33", 0, "r21", "r22", 0],
+		[0, "o31", "o32", "o33", 0, "b21", "b22", 0],
+		[0, "g41", "g42", "g43", "g44", 0, "o21", "o22"],
+		["o11", 0, "p41", "p42", "p43", "p44", "g21", "g22"],
+		["p11", 0, 0, "b11", "o21", "o22", "b21", "b22"],
+		["g11", 0, "b21", "b22", "r21", "r22", "b11", 0],
+		["g21", "g22", 0, "b11", "r21", "r22", 0, 0],
+		["p21", "p22", "r21", "r22", "g11", 0, "o11", 0],
+		["g11", 0, "p21", "p22", "p21", "p22", "o21", "o22"],
+		["o21", "o22", 0, "g11", "p21", "p22", 0, 0],
 	];
 
 let Arena = {
@@ -30,9 +38,8 @@ let Arena = {
 		}
 		return matrix;
 	},
-	addRow(i) {
-		let index = i || Utils.random(0, NewRows.length),
-			row = [...NewRows[index]];
+	addRows(i=1) {
+		let row = [...NewRows[Utils.random(0, NewRows.length)]];
 		// add new row
 		this.matrix.push(row);
 		// re-draw arena
@@ -40,9 +47,8 @@ let Arena = {
 
 		this.els.rows.cssSequence("add-row", "transitionend", el => {
 			// remove top row
-			let out = this.matrix.shift();
-			// let gameOver = (row.reduce((a,c) => a + c, 0) === 0);
-			// console.log("gameOver", gameOver);
+			let out = this.matrix.shift(),
+				gameOver = !(out.reduce((a,c) => a + c, 0) === 0);
 
 			// reset rows element
 			el.removeClass("add-row");
@@ -52,6 +58,9 @@ let Arena = {
 					tY = +tEl.cssProp("--y") - 1;
 				tEl.css({ "--y": tY });
 			});
+
+			if (gameOver) dropdom.dispatch({ type: "game-over" });
+			else if (i > 1) setTimeout(() => this.addRows(i-1), 100);
 		});
 	},
 	deleteRows(rows) {

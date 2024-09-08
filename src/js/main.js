@@ -30,6 +30,9 @@ const dropdom = {
 			case "window.init":
 				break;
 			// custom events
+			case "game-over":
+				Self.content.find(".game-view").addClass("game-over");
+				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;

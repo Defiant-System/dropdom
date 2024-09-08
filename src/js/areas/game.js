@@ -37,6 +37,9 @@
 				// prevent default behaviour
 				event.preventDefault();
 
+				// exit if game over
+				if (Self.els.el.hasClass("game-over")) return;
+
 				let doc = Self.els.doc,
 					cols = Self.els.columns,
 					grid = 55,
