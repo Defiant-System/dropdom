@@ -44,13 +44,40 @@ let Arena = {
 		// update internal matrix
 		this.matrix = matrix;
 	},
+	collisionCheck(piece, o) {
+		let m = piece.matrix;
+		for (let x=0; x<piece.s; x++) {
+			if ((this.matrix[o.y] && this.matrix[o.y][x + o.x]) !== 0) {
+				return true;
+			}
+		}
+		return false;
+	},
+	drop() {
+		for (let y=0, yl=this.matrix.length; y<yl; y++) {
+			for (let x=0; x<8; x++) {
+				let col = this.matrix[y][x];
+				if (col === 0) continue;
+
+				let piece = this.getPiece(x, y, true);
+				if (piece.s) x += piece.s;
+
+				for (let t=y; t<yl+1; t++) {
+					if (this.collisionCheck(piece, { x: piece.x, y: t })) {
+						Arena.merge(piece.matrix, piece.x, t-1);
+						break;
+					}
+				}
+			}
+		}
+	},
 	merge(piece, x, y) {
 		piece.map((c, i) => {
 			this.matrix[y][x+i] = c;
 		});
 	},
 	getTrack(x, y) {
-		let piece = this.getPiece(x, y),
+		let piece = this.getPiece(x, y, true),
 			minX = 0,
 			maxX = 8;
 		for (let i=x; i>-1; i--) {
@@ -64,17 +91,17 @@ let Arena = {
 			else break;
 		}
 		maxX -= piece.s - 1;
-		return { minX, maxX, x, y, ...piece };
+		return { minX, maxX, ...piece };
 	},
-	getPiece(x, y) {
+	getPiece(x, y, detach) {
 		let col = this.matrix[y][x],
 			[c,s,p] = col.split("").map(i => i == +i ? +i : i),
 			matrix = [];
 		for (let i=0; i<s; i++) {
 			let ix = i + x - p + 1;
 			matrix.push(this.matrix[y][ix]);
-			this.matrix[y][ix] = 0;
+			if (detach) this.matrix[y][ix] = 0;
 		}
-		return { c, s, p, matrix };
+		return { c, s, p, x, y, matrix };
 	}
 };
