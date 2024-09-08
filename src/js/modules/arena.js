@@ -40,6 +40,19 @@ let Arena = {
 	},
 	addRows(i=1) {
 		let row = [...NewRows[Utils.random(0, NewRows.length)]];
+		// make "rainbow" if "lucky"
+		// if (Utils.random(0, 20) < 10) {
+		// 	row
+		// }
+		let pieces = [];
+		row.map((col, x) => {
+			if (col) {
+				let [c,s,p] = col.split("").map(i => i == +i ? +i : i);
+				if (p === 1) pieces[x] = c;
+			}
+		});
+		console.log(pieces);
+
 		// add new row
 		this.matrix.push(row);
 		// re-draw arena
@@ -63,7 +76,7 @@ let Arena = {
 			this.els.board.toggleClass("danger", free > 2);
 
 			if (free === 0) dropdom.dispatch({ type: "game-over" });
-			else if (i > 1) setTimeout(() => this.addRows(i-1), 500);
+			else if (i > 1) setTimeout(() => this.addRows(i-1), 250);
 		});
 	},
 	deleteRows(rows) {

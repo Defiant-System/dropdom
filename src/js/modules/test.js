@@ -54,7 +54,7 @@ let Test = {
 		Arena.draw(State);
 
 		return setTimeout(() => {
-			Arena.addRows(10);
+			Arena.addRows(2);
 		}, 500);
 
 		setTimeout(() => {
