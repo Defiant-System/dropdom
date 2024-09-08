@@ -5,12 +5,23 @@ let NewRows = [
 	];
 
 let Arena = {
+	dim: { w: 8, h: 10 },
+	palette: {
+		b: "blue",
+		g: "green",
+		r: "red",
+		p: "purple",
+		o: "orange",
+		c: "colors",
+	},
 	init() {
 		// fast references
-		this.els = {};
-		this.els.board = window.find(".board");
+		this.els = {
+			board: window.find(".board"),
+			rows: window.find(".wrapper .rows"),
+		};
 
-		this.matrix = this.createMatrix(8, 10);
+		this.matrix = this.createMatrix(this.dim.w, this.dim.h);
 	},
 	createMatrix(w, h) {
 		let matrix = [];
@@ -19,26 +30,46 @@ let Arena = {
 		}
 		return matrix;
 	},
-	addRow(index) {
+	addRow(i) {
+		let index = i || Utils.random(0, NewRows.length),
+			row = [...NewRows[index]];
+		// add new row
+		this.matrix.push(row);
+		// re-draw arena
+		this.draw();
 
+		this.els.rows.cssSequence("add-row", "transitionend", el => {
+			// remove top row
+			let out = this.matrix.shift();
+			// let gameOver = (row.reduce((a,c) => a + c, 0) === 0);
+			// console.log("gameOver", gameOver);
+
+			// reset rows element
+			el.removeClass("add-row");
+			// "pull up" tiles
+			el.find(".tile").map(elem => {
+				let tEl = $(elem),
+					tY = +tEl.cssProp("--y") - 1;
+				tEl.css({ "--y": tY });
+			});
+		});
 	},
-	deleteRows() {
-
+	deleteRows(rows) {
+		rows.map(y => {
+			[...Array(this.dim.w)].map((e, x) => {
+				this.matrix[y][x] = 0;
+			});
+		});
+		// update arena
+		Arena.draw();
+		// drop rows
+		setTimeout(() => this.drop(), 500);
 	},
 	draw(matrix) {
 		// if no args, draw arena matrix
 		matrix = matrix || this.matrix;
 		// clean up
-		this.els.board.find(".tile").remove();
-
-		let palette = {
-				b: "blue",
-				g: "green",
-				r: "red",
-				p: "purple",
-				o: "orange",
-				c: "colors",
-			};
+		this.els.rows.find(".tile").remove();
 
 		let out = [];
 		matrix.map((row, y) => {
@@ -46,11 +77,11 @@ let Arena = {
 				if (col === 0) return;
 				let [c,s,p] = col.split("");
 				if (p === "1") {
-					out.push(`<span class="tile ${palette[c]}-${s}" style="--x: ${x}; --y: ${y};"></span>`);
+					out.push(`<span class="tile ${this.palette[c]}-${s}" style="--x: ${x}; --y: ${y};"></span>`);
 				}
 			});
 		});
-		this.els.board.append(out.join(""));
+		this.els.rows.append(out.join(""));
 
 		// update internal matrix
 		this.matrix = matrix;
@@ -91,9 +122,12 @@ let Arena = {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
 			if (remove) clear.unshift(y);
-			// if (row.reduce((a,c) => a + c, 0) === 0) clear.unshift(y)
 		});
-		console.log(clear);
+		
+		if (clear.length) {
+			console.log("clear", clear);
+			setTimeout(() => this.deleteRows(clear), 500);
+		}
 	},
 	merge(piece, x, y) {
 		piece.map((c, i) => {

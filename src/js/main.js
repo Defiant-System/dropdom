@@ -1,5 +1,6 @@
 
 @import "./modules/arena.js"
+@import "./modules/utils.js"
 @import "./modules/test.js"
 
 

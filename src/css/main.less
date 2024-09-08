@@ -82,7 +82,7 @@ content {
 				position: absolute;
 				top: 3px;
 				left: 41px;
-				width: 47px;
+				width: 53px;
 				height: 61px;
 				z-index: 2;
 				filter: drop-shadow(0 1px 3px rgba(#000,.75));
@@ -148,7 +148,7 @@ content {
 			left: 23px;
 			right: 23px;
 			height: 556px;
-
+			
 			&:before {
 				content: "";
 				background: url(~/img/frame.webp) 0 0/contain no-repeat;
@@ -177,7 +177,7 @@ content {
 			}
 
 			.columns {
-				background: rgba(#fff,.2);
+				background: rgba(#fff,.3);
 				position: absolute;
 				top: 4px;
 				bottom: 3px;
@@ -189,6 +189,28 @@ content {
 
 				&.hidden {
 					display: none;
+				}
+			}
+
+			.wrapper {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 2px;
+				z-index: 2;
+				overflow: hidden;
+
+				.rows {
+					position: absolute;
+					top: 0;
+					left: 0;
+					transition: transform 0s ease-in-out;
+
+					&.add-row {
+						transition-duration: 300ms;
+						transform: translateY(-54px);
+					}
 				}
 			}
 

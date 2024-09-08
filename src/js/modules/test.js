@@ -28,6 +28,7 @@ State = [
 */
 
 /*
+*/
 State = [
 		[0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0],
@@ -40,7 +41,6 @@ State = [
 		[0, 0, 0, 0, 0, 0, 0, 0],
 		["b31", "b32", "b33", 0, "r21", "r22", 0, 0],
 	];
-*/
 
 let Test = {
 	init(APP) {
@@ -52,6 +52,10 @@ let Test = {
 		// });
 
 		Arena.draw(State);
+
+		return setTimeout(() => {
+			Arena.addRow();
+		}, 500);
 
 		setTimeout(() => {
 			// let piece = Arena.getPiece(3, 9);
