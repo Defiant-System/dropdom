@@ -59,12 +59,14 @@ let Arena = {
 				let col = this.matrix[y][x];
 				if (col === 0) continue;
 
-				let piece = this.getPiece(x, y, true);
-				if (piece.s) x += piece.s;
+				let piece = this.getPiece(x, y);
+				if (piece.s) x += piece.s - 1;
 
-				for (let t=y; t<yl+1; t++) {
-					if (this.collisionCheck(piece, { x: piece.x, y: t })) {
-						Arena.merge(piece.matrix, piece.x, t-1);
+				for (let t=piece.y; t<yl; t++) {
+					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
+					if (check) {
+						piece = this.getPiece(piece.x, piece.y, true);
+						Arena.merge(piece.matrix, piece.x, t);
 						break;
 					}
 				}
