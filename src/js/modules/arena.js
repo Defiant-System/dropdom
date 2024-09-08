@@ -41,17 +41,25 @@ let Arena = {
 	addRows(i=1) {
 		let row = [...NewRows[Utils.random(0, NewRows.length)]];
 		// make "rainbow" if "lucky"
-		// if (Utils.random(0, 20) < 10) {
-		// 	row
-		// }
-		let pieces = [];
-		row.map((col, x) => {
-			if (col) {
-				let [c,s,p] = col.split("").map(i => i == +i ? +i : i);
-				if (p === 1) pieces[x] = c;
-			}
-		});
-		console.log(pieces);
+		if (Utils.random(0, 50) < 6) {
+			let pieces = [];
+			row.map((col, x) => {
+				if (col) {
+					let [c,s,p] = col.split("").map(i => i == +i ? +i : i);
+					if (p === 1) pieces[x] = col;
+				}
+			});
+			pieces = pieces.filter(i => !!i);
+			let select = pieces[Utils.random(0, pieces.length)],
+				done = +select.split("")[1];
+			// make rainbow
+			row.map((col, x) => {
+				if (col && col.startsWith(select.slice(0,2)) && done) {
+					row[x] = `c${col.slice(1)}`;
+					done--;
+				}
+			});
+		}
 
 		// add new row
 		this.matrix.push(row);
