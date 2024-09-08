@@ -197,11 +197,21 @@ content {
 					border-radius: inherit;
 				}
 
+				&:after {
+					content: "";
+					position: absolute;
+					top: 7px;
+					left: 13px;
+					right: 13px;
+					height: 1px;
+					background: linear-gradient(90deg, transparent, rgba(#fff,.5), transparent);
+				}
+
 				// &:after,
 				&.dragged {
 					z-index: 4;
 
-					&:after {
+					&:before {
 						content: "";
 						position: absolute;
 						top: 0;

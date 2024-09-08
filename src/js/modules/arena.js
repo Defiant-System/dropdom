@@ -15,6 +15,8 @@ let Arena = {
 		return matrix;
 	},
 	draw(matrix) {
+		// if no args, draw arena matrix
+		matrix = matrix || this.matrix;
 		// clean up
 		this.els.board.find(".tile").remove();
 
@@ -42,8 +44,20 @@ let Arena = {
 		// update internal matrix
 		this.matrix = matrix;
 	},
+	merge(piece, x, y) {
+		piece.map((c, i) => {
+			this.matrix[y][x+i] = c;
+		});
+	},
 	getPiece(x, y) {
-		let piece = this.matrix[y][x];
-		console.log( piece );
+		let col = this.matrix[y][x],
+			[c,s,p] = col.split("").map(i => i == +i ? +i : i),
+			piece = [];
+		for (let i=0; i<s; i++) {
+			let ix = i + x - p + 1;
+			piece.push(this.matrix[y][ix]);
+			this.matrix[y][ix] = 0;
+		}
+		return piece;
 	}
 };

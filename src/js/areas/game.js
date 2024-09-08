@@ -51,9 +51,17 @@
 						maxX: +el.parent().prop("offsetWidth") - el.width() - 5,
 					},
 					cX = Math.round(offset.left / grid),
-					cW = +el.prop("className").match(/tile \w+-(\d)/)[1];
+					cW = +el.prop("className").match(/tile \w+-(\d)/)[1],
+					// piece
+					pX = +el.cssProp("--x"),
+					pY = +el.cssProp("--y"),
+					piece = {
+						matrix: Arena.getPiece(pX, pY),
+						x: pX,
+						y: pY,
+					};
 				// drag details
-				Self.drag = { doc, cols, el, grid, offset, click, limit };
+				Self.drag = { doc, cols, el, grid, piece, offset, click, limit };
 
 				// show show columns
 				Self.drag.cols.css({ "--x": cX, "--w": cW }).removeClass("hidden");
@@ -67,10 +75,14 @@
 				left = Math.max(Drag.limit.minX, Math.min(Drag.limit.maxX, left));
 				Drag.el.css({ left });
 
-				let colX = Math.round(left / Drag.grid);
-				Self.drag.cols.css({ "--x": colX });
+				Drag.colX = Math.round(left / Drag.grid);
+				Self.drag.cols.css({ "--x": Drag.colX });
 				break;
 			case "mouseup":
+				// update arena matrix
+				Arena.merge(Drag.piece.matrix, Drag.colX, Drag.piece.y);
+				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+
 				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
 				Drag.el.removeClass("dragged").css({ left: val });
 

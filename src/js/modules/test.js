@@ -16,6 +16,14 @@ let Test = {
 	init(APP) {
 		Arena.draw(State);
 
-		Arena.getPiece(0, 9);
+		return;
+		setTimeout(() => {
+			let piece = Arena.getPiece(3, 9);
+			// Arena.getPiece(6, 9);
+			Arena.merge(piece, 1, 9);
+			// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+
+			Arena.draw();
+		}, 1500);
 	}
 };
