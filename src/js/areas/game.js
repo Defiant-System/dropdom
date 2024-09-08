@@ -93,6 +93,7 @@
 				Self.drag.doc.off("mousemove mouseup", Self.doDrag);
 
 				Arena.drop();
+				Arena.addRows();
 				break;
 		}
 	}

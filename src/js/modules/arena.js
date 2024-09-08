@@ -82,6 +82,7 @@ let Arena = {
 			});
 
 			this.els.board.toggleClass("danger", free > 2);
+			this.drop();
 
 			if (free === 0) dropdom.dispatch({ type: "game-over" });
 			else if (i > 1) setTimeout(() => this.addRows(i-1), 250);
@@ -159,7 +160,7 @@ let Arena = {
 		
 		if (clear.length) {
 			console.log("clear", clear);
-			setTimeout(() => this.deleteRows(clear), 500);
+			setTimeout(() => this.deleteRows(clear), 100);
 		}
 	},
 	merge(piece, x, y) {
