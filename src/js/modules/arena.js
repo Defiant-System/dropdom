@@ -22,7 +22,7 @@ let Arena = {
 	addRow(index) {
 
 	},
-	deleteRow() {
+	deleteRows() {
 
 	},
 	draw(matrix) {
@@ -83,6 +83,17 @@ let Arena = {
 				}
 			}
 		}
+		// update arena
+		Arena.draw();
+
+		let clear = [];
+		this.matrix.map((row, y) => {
+			let remove = true;
+			row.map(c => remove = remove && !!c);
+			if (remove) clear.unshift(y);
+			// if (row.reduce((a,c) => a + c, 0) === 0) clear.unshift(y)
+		});
+		console.log(clear);
 	},
 	merge(piece, x, y) {
 		piece.map((c, i) => {
