@@ -20,7 +20,7 @@ let Arena = {
 		return matrix;
 	},
 	addRow(index) {
-		
+
 	},
 	draw(matrix) {
 		// if no args, draw arena matrix
@@ -62,7 +62,7 @@ let Arena = {
 		return false;
 	},
 	drop() {
-		for (let y=0, yl=this.matrix.length; y<yl; y++) {
+		for (let yl=this.matrix.length-1, y=yl; y>-1; y--) {
 			for (let x=0; x<8; x++) {
 				let col = this.matrix[y][x];
 				if (col === 0) continue;
