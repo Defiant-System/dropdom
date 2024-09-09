@@ -157,22 +157,31 @@ let Arena = {
 		this.syncAnim(doAdd);
 	},
 	syncAnim(doAdd) {
+		let count = 0,
+			tiles = this.draw(true);
+
 		// create virtual dom + make comparison + animate ?
-		this.draw(true).map(vTile => {
+		tiles.map((vTile, i) => {
 			let props = vTile.getAttribute("style"),
 				x = +props.match(/--x: (\d);/)[1],
 				y = +props.match(/--y: (\d);/)[1],
 				oY = +props.match(/--oY: (\d);/)[1],
 				tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
-			// console.log(props, x, y, oY);
-			// console.log(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
-			console.log(tile);
+			
+			// if (i === tiles.length-1 && count === 0 && doAdd) this.clearAdd(doAdd);
+			if (y === oY) return;
+			count++;
+			tile.css({ "--y": y }).cssSequence("smooth-drop", "transitionend", tile => {
+				// reset tile
+				tile.removeClass("smooth-drop");
+				// is last ?
+				if (count-- > 1) return;
+
+				this.clearAdd(doAdd);
+			});
 		});
-
-		return;
-
-		this.draw();
-
+	},
+	clearAdd(doAdd) {
 		let clear = [];
 		this.matrix.map((row, y) => {
 			let remove = true;
@@ -181,7 +190,6 @@ let Arena = {
 		});
 		
 		if (clear.length) {
-			console.log("clear", clear);
 			setTimeout(() => this.deleteRows(clear), 200);
 		}
 		// add rows if user made drag'n drop
