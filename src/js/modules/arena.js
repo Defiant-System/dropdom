@@ -217,7 +217,7 @@ let Arena = {
 	},
 	syncAnim(doAdd) {
 		let count = 0,
-			tiles = this.draw(true);
+			tiles = this.draw(true).reverse();
 
 		// create virtual dom + make comparison + animate ?
 		tiles.map((vTile, i) => {
@@ -225,7 +225,7 @@ let Arena = {
 				x = +props.match(/--x: (\d);/)[1],
 				y = +props.match(/--y: (\d);/)[1],
 				oY = +props.match(/--oY: (\d);/)[1],
-				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]`);
+				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]:not(.smooth-drop)`);
 			
 			if (y === oY) return;
 			count++;
