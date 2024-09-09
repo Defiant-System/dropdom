@@ -129,32 +129,13 @@ let Arena = {
 	deleteRows(rows) {
 		rows.map(y => {
 			[...Array(this.dim.w)].map((e, x) => {
-				let col = this.matrix[y][x];
-				if (col === 0 || !col.endsWith("1")) return;
-				// remove DOM element
-				let tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${y};"]`);
-				/// remove row tiles
-				tile.remove();
+				this.matrix[y][x] = 0;
 			});
-
-			// pull down all items above tile
-			for (let t=y-1; t>0; t--) {
-				// reset matrix
-				this.matrix[t+1] = this.matrix[t];
-
-				let tiles = this.els.rows.find(`.tile[style*="--y: ${t};"]`);
-				if (tiles.length) {
-					tiles.css({ "--y": t+1 }).cssSequence("smooth-drop", "transitionend", el => {
-						// reset tile
-						el.removeClass("smooth-drop");
-
-						if (el[0] !== tiles[0] || t === y-1) return;
-						// add row(s)
-						this.addRows();
-					});
-				}
-			}
 		});
+		// update arena
+		this.draw();
+		// drop rows
+		setTimeout(() => this.drop(), 150);
 	},
 	draw(vdom) {
 		let out = [];
@@ -252,7 +233,7 @@ let Arena = {
 			setTimeout(() => this.deleteRows(clear), 200);
 		}
 		// add rows if user made drag'n drop
-		// if (doAdd) this.addRows();
+		if (doAdd) this.addRows();
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
