@@ -60,7 +60,7 @@
 					cX = Math.round(offset.left / grid),
 					cW = +el.prop("className").match(/tile \w+-(\d)/)[1];
 				// drag details
-				Self.drag = { doc, cols, el, grid, piece, offset, click, limit };
+				Self.drag = { doc, cols, colX: pX, el, grid, piece, offset, click, limit };
 
 				// show show columns
 				Self.drag.cols.css({ "--x": cX, "--w": cW }).removeClass("hidden");
@@ -82,8 +82,14 @@
 				Arena.merge(Drag.piece.matrix, Drag.colX, Drag.piece.y);
 				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 
-				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
-				Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
+				// piece was dragged
+				if (Drag.colX !== Drag.piece.x) {
+					let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
+					Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
+
+					Arena.drop();
+					Arena.addRows();
+				}
 
 				// hide show columns
 				Self.drag.cols.addClass("hidden");
@@ -91,9 +97,6 @@
 				Self.els.content.removeClass("cover");
 				// bind event handler
 				Self.drag.doc.off("mousemove mouseup", Self.doDrag);
-
-				Arena.drop();
-				Arena.addRows();
 				break;
 		}
 	}

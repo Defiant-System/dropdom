@@ -160,7 +160,7 @@ let Arena = {
 		
 		if (clear.length) {
 			console.log("clear", clear);
-			setTimeout(() => this.deleteRows(clear), 100);
+			setTimeout(() => this.deleteRows(clear), 200);
 		}
 	},
 	merge(piece, x, y) {
