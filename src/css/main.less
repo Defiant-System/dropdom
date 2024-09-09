@@ -191,6 +191,42 @@ content {
 				width: 85px;
 				height: 58px;
 				border-radius: 11px;
+
+				&:hover:before {
+					filter: saturate(1.15);
+					box-shadow: 0 0 5px #f00;
+				}
+
+				&:active:before {
+					background-position: -5px -4px;
+					filter: brightness(1);
+					box-shadow: 0 0 2px #f00;
+				}
+
+				&:before {
+					content: "";
+					background: #322333; // url(~/img/button.webp) 50% 50%/contain no-repeat;
+					position: absolute;
+					top: 5px;
+					left: 5px;
+					right: 4px;
+					bottom: 5px;
+					border-radius: 5px;
+				}
+
+				&:before {
+					content: "";
+					background: url(~/img/button.webp) no-repeat;
+					background-size: 85px 58px;
+					background-position: -5px -5px;
+					position: absolute;
+					top: 5px;
+					left: 5px;
+					right: 4px;
+					bottom: 5px;
+					border-radius: 5px;
+					filter: brightness(0.95);
+				}
 			}
 		}
 
