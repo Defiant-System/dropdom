@@ -12,6 +12,16 @@ let NewRows = [
 		["o21", "o22", 0, "g11", "p21", "p22", 0, 0],
 	];
 
+let Pipeline = [
+		// [0, "o31", "o32", "o33", 0, "b21", "b22", 0],
+		// ["g11", 0, "b21", "b22", "r21", "r22", "b11", 0],
+		// ["g21", "g22", 0, "b11", "r21", "r22", 0, 0],
+		// ["p21", "p22", "r21", "r22", "g11", 0, "o11", 0],
+		// ["g11", 0, "p21", "p22", "p21", "p22", "o21", "o22"],
+		// [0, "o21", "o22", "g11", "p21", "p22", 0, 0],
+	];
+
+
 let Arena = {
 	dim: { w: 8, h: 10 },
 	palette: {
@@ -27,9 +37,12 @@ let Arena = {
 		this.els = {
 			board: window.find(".board"),
 			rows: window.find(".wrapper .rows"),
+			preview: window.find(".preview"),
 		};
-
+		// prepare arena matrix
 		this.matrix = this.createMatrix(this.dim.w, this.dim.h);
+		// new rows pipeline
+		this.refillPreview();
 	},
 	createMatrix(w, h) {
 		let matrix = [];
@@ -38,8 +51,33 @@ let Arena = {
 		}
 		return matrix;
 	},
+	updatePreview() {
+		let row = Pipeline[0],
+			out = [];
+		row.map((col, x) => {
+			if (col) {
+				let [c,s,p] = col.split("");
+				if (p === "1") {
+					out.push(`<span class="t${s}" style="--x: ${x};"></span>`);
+				}
+			}
+		});
+		this.els.preview.html(out.join());
+		// add more to pipeline if needed
+		if (Pipeline.length < 2) this.refillPreview();
+	},
+	refillPreview() {
+		let nr = [...NewRows];
+		for (let i=0, il=nr; i<il; ++i) {
+			let j = i + Utils.random(il - i);
+			let tmp = nr[i];
+			nr[i] = nr[j];
+			nr[j] = tmp;
+		}
+		Pipeline = Pipeline.concat(nr);
+	},
 	addRows(i=1) {
-		let row = [...NewRows[Utils.random(0, NewRows.length)]];
+		let row = Pipeline.shift();
 		// make "rainbow" if "lucky"
 		if (Utils.random(0, 50) < 6) {
 			let pieces = [];
@@ -124,6 +162,8 @@ let Arena = {
 			this.els.rows.find(".tile").remove();
 			this.els.rows.append(out.join(""));
 		}
+		// update preview row
+		this.updatePreview();
 	},
 	collisionCheck(piece, o) {
 		let m = piece.matrix;
@@ -168,7 +208,6 @@ let Arena = {
 				oY = +props.match(/--oY: (\d);/)[1],
 				tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
 			
-			// if (i === tiles.length-1 && count === 0 && doAdd) this.clearAdd(doAdd);
 			if (y === oY) return;
 			count++;
 			tile.css({ "--y": y }).cssSequence("smooth-drop", "transitionend", tile => {
@@ -176,10 +215,12 @@ let Arena = {
 				tile.removeClass("smooth-drop");
 				// is last ?
 				if (count-- > 1) return;
-
+				console.log( "clearAdd" );
 				this.clearAdd(doAdd);
 			});
 		});
+		// if nothing is "drop"
+		// if (count === 0 && doAdd) this.clearAdd(doAdd);
 	},
 	clearAdd(doAdd) {
 		let clear = [];
@@ -193,7 +234,7 @@ let Arena = {
 			setTimeout(() => this.deleteRows(clear), 200);
 		}
 		// add rows if user made drag'n drop
-		if (doAdd) Arena.addRows();
+		if (doAdd) this.addRows();
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {

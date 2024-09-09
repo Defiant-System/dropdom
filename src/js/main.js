@@ -34,6 +34,9 @@ const dropdom = {
 				Self.content.find(".board").removeClass("danger");
 				Self.content.find(".game-view").addClass("game-over");
 				break;
+			case "output-arena":
+				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;
