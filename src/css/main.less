@@ -123,14 +123,16 @@ content {
 				background: url(~/icons/icon-champion.png) 50% 50%/contain no-repeat;
 				position: absolute;
 				top: 5px;
-				left: 37px;
+				left: 27px;
 				width: 55px;
 				height: 57px;
 				z-index: 2;
-				filter: saturate(1.25) brightness(1.15) drop-shadow(0 1px 3px rgba(#000,.75));
+				filter: saturate(1.25) brightness(1.45) hue-rotate(13deg) drop-shadow(0 1px 3px rgba(#000,.75));
 			}
 
 			> div {
+				position: absolute;
+
 				&:before {
 					content: "";
 					position: absolute;
@@ -158,10 +160,9 @@ content {
 
 				&.best {
 					background: linear-gradient(0deg, #1c3f1e, #245746, #1e3c34);
-					position: absolute;
 					top: 11px;
-					left: 31px;
-					width: 179px;
+					left: 21px;
+					width: 173px;
 					height: 47px;
 					text-align: right;
 					padding: 6px 25px 0 0;
@@ -170,10 +171,9 @@ content {
 
 				&.score {
 					background: linear-gradient(0deg, #413158, #563c6b, #413158);
-					position: absolute;
 					top: 11px;
-					right: 81px;
-					width: 139px;
+					right: 106px;
+					width: 134px;
 					height: 47px;
 					padding-top: 6px;
 					text-align: center;
@@ -181,6 +181,16 @@ content {
 					box-shadow: 0 2px 5px rgba(#000,.65),
 								inset 0 0 5px rgba(#000,.35);
 				}
+			}
+
+			span.button {
+				background: url(~/img/button.webp) 50% 50%/contain no-repeat;
+				position: absolute;
+				top: 6px;
+				right: 13px;
+				width: 85px;
+				height: 58px;
+				border-radius: 11px;
 			}
 		}
 
