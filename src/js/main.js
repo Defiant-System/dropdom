@@ -35,7 +35,8 @@ const dropdom = {
 				Self.content.find(".game-view").addClass("game-over");
 				break;
 			case "output-arena":
-				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+				Arena.addRows();
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

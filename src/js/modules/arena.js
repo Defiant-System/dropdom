@@ -129,13 +129,35 @@ let Arena = {
 	deleteRows(rows) {
 		rows.map(y => {
 			[...Array(this.dim.w)].map((e, x) => {
-				this.matrix[y][x] = 0;
+				let col = this.matrix[y][x];
+				if (col === 0 || !col.endsWith("1")) return;
+				// remove DOM element
+				let tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${y};"]`);
+				/// remove row tiles
+				tile.remove();
 			});
+
+			// pull down all items above tile
+			for (let t=y-1; t>0; t--) {
+				// reset matrix
+				this.matrix[t+1] = this.matrix[t];
+
+				let tile = this.els.rows.find(`.tile[style*="--y: ${t};"]`);
+				if (tile.length) {
+					tile.css({ "--y": t+1 }).cssSequence("smooth-drop", "transitionend", el => {
+						// reset tile
+						el.removeClass("smooth-drop");
+					});
+				}
+			}
 		});
-		// update arena
-		this.draw();
-		// drop rows
-		setTimeout(() => this.drop(), 500);
+
+		// this.matrix.map((row, i) => console.log( i, row.join(" ") ));
+
+		// // update arena
+		// this.draw(true);
+		// // drop rows
+		// setTimeout(() => this.drop(), 500);
 	},
 	draw(vdom) {
 		let out = [];
@@ -187,7 +209,9 @@ let Arena = {
 					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
 					if (check) {
 						piece = this.getPiece(piece.x, piece.y, true);
-						this.merge(piece.matrix, piece.x, t, piece.y);
+						piece.matrix.map((c, i) => {
+							this.matrix[t][piece.x + i] = `${c}-${piece.y}`;
+						});
 						break;
 					}
 				}
@@ -215,7 +239,6 @@ let Arena = {
 				tile.removeClass("smooth-drop");
 				// is last ?
 				if (count-- > 1) return;
-				console.log( "clearAdd" );
 				this.clearAdd(doAdd);
 			});
 		});
@@ -234,7 +257,7 @@ let Arena = {
 			setTimeout(() => this.deleteRows(clear), 200);
 		}
 		// add rows if user made drag'n drop
-		if (doAdd) this.addRows();
+		// if (doAdd) this.addRows();
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
