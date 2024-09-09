@@ -95,7 +95,7 @@ let Arena = {
 			});
 		});
 		// update arena
-		Arena.draw();
+		this.draw();
 		// drop rows
 		setTimeout(() => this.drop(), 500);
 	},
@@ -142,14 +142,17 @@ let Arena = {
 					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
 					if (check) {
 						piece = this.getPiece(piece.x, piece.y, true);
-						Arena.merge(piece.matrix, piece.x, t);
+						this.merge(piece.matrix, piece.x, t);
 						break;
 					}
 				}
 			}
 		}
 		// update arena
-		Arena.draw();
+		this.syncAnim();
+	},
+	syncAnim() {
+		this.draw();
 
 		let clear = [];
 		this.matrix.map((row, y) => {
