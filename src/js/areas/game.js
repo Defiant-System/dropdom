@@ -87,8 +87,7 @@
 					let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
 					Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
 
-					Arena.drop();
-					Arena.addRows();
+					Arena.drop(true);
 				}
 
 				// hide show columns

@@ -99,26 +99,31 @@ let Arena = {
 		// drop rows
 		setTimeout(() => this.drop(), 500);
 	},
-	draw(matrix) {
-		// if no args, draw arena matrix
-		matrix = matrix || this.matrix;
-		// clean up
-		this.els.rows.find(".tile").remove();
-
+	draw(vdom) {
 		let out = [];
-		matrix.map((row, y) => {
+		this.matrix.map((row, y) => {
 			row.map((col, x) => {
 				if (col === 0) return;
+				let oY;
+				if (col.includes("-")) {
+					oY = +col.split("-")[1];
+					col = col.split("-")[0];
+				}
 				let [c,s,p] = col.split("");
 				if (p === "1") {
-					out.push(`<span class="tile ${this.palette[c]}-${s}" style="--x: ${x}; --y: ${y};"></span>`);
+					out.push(`<span class="tile ${this.palette[c]}-${s}" style="--x: ${x}; --y: ${y}; ${oY ? `--oY: ${oY};` : ""}"></span>`);
 				}
+				// removes "oY" from matrix
+				row[x] = col;
 			});
 		});
-		this.els.rows.append(out.join(""));
-
-		// update internal matrix
-		this.matrix = matrix;
+		if (vdom) {
+			return $(out.join(""));
+		} else {
+			// clean up
+			this.els.rows.find(".tile").remove();
+			this.els.rows.append(out.join(""));
+		}
 	},
 	collisionCheck(piece, o) {
 		let m = piece.matrix;
@@ -129,7 +134,7 @@ let Arena = {
 		}
 		return false;
 	},
-	drop() {
+	drop(doAdd) {
 		for (let yl=this.matrix.length-1, y=yl; y>-1; y--) {
 			for (let x=0; x<8; x++) {
 				let col = this.matrix[y][x];
@@ -142,16 +147,30 @@ let Arena = {
 					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
 					if (check) {
 						piece = this.getPiece(piece.x, piece.y, true);
-						this.merge(piece.matrix, piece.x, t);
+						this.merge(piece.matrix, piece.x, t, piece.y);
 						break;
 					}
 				}
 			}
 		}
 		// update arena
-		this.syncAnim();
+		this.syncAnim(doAdd);
 	},
-	syncAnim() {
+	syncAnim(doAdd) {
+		// create virtual dom + make comparison + animate ?
+		this.draw(true).map(vTile => {
+			let props = vTile.getAttribute("style"),
+				x = +props.match(/--x: (\d);/)[1],
+				y = +props.match(/--y: (\d);/)[1],
+				oY = +props.match(/--oY: (\d);/)[1],
+				tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
+			// console.log(props, x, y, oY);
+			// console.log(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
+			console.log(tile);
+		});
+
+		return;
+
 		this.draw();
 
 		let clear = [];
@@ -165,10 +184,13 @@ let Arena = {
 			console.log("clear", clear);
 			setTimeout(() => this.deleteRows(clear), 200);
 		}
+		// add rows if user made drag'n drop
+		if (doAdd) Arena.addRows();
 	},
-	merge(piece, x, y) {
+	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
-			this.matrix[y][x+i] = c;
+			if (oY) c += `-${oY}`;
+			this.matrix[nY][x+i] = c;
 		});
 	},
 	getTrack(x, y) {

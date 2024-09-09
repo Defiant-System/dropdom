@@ -51,8 +51,9 @@ let Test = {
 		// 	Arena.addRow(1);
 		// });
 
-		Arena.draw(State);
-		Arena.drop();
+		Arena.matrix = State;
+		Arena.draw();
+		// Arena.drop();
 		return;
 
 		return setTimeout(() => {
