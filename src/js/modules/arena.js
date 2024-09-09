@@ -142,22 +142,19 @@ let Arena = {
 				// reset matrix
 				this.matrix[t+1] = this.matrix[t];
 
-				let tile = this.els.rows.find(`.tile[style*="--y: ${t};"]`);
-				if (tile.length) {
-					tile.css({ "--y": t+1 }).cssSequence("smooth-drop", "transitionend", el => {
+				let tiles = this.els.rows.find(`.tile[style*="--y: ${t};"]`);
+				if (tiles.length) {
+					tiles.css({ "--y": t+1 }).cssSequence("smooth-drop", "transitionend", el => {
 						// reset tile
 						el.removeClass("smooth-drop");
+
+						if (el[0] !== tiles[0] || t === y-1) return;
+						// add row(s)
+						this.addRows();
 					});
 				}
 			}
 		});
-
-		// this.matrix.map((row, i) => console.log( i, row.join(" ") ));
-
-		// // update arena
-		// this.draw(true);
-		// // drop rows
-		// setTimeout(() => this.drop(), 500);
 	},
 	draw(vdom) {
 		let out = [];
@@ -209,9 +206,7 @@ let Arena = {
 					let check = this.collisionCheck(piece, { x: piece.x, y: t+1 });
 					if (check) {
 						piece = this.getPiece(piece.x, piece.y, true);
-						piece.matrix.map((c, i) => {
-							this.matrix[t][piece.x + i] = `${c}-${piece.y}`;
-						});
+						this.merge(piece.matrix, piece.x, t, piece.y);
 						break;
 					}
 				}
@@ -230,7 +225,7 @@ let Arena = {
 				x = +props.match(/--x: (\d);/)[1],
 				y = +props.match(/--y: (\d);/)[1],
 				oY = +props.match(/--oY: (\d);/)[1],
-				tile = this.els.rows.find(`.tile[style^="--x: ${x}; --y: ${oY};"]`);
+				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]`);
 			
 			if (y === oY) return;
 			count++;
@@ -243,7 +238,7 @@ let Arena = {
 			});
 		});
 		// if nothing is "drop"
-		// if (count === 0 && doAdd) this.clearAdd(doAdd);
+		if (count === 0 && doAdd) this.clearAdd(doAdd);
 	},
 	clearAdd(doAdd) {
 		let clear = [];
