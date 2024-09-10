@@ -38,13 +38,11 @@ let State = [
 let Test = {
 	init(APP) {
 
-		return;
+		// return;
 		// APP.dispatch({ type: "start-game" });
 
-		// return setTimeout(() => {
-		// 	Arena.addRow(1);
-		// });
 
+		APP.content.data({ show: "game-view" });
 		Arena.matrix = State;
 		Arena.draw();
 		// Arena.drop();

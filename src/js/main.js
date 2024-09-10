@@ -1,4 +1,9 @@
 
+@import "./classes/fog.js"
+@import "./classes/shard.js"
+@import "./classes/sparkle.js"
+
+@import "./modules/fx.js"
 @import "./modules/arena.js"
 @import "./modules/utils.js"
 @import "./modules/test.js"
@@ -15,6 +20,7 @@ const dropdom = {
 			.map(i => this[i].init(this));
 
 		// init objects
+		FX.init();
 		Arena.init();
 
 		// DEV-ONLY-START
@@ -42,7 +48,7 @@ const dropdom = {
 				event.el.toggleClass("off", event.el.hasClass("off"));
 				break;
 			case "start-game":
-				Self.content.data({ show: "game-view" })
+				Self.content.data({ show: "game-view" });
 				setTimeout(() => Arena.addRows(4), 500);
 				break;
 			case "open-help":
