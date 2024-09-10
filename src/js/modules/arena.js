@@ -12,14 +12,7 @@ let NewRows = [
 		["o21", "o22", 0, "g11", "p21", "p22", 0, 0],
 	];
 
-let Pipeline = [
-		// [0, "o31", "o32", "o33", 0, "b21", "b22", 0],
-		// ["g11", 0, "b21", "b22", "r21", "r22", "b11", 0],
-		// ["g21", "g22", 0, "b11", "r21", "r22", 0, 0],
-		// ["p21", "p22", "r21", "r22", "g11", 0, "o11", 0],
-		// ["g11", 0, "p21", "p22", "p21", "p22", "o21", "o22"],
-		// [0, "o21", "o22", "g11", "p21", "p22", 0, 0],
-	];
+let Pipeline = [];
 
 
 let Arena = {
@@ -67,7 +60,7 @@ let Arena = {
 		if (Pipeline.length < 2) this.refillPreview();
 	},
 	refillPreview() {
-		let nr = [...NewRows];
+		let nr = NewRows.map(r => [...r]);
 		for (let i=0, il=nr; i<il; ++i) {
 			let j = i + Utils.random(il - i);
 			let tmp = nr[i];
@@ -106,9 +99,7 @@ let Arena = {
 
 		this.els.rows.cssSequence("add-row", "transitionend", el => {
 			// remove top row
-			let out = this.matrix.shift(),
-				// gameOver = !(out.reduce((a,c) => a + c, 0) === 0),
-				free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
+			let out = this.matrix.shift();
 
 			// reset rows element
 			el.removeClass("add-row");
@@ -119,8 +110,10 @@ let Arena = {
 				tEl.css({ "--y": tY });
 			});
 
-			this.els.board.toggleClass("danger", free > 2);
 			this.drop();
+
+			let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
+			this.els.board.toggleClass("danger", free > 1);
 
 			if (free === 0) dropdom.dispatch({ type: "game-over" });
 			else if (i > 1) setTimeout(() => this.addRows(i-1), 250);
@@ -149,7 +142,7 @@ let Arena = {
 				}
 				let [c,s,p] = col.split("");
 				if (p === "1") {
-					out.push(`<span class="tile ${this.palette[c]}-${s}" style="--x: ${x}; --y: ${y}; ${oY ? `--oY: ${oY};` : ""}"></span>`);
+					out.push(`<span class="tile ${this.palette[c]}-${s}" style="--x: ${x}; --y: ${y}; ${oY !== undefined ? `--oY: ${oY};` : ""}"></span>`);
 				}
 				// removes "oY" from matrix
 				row[x] = col;
@@ -237,7 +230,9 @@ let Arena = {
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
-			if (oY) c += `-${oY}`;
+			if (oY !== undefined) {
+				c += `-${oY}`;
+			}
 			this.matrix[nY][x+i] = c;
 		});
 	},
