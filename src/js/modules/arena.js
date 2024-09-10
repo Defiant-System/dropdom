@@ -111,13 +111,14 @@ let Arena = {
 			});
 
 			this.drop();
-
-			let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
-			this.els.board.toggleClass("danger", free > 1);
-
-			if (free === 0) dropdom.dispatch({ type: "game-over" });
-			else if (i > 1) setTimeout(() => this.addRows(i-1), 250);
+			this.checkDanger();
+			if (i > 1) setTimeout(() => this.addRows(i-1), 250);
 		});
+	},
+	checkDanger() {
+		let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
+		this.els.board.toggleClass("danger", free > 1);
+		if (free === 0) dropdom.dispatch({ type: "game-over" });
 	},
 	deleteRows(rows) {
 		rows.map(y => {
@@ -128,7 +129,7 @@ let Arena = {
 		// update arena
 		this.draw();
 		// drop rows
-		setTimeout(() => this.drop(), 150);
+		setTimeout(() => this.drop(), 250);
 	},
 	draw(vdom) {
 		let out = [];
@@ -224,6 +225,7 @@ let Arena = {
 		
 		if (clear.length) {
 			this.deleteRows(clear);
+			this.checkDanger();
 		}
 		// add rows if user made drag'n drop
 		if (doAdd) setTimeout(() => this.addRows(), 250);

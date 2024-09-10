@@ -83,10 +83,10 @@
 				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 
 				// piece was dragged
-				if (Drag.colX !== Drag.piece.x) {
-					let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
-					Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
+				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
+				Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
 
+				if (Drag.colX !== Drag.piece.x) {
 					Arena.drop(true);
 				}
 
