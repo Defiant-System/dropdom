@@ -8,6 +8,7 @@ content {
 	right: 0;
 	bottom: 0;
 	font-family: "Racing Sans One", sans-serif;
+	background: #222 url(~/img/tile.webp);
 
 	&.cover {
 		&:before {
@@ -27,8 +28,200 @@ content {
 		}
 	}
 
+	&[data-show="start-view"] {
+		.start-view {
+			display: block;
+		}
+
+		.game-view {
+			display: none;
+		}
+	}
+
+	&[data-show="game-view"] {
+		.start-view {
+			display: none;
+		}
+
+		.game-view {
+			display: block;
+		}
+	}
+
+
+	.green {
+		background: url(~/img/leafs.webp) 41% 50%/cover no-repeat;
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 113px;
+		pointer-events: none;
+		z-index: 2;
+
+		&.top {
+			top: 0;
+			transform: rotate(180deg);
+		}
+
+		&.bottom {
+			bottom: 0;
+		}
+	}
+
+	span.button {
+		background: url(~/img/button-red.webp) 50% 50%/contain no-repeat;
+		display: inline-block;
+		position: relative;
+		width: 85px;
+		height: 58px;
+		border-radius: 11px;
+
+		&:hover:before {
+			filter: saturate(1.15);
+			box-shadow: 0 0 5px #f00;
+		}
+
+		&:active:before {
+			background-position: -5px -4px;
+			filter: brightness(1);
+			box-shadow: 0 0 2px #f00;
+		}
+
+		&:before {
+			content: "";
+			background: #322333;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			right: 4px;
+			bottom: 5px;
+			border-radius: 5px;
+		}
+
+		&:before {
+			content: "";
+			background-image: inherit;
+			background-repeat: inherit;
+			background-size: 85px 58px;
+			background-position: -5px -5px;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			right: 4px;
+			bottom: 5px;
+			border-radius: 5px;
+			filter: brightness(0.95);
+		}
+	}
+
+	.start-view {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		.logo {
+			position: relative;
+			margin: 101px auto;
+			width: 467px;
+			height: 116px;
+
+			svg {
+				width: inherit;
+				height: inherit;
+				filter: drop-shadow(0 1px 0 hsl(174, 5%, 80%))
+						drop-shadow(0 2px 0 hsl(174, 5%, 75%))
+						drop-shadow(0 3px 1px hsl(174, 5%, 67%))
+						drop-shadow(0 4px 1px hsl(174, 5%, 59%))
+						drop-shadow(0 5px 0 hsl(174, 5%, 51%))
+						drop-shadow(0 6px 0 hsl(174, 5%, 43%))
+						// drop-shadow(0 5px 11px rgba(#000,.25))
+						sepia(1) saturate(3) hue-rotate(15deg);
+			}
+
+			.jewel {
+				background: url(/app/ant/icons/app-icon-dropdom.png) 50% 50%/contain no-repeat;
+				position: absolute;
+				top: 32px;
+				left: 303px;
+				width: 67px;
+				height: 67px;
+				filter: drop-shadow(0 0 3px rgba(#000,.35));
+			}
+		}
+
+		.info {
+			position: absolute;
+			top: 273px;
+			left: 37px;
+			right: 37px;
+			height: 295px;
+
+			&:before,
+			&:after {
+				content: "";
+				background: url(~/img/frame.webp) 0 0/cover no-repeat;
+				position: absolute;
+				top: -7px;
+				left: -7px;
+				right: -7px;
+				// width: 461px;
+				height: 213px;
+				border-radius: 9px 9px 0 0;
+				box-shadow: 0 0 3px rgba(#000,.65);
+				z-index: 1;
+				// pointer-events: none;
+			}
+
+			&:after {
+				top: auto;
+				bottom: 0;
+				border-radius: 0 0 9px 9px;
+				background-position: 0 100%;
+			}
+		}
+
+		.options {
+			position: absolute;
+			top: 593px;
+			left: 37px;
+			right: 37px;
+			text-align: center;
+
+			span.button {
+				background: url(~/img/button-blue.webp) 50% 50%/contain no-repeat;
+				height: 55px;
+				margin: 0 7px;
+
+				&:before {
+					// background: #000;
+					top: 5px;
+					left: 5px;
+					right: 6px;
+					bottom: 6px;
+				}
+
+				&:hover:before {
+					filter: saturate(1.15);
+					box-shadow: 0 0 5px #00f;
+				}
+
+				&:active:before {
+					background-position: -5px -4px;
+					filter: brightness(1);
+					box-shadow: 0 0 2px #00f;
+				}
+
+				&[data-click="toggle-audio"],
+				&[data-click="start-game"] {
+
+				}
+			}
+		}
+	}
+
 	.game-view {
-		background: #222 url(~/img/tile.webp);
 		background-size: 23%;
 		position: absolute;
 		top: 0;
@@ -75,25 +268,6 @@ content {
 						}
 					}
 				}
-			}
-		}
-
-		.green {
-			background: url(~/img/leafs.webp) 41% 50%/cover no-repeat;
-			position: absolute;
-			left: 0;
-			right: 0;
-			height: 113px;
-			pointer-events: none;
-			z-index: 2;
-
-			&.top {
-				top: 0;
-				transform: rotate(180deg);
-			}
-
-			&.bottom {
-				bottom: 0;
 			}
 		}
 
@@ -184,49 +358,9 @@ content {
 			}
 
 			span.button {
-				background: url(~/img/button.webp) 50% 50%/contain no-repeat;
 				position: absolute;
 				top: 6px;
 				right: 13px;
-				width: 85px;
-				height: 58px;
-				border-radius: 11px;
-
-				&:hover:before {
-					filter: saturate(1.15);
-					box-shadow: 0 0 5px #f00;
-				}
-
-				&:active:before {
-					background-position: -5px -4px;
-					filter: brightness(1);
-					box-shadow: 0 0 2px #f00;
-				}
-
-				&:before {
-					content: "";
-					background: #322333; // url(~/img/button.webp) 50% 50%/contain no-repeat;
-					position: absolute;
-					top: 5px;
-					left: 5px;
-					right: 4px;
-					bottom: 5px;
-					border-radius: 5px;
-				}
-
-				&:before {
-					content: "";
-					background: url(~/img/button.webp) no-repeat;
-					background-size: 85px 58px;
-					background-position: -5px -5px;
-					position: absolute;
-					top: 5px;
-					left: 5px;
-					right: 4px;
-					bottom: 5px;
-					border-radius: 5px;
-					filter: brightness(0.95);
-				}
 			}
 		}
 

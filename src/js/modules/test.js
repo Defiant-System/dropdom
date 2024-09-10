@@ -38,7 +38,7 @@ let State = [
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 
 		// return setTimeout(() => {
 		// 	Arena.addRow(1);
