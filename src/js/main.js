@@ -32,7 +32,7 @@ const dropdom = {
 			// custom events
 			case "game-over":
 				Self.content.find(".board").removeClass("danger");
-				Self.content.find(".game-view").addClass("game-over");
+				Self.content.find(".game-view").addClass("game-over busy");
 				break;
 			case "output-arena":
 				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
@@ -43,6 +43,7 @@ const dropdom = {
 				break;
 			case "start-game":
 				Self.content.data({ show: "game-view" })
+				setTimeout(() => Arena.addRows(4), 500);
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

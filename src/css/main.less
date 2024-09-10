@@ -76,6 +76,7 @@ content {
 		height: 58px;
 		border-radius: 11px;
 
+
 		&:hover:before {
 			filter: saturate(1.15);
 			box-shadow: 0 0 5px #f00;
@@ -132,6 +133,7 @@ content {
 			height: 116px;
 
 			svg {
+				position: absolute;
 				width: inherit;
 				height: inherit;
 				filter: drop-shadow(0 1px 0 hsl(174, 5%, 80%))
@@ -141,26 +143,37 @@ content {
 						drop-shadow(0 5px 0 hsl(174, 5%, 51%))
 						drop-shadow(0 6px 0 hsl(174, 5%, 43%))
 						// drop-shadow(0 5px 11px rgba(#000,.25))
-						sepia(1) saturate(3) hue-rotate(15deg);
+						sepia(1) saturate(3) hue-rotate(315deg);
+
+				&:nth-child(1) {
+					z-index: 1;
+				}
+
+				&:nth-child(3) {
+					z-index: 3;
+				}
 			}
 
 			.jewel {
 				background: url(/app/ant/icons/app-icon-dropdom.png) 50% 50%/contain no-repeat;
 				position: absolute;
-				top: 32px;
-				left: 303px;
-				width: 67px;
-				height: 67px;
+				top: 31px;
+				left: 302px;
+				width: 71px;
+				height: 71px;
+				z-index: 2;
 				filter: drop-shadow(0 0 3px rgba(#000,.35));
 			}
 		}
 
-		.info {
+		.tutorial {
 			position: absolute;
-			top: 273px;
-			left: 37px;
-			right: 37px;
-			height: 295px;
+			top: 293px;
+			left: 58px;
+			width: 374px;
+			height: 243px;
+			--size: 45px;
+			--sW: 46px;
 
 			&:before,
 			&:after {
@@ -175,7 +188,7 @@ content {
 				border-radius: 9px 9px 0 0;
 				box-shadow: 0 0 3px rgba(#000,.65);
 				z-index: 1;
-				// pointer-events: none;
+				pointer-events: none;
 			}
 
 			&:after {
@@ -183,6 +196,41 @@ content {
 				bottom: 0;
 				border-radius: 0 0 9px 9px;
 				background-position: 0 100%;
+			}
+
+			.bg {
+				background: url(~/img/block.webp);
+				background-size: 46px;
+				position: absolute;
+				top: 3px;
+				left: 4px;
+				width: 367px;
+				height: 230px;
+				z-index: 2;
+				pointer-events: none;
+			}
+
+			.tile {
+				cursor: pointer;
+
+				&:hover,
+				&.dragged {
+					z-index: 4;
+
+					&:before {
+						content: "";
+						position: absolute;
+						top: 0;
+						left: 1px;
+						right: 1px;
+						bottom: 0;
+						border-radius: inherit;
+						box-shadow: 0 0 1px 2px rgba(#fff,.85),
+									0 0 11px rgba(#ddf,.75),
+									0 0 19px rgba(#aaf,.85),
+									0 0 29px rgba(#88f,.9);
+					}
+				}
 			}
 		}
 
@@ -250,9 +298,11 @@ content {
 			}
 		}
 
-		&:not(.game-over) {
-			.baord {
+		&:not(.busy) {
+			.board {
 				.tile {
+					cursor: pointer;
+
 					&:hover,
 					&.dragged {
 						z-index: 4;
@@ -442,6 +492,8 @@ content {
 				bottom: 2px;
 				z-index: 2;
 				overflow: hidden;
+				--size: 54px;
+				--sW: 55px;
 
 				.rows {
 					position: absolute;
@@ -454,72 +506,6 @@ content {
 						transform: translateY(-54px);
 					}
 				}
-			}
-
-			.tile {
-				background: 50% 50%/contain no-repeat;
-				position: absolute;
-				top: calc( calc( var( --y ) * 55px ) + 4px );
-				left: calc( calc( var( --x ) * 55px ) + 5px );
-				height: 54px;
-				border-radius: 4px;
-				z-index: 3;
-
-				&.smooth-drop {
-					transition: top 200ms ease-out;
-				}
-
-				&:before {
-					content: "";
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					border: 1px solid #830;
-					border-top-color: #fb0;
-					border-radius: inherit;
-					pointer-events: none;
-				}
-
-				&:after {
-					content: "";
-					position: absolute;
-					top: 7px;
-					left: 13px;
-					right: 13px;
-					height: 1px;
-					background: linear-gradient(90deg, transparent, rgba(#fff,.5), transparent);
-					pointer-events: none;
-				}
-
-				&.blue-4    { width: 219px; background-image: url(~/icons/blue-4.png); }
-				&.green-4   { width: 219px; background-image: url(~/icons/green-4.png); }
-				&.red-4     { width: 219px; background-image: url(~/icons/red-4.png); }
-				&.purple-4  { width: 219px; background-image: url(~/icons/purple-4.png); }
-				&.orange-4  { width: 219px; background-image: url(~/icons/orange-4.png); }
-				&.colors-4  { width: 219px; background-image: url(~/icons/colors-4.png); }
-
-				&.blue-3    { width: 164px; background-image: url(~/icons/blue-3.png); }
-				&.green-3   { width: 164px; background-image: url(~/icons/green-3.png); }
-				&.red-3     { width: 164px; background-image: url(~/icons/red-3.png); }
-				&.purple-3  { width: 164px; background-image: url(~/icons/purple-3.png); }
-				&.orange-3  { width: 164px; background-image: url(~/icons/orange-3.png); }
-				&.colors-3  { width: 164px; background-image: url(~/icons/colors-3.png); }
-
-				&.blue-2    { width: 109px; background-image: url(~/icons/blue-2.png); }
-				&.green-2   { width: 109px; background-image: url(~/icons/green-2.png); }
-				&.red-2     { width: 109px; background-image: url(~/icons/red-2.png); }
-				&.purple-2  { width: 109px; background-image: url(~/icons/purple-2.png); }
-				&.orange-2  { width: 109px; background-image: url(~/icons/orange-2.png); }
-				&.colors-2  { width: 109px; background-image: url(~/icons/colors-2.png); }
-
-				&.blue-1    { width: 54px; background-image: url(~/icons/blue-1.png); }
-				&.green-1   { width: 54px; background-image: url(~/icons/green-1.png); }
-				&.red-1     { width: 54px; background-image: url(~/icons/red-1.png); }
-				&.purple-1  { width: 54px; background-image: url(~/icons/purple-1.png); }
-				&.orange-1  { width: 54px; background-image: url(~/icons/orange-1.png); }
-				&.colors-1  { width: 54px; background-image: url(~/icons/colors-1.png); }
 			}
 		}
 
@@ -545,7 +531,7 @@ content {
 			span {
 				position: absolute;
 				top: 7px;
-				left: calc( calc( var( --x ) * 55px ) + 4px );
+				left: calc( calc( var( --x ) * var( --sW ) ) + 4px );
 
 				&:before {
 					content: "";
@@ -564,6 +550,73 @@ content {
 				&.t1 { width: 54px; }
 			}
 		}
+	}
+
+
+	.tile {
+		background: 50% 50%/contain no-repeat;
+		position: absolute;
+		top: calc( calc( var( --y ) * var( --sW ) ) + 4px );
+		left: calc( calc( var( --x ) * var( --sW ) ) + 5px );
+		height: var( --size );
+		border-radius: 4px;
+		z-index: 3;
+
+		&.smooth-drop {
+			transition: top 200ms ease-out;
+		}
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			border: 1px solid #830;
+			border-top-color: #fb0;
+			border-radius: inherit;
+			pointer-events: none;
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			top: 7px;
+			left: 13px;
+			right: 13px;
+			height: 1px;
+			background: linear-gradient(90deg, transparent, rgba(#fff,.5), transparent);
+			pointer-events: none;
+		}
+
+		&.blue-4    { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/blue-4.png); }
+		&.green-4   { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/green-4.png); }
+		&.red-4     { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/red-4.png); }
+		&.purple-4  { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/purple-4.png); }
+		&.orange-4  { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/orange-4.png); }
+		&.colors-4  { width: calc( calc( var( --size ) * 4 ) + 3px ); background-image: url(~/icons/colors-4.png); }
+
+		&.blue-3    { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/blue-3.png); }
+		&.green-3   { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/green-3.png); }
+		&.red-3     { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/red-3.png); }
+		&.purple-3  { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/purple-3.png); }
+		&.orange-3  { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/orange-3.png); }
+		&.colors-3  { width: calc( calc( var( --size ) * 3 ) + 2px ); background-image: url(~/icons/colors-3.png); }
+
+		&.blue-2    { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/blue-2.png); }
+		&.green-2   { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/green-2.png); }
+		&.red-2     { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/red-2.png); }
+		&.purple-2  { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/purple-2.png); }
+		&.orange-2  { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/orange-2.png); }
+		&.colors-2  { width: calc( calc( var( --size ) * 2 ) + 1px ); background-image: url(~/icons/colors-2.png); }
+
+		&.blue-1    { width: var( --size ); background-image: url(~/icons/blue-1.png); }
+		&.green-1   { width: var( --size ); background-image: url(~/icons/green-1.png); }
+		&.red-1     { width: var( --size ); background-image: url(~/icons/red-1.png); }
+		&.purple-1  { width: var( --size ); background-image: url(~/icons/purple-1.png); }
+		&.orange-1  { width: var( --size ); background-image: url(~/icons/orange-1.png); }
+		&.colors-1  { width: var( --size ); background-image: url(~/icons/colors-1.png); }
 	}
 }
 
