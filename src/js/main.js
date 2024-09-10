@@ -38,6 +38,12 @@ const dropdom = {
 				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 				// Arena.addRows();
 				break;
+			case "toggle-audio":
+				event.el.toggleClass("off", event.el.hasClass("off"));
+				break;
+			case "start-game":
+				Self.content.data({ show: "game-view" })
+				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
 				break;
