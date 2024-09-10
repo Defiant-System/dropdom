@@ -42,15 +42,17 @@ let Test = {
 		// APP.dispatch({ type: "start-game" });
 
 
+		setTimeout(() => {
+			// blast row(s) with effect
+			FX.blast(9, [2, 3, 4]);
+		}, 800);
+
+
 		APP.content.data({ show: "game-view" });
 		Arena.matrix = State;
 		Arena.draw();
 		// Arena.drop();
 		return;
-
-		return setTimeout(() => {
-			Arena.addRows(4);
-		}, 500);
 
 		setTimeout(() => {
 			// let piece = Arena.getPiece(3, 9);

@@ -62,7 +62,7 @@ let Arena = {
 	refillPreview() {
 		let nr = NewRows.map(r => [...r]);
 		for (let i=0, il=nr; i<il; ++i) {
-			let j = i + Utils.random(il - i);
+			let j = i + Utils.randomInt(il - i);
 			let tmp = nr[i];
 			nr[i] = nr[j];
 			nr[j] = tmp;
@@ -72,7 +72,7 @@ let Arena = {
 	addRows(i=1) {
 		let row = Pipeline.shift();
 		// make "rainbow" if "lucky"
-		if (Utils.random(0, 50) < 6) {
+		if (Utils.randomInt(0, 50) < 6) {
 			let pieces = [];
 			row.map((col, x) => {
 				if (col) {
@@ -81,7 +81,7 @@ let Arena = {
 				}
 			});
 			pieces = pieces.filter(i => !!i);
-			let select = pieces[Utils.random(0, pieces.length)],
+			let select = pieces[Utils.randomInt(0, pieces.length)],
 				done = +select.split("")[1];
 			// make rainbow
 			row.map((col, x) => {

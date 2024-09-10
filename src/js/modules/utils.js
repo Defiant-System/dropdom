@@ -8,8 +8,11 @@ let Utils = {
 		return { cvs, ctx }
 	},
 	// get a random number within a range
-	random(min, max) {
+	randomInt(min, max) {
 		return (Math.random() * ( max - min ) + min) | 0;
+	},
+	random(min, max) {
+		return Math.random() * ( max - min ) + min;
 	},
 	// calculate the distance between two points
 	calculateDistance(p1x, p1y, p2x, p2y) {

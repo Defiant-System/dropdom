@@ -4,6 +4,7 @@
 @import "./classes/sparkle.js"
 
 @import "./modules/fx.js"
+@import "./modules/fragments.js"
 @import "./modules/arena.js"
 @import "./modules/utils.js"
 @import "./modules/test.js"
