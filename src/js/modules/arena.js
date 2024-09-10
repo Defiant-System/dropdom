@@ -223,10 +223,10 @@ let Arena = {
 		});
 		
 		if (clear.length) {
-			setTimeout(() => this.deleteRows(clear), 200);
+			this.deleteRows(clear);
 		}
 		// add rows if user made drag'n drop
-		if (doAdd) this.addRows();
+		if (doAdd) setTimeout(() => this.addRows(), 250);
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
