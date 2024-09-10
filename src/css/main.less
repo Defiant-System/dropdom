@@ -126,6 +126,12 @@ content {
 		right: 0;
 		bottom: 0;
 
+		&:hover {
+			.tutorial .hand {
+				display: none;
+			}
+		}
+
 		.logo {
 			position: relative;
 			margin: 101px auto;
@@ -174,12 +180,6 @@ content {
 			height: 243px;
 			--size: 45px;
 			--sW: 46px;
-
-			&:hover {
-				.hand {
-					display: none;
-				}
-			}
 
 			&:before,
 			&:after {
