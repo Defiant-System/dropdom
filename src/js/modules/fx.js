@@ -11,19 +11,29 @@ let FX = {
 		this.cvs.attr({ width, height });
 		this.dim = { width, height };
 
+		this.counter = 0;
+
 		let Self = this;
 		this.fpsControl = karaqu.FpsControl({
 			fps: 30,
 			callback() {
-				// console.log("tick");
 				Self.render();
+				Self.counter++;
 
-				if (!Self.particles.length) {
+				if (!Self.particles.length || Self.counter > 200) {
 					// stop fps control
 					Self.fpsControl.stop();
 				}
 			}
 		});
+	},
+	electify(x1, y1, x2, y2) {
+		this.particles.push(new Electric);
+
+		// start fpsControl
+		if (this.fpsControl._stopped) {
+			this.fpsControl.start();
+		}
 	},
 	blast(y, cells) {
 		let list = cells.map((c, x) => [x, y, c]);

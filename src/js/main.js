@@ -1,4 +1,8 @@
 
+
+@import "./classes/simplexnoise.js"
+@import "./classes/electric.js"
+@import "./classes/vector.js"
 @import "./classes/fog.js"
 @import "./classes/shard.js"
 @import "./classes/sparkle.js"

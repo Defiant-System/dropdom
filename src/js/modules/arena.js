@@ -243,7 +243,7 @@ let Arena = {
 					Object.keys(ns).map(key => {
 						let tEl = this.els.rows.find(`.tile[style^="--x: ${ns[key].x}; --y: ${ns[key].y};"]`);
 						tEl.cssSequence("flash", "transitionend", el => {
-							console.log(el);
+							// console.log(el);
 						});
 					});
 					pause = true;

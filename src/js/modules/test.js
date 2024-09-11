@@ -45,7 +45,6 @@ let Test = {
 		// return;
 		// APP.dispatch({ type: "start-game" });
 
-
 		// setTimeout(() => {
 		// 	// blast row(s) with effect
 		// 	//FX.blast(6, ["g", 0, 0, 0, 0, 0, 0, "o"]);
@@ -57,6 +56,13 @@ let Test = {
 		Arena.matrix = State;
 		Arena.draw();
 		// Arena.drop();
+
+
+		return setTimeout(() => {
+			FX.electify(100, 100, 200, 200);
+		}, 1000);
+
+
 		return;
 
 		setTimeout(() => {
