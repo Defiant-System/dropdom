@@ -236,12 +236,17 @@ let Arena = {
 			Object.keys(clear).map(y => {
 				let cIndex = clear[+y].indexOf("c");
 				if (cIndex > -1) {
-					let piece = this.getPiece(cIndex, +y);
-					console.log(cIndex, +y, piece);
-					// this.getNeighbours(piece).forEach(p => {
-					// 	console.log( p );
-					// });
-					pause = true;;
+					// this.matrix.map((row, i) => console.log( i, row.join(" ") ));
+
+					let piece = this.getPiece(cIndex, +y),
+						ns = this.getNeighbours(piece);
+					Object.keys(ns).map(key => {
+						let tEl = this.els.rows.find(`.tile[style^="--x: ${ns[key].x}; --y: ${ns[key].y};"]`);
+						tEl.cssSequence("flash", "transitionend", el => {
+							console.log(el);
+						});
+					});
+					pause = true;
 				}
 			});
 
@@ -261,12 +266,20 @@ let Arena = {
 		});
 	},
 	getNeighbours(piece) {
-		let neighbours = new Set();
+		let neighbours = {};
 		for (let l=piece.x; l<piece.x + piece.s; l++) {
 			let above = this.getPiece(l, piece.y-1),
 				below = this.getPiece(l, piece.y+1);
-			if (above) neighbours.add(above);
-			if (below) neighbours.add(below);
+			if (above) {
+				above.x -= above.p - 1;
+				delete above.p;
+				neighbours[JSON.stringify(above)] = above;
+			}
+			if (below) {
+				below.x -= below.p - 1;
+				delete below.p;
+				neighbours[JSON.stringify(below)] = below;
+			}
 		}
 		return neighbours;
 	},

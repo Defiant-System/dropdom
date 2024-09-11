@@ -615,10 +615,18 @@ content {
 		left: calc( calc( var( --x ) * var( --sW ) ) + 5px );
 		height: var( --size );
 		border-radius: 4px;
+		opacity: 1;
 		z-index: 3;
 
 		&.smooth-drop {
 			transition: top 200ms ease-out;
+		}
+
+		&.flash {
+			transition: filter 250ms 300ms linear,
+						opacity 250ms 450ms linear;
+			filter: contrast(0) brightness(2);
+			opacity: 0;
 		}
 
 		&:before {
