@@ -3,9 +3,9 @@ class Electric {
 	constructor(parent, speed, lineWidth, amplitude, color) {
 		this.parent = parent;
 		this.color = `rgba(${ color || "255, 255, 255" }, 1)`;
-		this.blurColor = "rgba(120, 120, 255, 0.5)";
-		this.blur = 21;
-		this.speed = speed || 0.025;
+		this.blurColor = "#ddddff77";
+		this.blur = 17;
+		this.speed = speed || 0.04;
 		this.lineWidth = lineWidth || 3;
 		this.amplitude = amplitude || 0.75;
 		this.points = null;
@@ -19,7 +19,7 @@ class Electric {
 			this.endVector = new Vector(this.random(.5, -.5), this.random(.5, -.5)).normalize();
 
 			this.children = [...Array(2)].map(i =>
-				new Electric(this, 0.025, 2, 0.65, "250, 250, 255"));
+				new Electric(this, 0.035, 3, 0.65, "250, 250, 255"));
 		}
 	}
 
@@ -86,14 +86,14 @@ class Electric {
 			startPoint = parent ? parent.startPoint : this.startPoint,
 			endPoint = parent ? parent.endPoint : this.endPoint,
 			length = startPoint.distanceTo(endPoint),
-			step = Math.max(length / 4, 25),
+			step = Math.max(length / 2, 25),
 			normal = endPoint.clone().sub(startPoint).normalize().scale(length / step),
 			radian = normal.angle(),
 			sinv   = _sin(radian),
 			cosv   = _cos(radian),
 			points = this.points = [],
-			off    = this.off += this.random(this.speed, this.speed * 0.2),
-			waveWidth = (parent ? length * 1.25 : length) * this.amplitude;
+			off    = this.off += this.random(this.speed, this.speed * 0.1),
+			waveWidth = (parent ? length * 1.5 : length) * this.amplitude;
 
 		
 		for (let i=0, len=step; i<len; i++) {
@@ -107,7 +107,6 @@ class Electric {
 				m = _sin((_pi * (i / (len - 1)))),
 				x = startPoint.x + normal.x * i + (ax - bx) * m,
 				y = startPoint.y + normal.y * i - (ay - by) * m;
-
 			points.push(new Vector(x, y));
 		}
 		points.push(endPoint.clone());
@@ -126,7 +125,7 @@ class Electric {
 		if (this.blur) {
 			ctx.save();
 			ctx.globalCompositeOperation = "lighter";
-			ctx.fillStyle   = "rgba(0, 0, 0, 1)";
+			ctx.fillStyle   = "#115";
 			ctx.shadowBlur  = this.blur;
 			ctx.shadowColor = this.blurColor;
 			ctx.beginPath();
