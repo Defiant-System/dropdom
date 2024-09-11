@@ -239,15 +239,24 @@ let Arena = {
 					// this.matrix.map((row, i) => console.log( i, row.join(" ") ));
 
 					let piece = this.getPiece(cIndex, +y),
-						ns = this.getNeighbours(piece);
-					Object.keys(ns).map(key => {
+						ns = this.getNeighbours(piece),
+						nA = Object.keys(ns);
+					nA.map((key, i) => {
 						let tEl = this.els.rows.find(`.tile[style^="--x: ${ns[key].x}; --y: ${ns[key].y};"]`);
 						tEl.cssSequence("flash", "transitionend", el => {
-							// console.log(el);
+							if (i < nA.length-1) return;
+							// testing
+							this.deleteRows(clear);
+							this.checkDanger();
 						});
 					});
 
-					FX.electify(250, 464, 353, 464);
+					let g = 54,
+						mx = 34,
+						x1 = (cIndex * g) + mx,
+						x2 = x1 + (piece.s * g),
+						my = (y * g) + mx;
+					FX.electify(x1, my, x2, my);
 
 					pause = true;
 				}
