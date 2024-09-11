@@ -120,20 +120,16 @@ let Arena = {
 		this.els.board.toggleClass("danger", free > 1);
 		if (free === 0) dropdom.dispatch({ type: "game-over" });
 	},
-	deleteRows(rows) {
-		rows.map(y => {
-			let fxRow = [];
-			[...Array(this.dim.w)].map((e, x) => {
-				fxRow.push(this.matrix[y][x].slice(0,1));
+	deleteRows(clear) {
+		Object.keys(clear).map(y => {
+			this.matrix[0].map((e, x) => {
 				this.matrix[y][x] = 0;
 			});
 			// explode row cells
-			FX.blast(y, fxRow);
+			FX.blast(y, clear[y]);
 		});
-
 		// sound effect
 		window.audio.play("line");
-
 		// update arena
 		this.draw();
 		// drop rows
@@ -224,14 +220,32 @@ let Arena = {
 		if (count === 0 && doAdd) this.clearAdd(doAdd);
 	},
 	clearAdd(doAdd) {
-		let clear = [];
+		let clear = {};
 		this.matrix.map((row, y) => {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
-			if (remove) clear.unshift(y);
+			if (remove) {
+				// fx row
+				clear[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
+			};
 		});
 		
-		if (clear.length) {
+		if (Object.keys(clear).length) {
+			let pause = false;
+
+			Object.keys(clear).map(y => {
+				let cIndex = clear[+y].indexOf("c");
+				if (cIndex > -1) {
+					let piece = this.getPiece(cIndex, +y);
+					console.log(cIndex, +y, piece);
+					// this.getNeighbours(piece).forEach(p => {
+					// 	console.log( p );
+					// });
+					pause = true;;
+				}
+			});
+
+			if (pause) return;
 			this.deleteRows(clear);
 			this.checkDanger();
 		}
@@ -245,6 +259,16 @@ let Arena = {
 			}
 			this.matrix[nY][x+i] = c;
 		});
+	},
+	getNeighbours(piece) {
+		let neighbours = new Set();
+		for (let l=piece.x; l<piece.x + piece.s; l++) {
+			let above = this.getPiece(l, piece.y-1),
+				below = this.getPiece(l, piece.y+1);
+			if (above) neighbours.add(above);
+			if (below) neighbours.add(below);
+		}
+		return neighbours;
 	},
 	getTrack(x, y) {
 		let piece = this.getPiece(x, y, true),
@@ -264,6 +288,7 @@ let Arena = {
 		return { minX, maxX, ...piece };
 	},
 	getPiece(x, y, detach) {
+		if (!this.matrix[y] || !this.matrix[y][x]) return;
 		let col = this.matrix[y][x],
 			[c,s,p] = col.split("").map(i => i == +i ? +i : i),
 			matrix = [];

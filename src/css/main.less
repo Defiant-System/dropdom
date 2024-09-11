@@ -236,7 +236,7 @@ content {
 				height: 110px;
 				z-index: 3;
 				filter: drop-shadow(0 0 5px rgba(#fff,.35));
-				animation: hand-slide 3000ms ease-in-out infinite;
+				animation: hand-slide 4s ease-in-out infinite;
 
 				&:before {
 					content: "";
@@ -682,9 +682,11 @@ content {
 }
 
 @keyframes hand-slide {
-	0%   { transform: translateX(0px); }
-	30%  { transform: translateX(137px); }
-	100% { transform: translateX(137px); }
+	0%   { opacity: 0; transform: translateX(0px); }
+	5%   { opacity: 1; transform: translateX(0px); }
+	30%  { opacity: 1; transform: translateX(137px); }
+	40%  { opacity: 0; transform: translateX(137px); }
+	100% { opacity: 0; transform: translateX(137px); }
 }
 
 
