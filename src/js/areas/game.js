@@ -40,6 +40,9 @@
 				// exit if game over
 				if (Self.els.el.hasClass("game-over")) return;
 
+				// sound effect
+				window.audio.play("grab");
+
 				let doc = Self.els.doc,
 					cols = Self.els.columns,
 					grid = 55,
@@ -81,6 +84,9 @@
 				// update arena matrix
 				Arena.merge(Drag.piece.matrix, Drag.colX, Drag.piece.y);
 				// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+
+				// sound effect
+				window.audio.play("drop");
 
 				// piece was dragged
 				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;

@@ -126,6 +126,10 @@ let Arena = {
 				this.matrix[y][x] = 0;
 			});
 		});
+
+		// sound effect
+		window.audio.play("line");
+
 		// update arena
 		this.draw();
 		// drop rows

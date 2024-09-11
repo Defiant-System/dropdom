@@ -35,7 +35,7 @@ let FX = {
 			var particleCount = Utils.random(2, 4) | 0,
 				x = (cell[0] * 54) + 27,
 				y = (cell[1] * 54) + 27,
-				color = cell[2] - 1; // Utils.random(1, 7) | 0;
+				color = cell[2]; // Utils.random(1, 7) | 0;
 			// fog
 			this.particles.push(new Fog(this, x, y, color));
 			// shards

@@ -1,5 +1,6 @@
 <Sounds>
 	<i id="grab" url="~/audio/grab.ogg"/>
+	<i id="drop" url="~/audio/drop.mp3"/>
 	<i id="line" url="~/audio/line.ogg"/>
 	<i id="combo" url="~/audio/combo.ogg"/>
 </Sounds>
