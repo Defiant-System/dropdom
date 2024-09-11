@@ -62,6 +62,9 @@
 					},
 					cX = Math.round(offset.left / grid),
 					cW = +el.prop("className").match(/tile \w+-(\d)/)[1];
+
+				return console.log( el, "get neighbors" );
+
 				// drag details
 				Self.drag = { doc, cols, colX: pX, el, grid, piece, offset, click, limit };
 

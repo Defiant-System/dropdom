@@ -19,7 +19,6 @@ let FX = {
 				Self.render();
 
 				if (!Self.particles.length) {
-					console.log("stopped");
 					// stop fps control
 					Self.fpsControl.stop();
 				}
