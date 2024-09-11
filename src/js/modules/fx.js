@@ -31,9 +31,9 @@ let FX = {
 		this.explode(list);
 	},
 	explode(list) {
-		list.map(cell => {
+		list.filter(c => !!c[2]).map(cell => {
 			var particleCount = Utils.random(2, 4) | 0,
-				x = (cell[0] * 54) + 27,
+				x = (cell[0] * 54) + 57,
 				y = (cell[1] * 54) + 27,
 				color = cell[2]; // Utils.random(1, 7) | 0;
 			// fog

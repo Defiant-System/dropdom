@@ -122,9 +122,13 @@ let Arena = {
 	},
 	deleteRows(rows) {
 		rows.map(y => {
+			let fxRow = [];
 			[...Array(this.dim.w)].map((e, x) => {
+				fxRow.push(this.matrix[y][x].slice(0,1));
 				this.matrix[y][x] = 0;
 			});
+			// explode row cells
+			FX.blast(y, fxRow);
 		});
 
 		// sound effect
