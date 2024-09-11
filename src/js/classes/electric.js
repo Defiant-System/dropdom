@@ -3,10 +3,10 @@ class Electric {
 	constructor(parent, speed, lineWidth, amplitude, color) {
 		this.parent = parent;
 		this.color = `rgba(${ color || "255, 255, 255" }, 1)`;
-		this.blurColor = "#ddddff77";
-		this.blur = 17;
+		// this.blurColor = "#ddddff77";
+		// this.blur = 23;
 		this.speed = speed || 0.04;
-		this.lineWidth = lineWidth || 3;
+		this.lineWidth = lineWidth || 4;
 		this.amplitude = amplitude || 0.75;
 		this.points = null;
 		this.off = 0;
@@ -79,10 +79,10 @@ class Electric {
 		// Blur
 		if (this.blur) {
 			ctx.save();
-			ctx.globalCompositeOperation = "lighter";
+			ctx.globalCompositeOperation = "screen";
 			ctx.fillStyle   = "#115";
-			ctx.shadowBlur  = this.blur;
-			ctx.shadowColor = this.blurColor;
+			ctx.shadowColor = "#ddddff";
+			ctx.shadowBlur  = 23;
 			ctx.beginPath();
 
 			points.map((point, i) => {
