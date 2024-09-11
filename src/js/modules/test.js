@@ -38,7 +38,7 @@ let State = [
 let Test = {
 	init(APP) {
 
-		// return;
+		return;
 		// APP.dispatch({ type: "start-game" });
 
 
