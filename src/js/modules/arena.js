@@ -242,6 +242,8 @@ let Arena = {
 						ns = this.getNeighbours(piece),
 						nA = Object.keys(ns);
 					nA.map((key, i) => {
+						this.clearPiece(ns[key]);
+
 						let tEl = this.els.rows.find(`.tile[style^="--x: ${ns[key].x}; --y: ${ns[key].y};"]`);
 						tEl.cssSequence("flash", "transitionend", el => {
 							if (i < nA.length-1) return;
@@ -276,6 +278,11 @@ let Arena = {
 			}
 			this.matrix[nY][x+i] = c;
 		});
+	},
+	clearPiece(piece) {
+		for (let l=piece.x; l<piece.x + piece.s; l++) {
+			this.matrix[piece.y][l] = 0;
+		}
 	},
 	getNeighbours(piece) {
 		let neighbours = {};
