@@ -247,7 +247,7 @@ let Arena = {
 						});
 					});
 
-					FX.electify(220, 320, 280, 320);
+					FX.electify(250, 464, 353, 464);
 
 					pause = true;
 				}
