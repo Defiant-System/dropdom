@@ -1,7 +1,7 @@
 
 class Fog {
 	constructor(parent, x, y, color) {
-		let sprite = fog[color];
+		let sprite = fogs[color];
 
 		this.x = x;
 		this.y = y;

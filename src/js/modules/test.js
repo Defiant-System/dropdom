@@ -42,10 +42,10 @@ let Test = {
 		// APP.dispatch({ type: "start-game" });
 
 
-		// setTimeout(() => {
-		// 	// blast row(s) with effect
-		// 	FX.blast(6, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-		// }, 800);
+		setTimeout(() => {
+			// blast row(s) with effect
+			FX.blast(6, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		}, 800);
 
 
 		APP.content.data({ show: "game-view" });
