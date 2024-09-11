@@ -11,6 +11,9 @@ let FX = {
 		this.cvs.attr({ width, height });
 		this.dim = { width, height };
 
+		// prepare electric
+		this.electric = new Electric(this);
+
 		this.counter = 0;
 
 		let Self = this;
@@ -18,9 +21,8 @@ let FX = {
 			fps: 30,
 			callback() {
 				Self.render();
-				Self.counter++;
 
-				if (!Self.particles.length || Self.counter > 200) {
+				if (!Self.particles.length) {
 					// stop fps control
 					Self.fpsControl.stop();
 				}
@@ -28,7 +30,13 @@ let FX = {
 		});
 	},
 	electify(x1, y1, x2, y2) {
-		this.particles.push(new Electric);
+		this.electric.ttl = 50;
+		this.electric.startPoint = new Vector(x1, y1);
+		this.electric.endPoint = new Vector(x2, y2);
+		this.particles.push(this.electric);
+
+		// sound of electric
+		window.audio.play("electric");
 
 		// start fpsControl
 		if (this.fpsControl._stopped) {

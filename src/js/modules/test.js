@@ -58,9 +58,9 @@ let Test = {
 		// Arena.drop();
 
 
-		return setTimeout(() => {
-			FX.electify(100, 100, 200, 200);
-		}, 1000);
+		// return setTimeout(() => {
+		// 	FX.electify(100, 200, 200, 200);
+		// }, 1000);
 
 
 		return;

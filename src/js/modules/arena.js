@@ -246,6 +246,9 @@ let Arena = {
 							// console.log(el);
 						});
 					});
+
+					FX.electify(220, 320, 280, 320);
+
 					pause = true;
 				}
 			});

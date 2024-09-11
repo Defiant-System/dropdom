@@ -10,29 +10,13 @@ class Electric {
 		this.amplitude = amplitude || 0.75;
 		this.points = null;
 		this.off = 0;
+		this.ttl = 0;
+		this.children = [];
 		this.simplexNoise = new SimplexNoise;
 
-		if (!parent) {
-			this.startPoint = new Vector(140, 210);
-			this.endPoint = new Vector(290, 210);
-			this.startVector = new Vector(this.random(.5, -.5), this.random(.5, -.5)).normalize();
-			this.endVector = new Vector(this.random(.5, -.5), this.random(.5, -.5)).normalize();
-
-			this.children = [...Array(2)].map(i =>
-				new Electric(this, 0.035, 3, 0.65, "250, 250, 255"));
+		if (this.parent.particles !== undefined) {
+			this.children = [...Array(2)].map(i => new Electric(this, 0.035, 3, 0.65, "250, 250, 255"));
 		}
-	}
-
-	destroy() {
-		
-	}
-
-	random(max, min) {
-		return Math.random() * (max - min) + min;
-	}
-
-	randomInteger(max, min) {
-		return this.random(max + 1, min) | 0;
 	}
 
 	noise(v) {
@@ -47,44 +31,13 @@ class Electric {
 		return sum;
 	}
 
-	pointBoundries(point, vector, polygon) {
-		let vExtended = vector.clone().normalize().multiply(1e4),
-			dLine = [[point.x, point.y], [vExtended.x, vExtended.y]],
-			distances = [];
-
-		for (let i=0, il=polygon.length; i<il; i++) {
-			let x0 = polygon[i][0],
-				y0 = polygon[i][1],
-				x1 = polygon[(i+1) % il][0],
-				y1 = polygon[(i+1) % il][1],
-				line = [[x0, y0], [x1, y1]],
-				collision = LineHelper.lineIntersect(dLine, line),
-				dVector,
-				distance;
-			
-			if (collision) {
-				dVector = { x: collision[0], y: collision[1] };
-				distance = point.distanceTo(dVector);
-				distances.push({ ...dVector, x0, y0, x1, y1, distance});
-			}
-		}
-		// sort distances
-		distances.sort((a, b) => a.distance - b.distance);
-		
-		if (distances.length && distances[0].distance <= 3) {
-			let radian = Math.atan2(distances[0].y1 - distances[0].y0, distances[0].x1 - distances[0].x0),
-				normal = Vector.getNormal(radian);
-			Vector.reflect(normal, vector);
-		}
-	}
-
-	update() {
+	update(index) {
 		let _sin = Math.sin,
 			_cos = Math.cos,
 			_pi = Math.PI,
-			parent = this.parent,
-			startPoint = parent ? parent.startPoint : this.startPoint,
-			endPoint = parent ? parent.endPoint : this.endPoint,
+			isChild = this.parent.particles === undefined,
+			startPoint = isChild ? this.parent.startPoint : this.startPoint,
+			endPoint = isChild ? this.parent.endPoint : this.endPoint,
 			length = startPoint.distanceTo(endPoint),
 			step = Math.max(length / 2, 25),
 			normal = endPoint.clone().sub(startPoint).normalize().scale(length / step),
@@ -92,9 +45,13 @@ class Electric {
 			sinv   = _sin(radian),
 			cosv   = _cos(radian),
 			points = this.points = [],
-			off    = this.off += this.random(this.speed, this.speed * 0.1),
-			waveWidth = (parent ? length * 1.5 : length) * this.amplitude;
+			off    = this.off += Utils.random(this.speed, this.speed * 0.1),
+			waveWidth = (isChild ? length * 1.5 : length) * this.amplitude;
 
+		// count down ttl (Time To Live)
+		if (!isChild && this.ttl-- <= 0) {
+			this.parent.particles.splice(index, 1);
+		}
 		
 		for (let i=0, len=step; i<len; i++) {
 			let n = i / 60,
@@ -111,9 +68,7 @@ class Electric {
 		}
 		points.push(endPoint.clone());
 		
-		if (!parent) {
-			this.children.map(child => child.update());
-		}
+		this.children.map(child => child.update());
 	}
 
 	draw(ctx) {
@@ -140,7 +95,7 @@ class Electric {
 		}
 
 		ctx.save();
-		ctx.lineWidth = this.random(this.lineWidth, 0.5);
+		ctx.lineWidth = Utils.random(this.lineWidth, 0.5);
 		ctx.strokeStyle = this.color;
 		ctx.beginPath();
 		points.map((point, i) => ctx[i === 0 ? "moveTo" : "lineTo"](point.x, point.y));
