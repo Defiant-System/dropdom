@@ -533,6 +533,26 @@ content {
 				}
 			}
 
+			.points {
+				position: absolute;
+				top: 45%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-size: 37px;
+				z-index: 11;
+				opacity: 0;
+				background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
+			    color: transparent;
+			    background-clip: text;
+			    filter: drop-shadow(0 2px 0 #ba671a)
+			    		drop-shadow(0 1px 4px rgba(#000,.85));
+
+			    &.show {
+			    	animation: show-points 1000ms ease-in-out forwards;
+			    }
+			}
+
 			&.danger {
 				.wrapper:before {
 					content: "";
@@ -705,6 +725,12 @@ content {
 	100% { opacity: 0; transform: translateX(137px); }
 }
 
+@keyframes show-points {
+	0%   { opacity: 0; transform: translateY(0px); }
+	3%   { opacity: 1; transform: translateY(-3px); }
+	80%  { opacity: 1; }
+	100% { opacity: 0; transform: translateY(-30px); }
+}
 
 
 

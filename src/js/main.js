@@ -42,6 +42,9 @@ const dropdom = {
 				break;
 			// custom events
 			case "game-over":
+				// play sound effect
+				window.audio.play("fail");
+
 				Self.content.find(".board").removeClass("danger");
 				Self.content.find(".game-view").addClass("game-over busy");
 				break;

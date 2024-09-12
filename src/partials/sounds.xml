@@ -4,4 +4,5 @@
 	<i id="line" url="~/audio/line.ogg"/>
 	<i id="combo" url="~/audio/combo.ogg"/>
 	<i id="electric" url="~/audio/electric.mp3"/>
+	<i id="fail" url="~/audio/fail.mp3"/>
 </Sounds>

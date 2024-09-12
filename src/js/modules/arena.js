@@ -30,6 +30,7 @@ let Arena = {
 		this.els = {
 			board: window.find(".board"),
 			rows: window.find(".wrapper .rows"),
+			points: window.find(".points"),
 			preview: window.find(".preview"),
 		};
 		// prepare arena matrix
@@ -221,7 +222,8 @@ let Arena = {
 		if (count === 0 && doAdd) this.clearAdd(doAdd);
 	},
 	clearAdd(doAdd) {
-		let clear = {};
+		let score = 8,
+			clear = {};
 		this.matrix.map((row, y) => {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
@@ -232,6 +234,13 @@ let Arena = {
 		});
 		
 		let finish = (doAdd) => {
+			this.els.points
+				.html(score)
+				.cssSequence("show", "animationend", el => {
+					// reset element
+					el.html("").removeClass("show");
+				});
+
 			this.deleteRows(clear);
 			this.checkDanger();
 			// add rows if user made drag'n drop
@@ -260,6 +269,7 @@ let Arena = {
 									for (let l=0; l<rPiece.s; l++) {
 										row[rPiece.x + l] = rPiece.c;
 									}
+									// blast row
 									FX.blast(rPiece.y, row);
 
 									if (i < nA.length-1) return;
