@@ -101,6 +101,22 @@ class Electric {
 		points.map((point, i) => ctx[i === 0 ? "moveTo" : "lineTo"](point.x, point.y));
 		ctx.stroke();
 		ctx.restore();
+		
+		if (this.parent.particles != undefined) {
+			ctx.save();
+			ctx.globalCompositeOperation = "screen";
+			ctx.fillStyle   = "#fff";
+			// start dot
+			ctx.beginPath();
+			ctx.arc(this.startPoint.x, this.startPoint.y, 4, 0, pi2);
+			ctx.fill();
+
+			// end dot
+			ctx.beginPath();
+			ctx.arc(this.endPoint.x, this.endPoint.y, 4, 0, pi2);
+			ctx.fill();
+			ctx.restore();
+		}
 
 		// Draw children
 		if (this.children) {

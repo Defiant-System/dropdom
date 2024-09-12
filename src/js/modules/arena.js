@@ -200,8 +200,9 @@ let Arena = {
 
 		// create virtual dom + make comparison + animate ?
 		tiles.map((vTile, i) => {
-			let props = vTile.getAttribute("style"),
-				x = +props.match(/--x: (\d);/)[1],
+			let props = vTile.getAttribute("style");
+			if (props.match(/--x: (\d);/) == null) return;
+			let x = +props.match(/--x: (\d);/)[1],
 				y = +props.match(/--y: (\d);/)[1],
 				oY = +props.match(/--oY: (\d);/)[1],
 				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]:not(.smooth-drop)`);
@@ -271,7 +272,7 @@ let Arena = {
 							mx = 34,
 							x1 = (piece.x * g) + mx,
 							x2 = x1 + (piece.s * g) - piece.s,
-							my = (y * g) + mx;
+							my = (y * g) + mx + 3;
 						FX.electify(x1, my, x2, my);
 
 						// if there is no neighbour pieces
