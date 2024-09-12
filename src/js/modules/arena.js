@@ -116,6 +116,7 @@ let Arena = {
 	},
 	checkDanger() {
 		let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
+		if (free < 0) free = 9;
 		this.els.board.toggleClass("danger", free > 1);
 		if (free === 0) dropdom.dispatch({ type: "game-over" });
 	},
@@ -269,12 +270,12 @@ let Arena = {
 						let g = 54,
 							mx = 34,
 							x1 = (piece.x * g) + mx,
-							x2 = x1 + (piece.s * g),
+							x2 = x1 + (piece.s * g) - piece.s,
 							my = (y * g) + mx;
 						FX.electify(x1, my, x2, my);
 
 						// if there is no neighbour pieces
-						if (!nA.length) setTimeout(() => finish(true), 1e3);
+						if (!nA.length) setTimeout(() => finish(true), 12e2);
 
 						pause = true;
 					}
@@ -305,6 +306,7 @@ let Arena = {
 		let pieces = {};
 		this.matrix[y].map((col, x) => {
 			let piece = this.getPiece(x, y);
+			if (!piece) return;
 			piece.x -= piece.p - 1;
 			delete piece.p;
 			pieces[JSON.stringify(piece)] = piece;
