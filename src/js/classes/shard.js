@@ -50,6 +50,7 @@ class Shard {
 		ctx.translate(this.x, this.y);
 		ctx.rotate(this.rotation * this.rad);
 
+		ctx.scale(1.5, 1.5);
 		ctx.globalAlpha = this.alpha;
 		// ctx.globalCompositeOperation = "lighter";
 		ctx.drawImage(this.frag.img, -this.cX, -this.cY);

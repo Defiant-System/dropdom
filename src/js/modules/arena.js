@@ -57,6 +57,14 @@ let Arena = {
 			}
 		});
 		this.els.preview.html(out.join());
+
+		// setTimeout(() =>
+		// 	this.els.preview
+		// 		.removeClass("fade-in")
+		// 		.cssSequence("fade-out", "transitionend", el => {
+		// 			console.log(el);
+		// 			el.removeClass("fade-out").addClass("fade-in").html(out.join());
+		// 		}), 10);
 		// add more to pipeline if needed
 		if (Pipeline.length < 2) this.refillPreview();
 	},
@@ -95,7 +103,15 @@ let Arena = {
 		// add new row
 		this.matrix.push(row);
 		// re-draw arena
-		this.draw();
+		let vdom = this.draw(true);
+		vdom.map((vTile, i) => {
+			let props = vTile.getAttribute("style");
+			if (props.match(/--x: (\d);/) == null) return;
+			let x = +props.match(/--x: (\d);/)[1],
+				y = +props.match(/--y: (\d+);/)[1];
+			if (y < 10) return;
+			this.els.rows.append(vTile);
+		});
 
 		this.els.rows.cssSequence("add-row", "transitionend", el => {
 			// remove top row
@@ -154,6 +170,9 @@ let Arena = {
 				row[x] = col;
 			});
 		});
+		// update preview row
+		this.updatePreview();
+
 		if (vdom) {
 			return $(out.join(""));
 		} else {
@@ -161,8 +180,6 @@ let Arena = {
 			this.els.rows.find(".tile").remove();
 			this.els.rows.append(out.join(""));
 		}
-		// update preview row
-		this.updatePreview();
 	},
 	collisionCheck(piece, o) {
 		let m = piece.matrix;
@@ -218,6 +235,7 @@ let Arena = {
 				this.clearAdd(doAdd);
 			});
 		});
+
 		// if nothing is "drop"
 		if (count === 0 && doAdd) this.clearAdd(doAdd);
 	},
@@ -234,18 +252,18 @@ let Arena = {
 		});
 		
 		let finish = (doAdd) => {
-			this.els.points
-				.html(score)
-				.cssSequence("show", "animationend", el => {
-					// reset element
-					el.html("").removeClass("show");
-				});
+				this.els.points
+					.html(score)
+					.cssSequence("show", "animationend", el => {
+						// reset element
+						el.html("").removeClass("show");
+					});
 
-			this.deleteRows(clear);
-			this.checkDanger();
-			// add rows if user made drag'n drop
-			if (doAdd) setTimeout(() => this.addRows(), 250);
-		};
+				this.deleteRows(clear);
+				this.checkDanger();
+				// add rows if user made drag'n drop
+				if (doAdd) setTimeout(() => this.addRows(), 250);
+			};
 
 		if (Object.keys(clear).length) {
 			let pause = false;
