@@ -6,8 +6,8 @@ class Electric {
 		// this.blurColor = "#ddddff77";
 		// this.blur = 23;
 		this.speed = speed || 0.04;
-		this.lineWidth = lineWidth || 4;
-		this.amplitude = amplitude || 0.75;
+		this.lineWidth = lineWidth || 5;
+		this.amplitude = amplitude || 0.65;
 		this.points = null;
 		this.off = 0;
 		this.ttl = 0;
@@ -15,7 +15,7 @@ class Electric {
 		this.simplexNoise = new SimplexNoise;
 
 		if (this.parent.particles !== undefined) {
-			this.children = [...Array(2)].map(i => new Electric(this, 0.035, 3, 0.65, "250, 250, 255"));
+			this.children = [...Array(2)].map(i => new Electric(this, 0.035, 4, 0.65, "250, 250, 255"));
 		}
 	}
 

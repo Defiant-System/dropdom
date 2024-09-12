@@ -61,12 +61,11 @@ let Arena = {
 	},
 	refillPreview() {
 		let nr = NewRows.map(r => [...r]);
-		for (let i=0, il=nr; i<il; ++i) {
-			let j = i + Utils.randomInt(il - i);
-			let tmp = nr[i];
-			nr[i] = nr[j];
-			nr[j] = tmp;
-		}
+		for (let i=nr.length-1; i>0; i--) {
+	        let j = Math.floor(Math.random() * (i + 1));
+	        [nr[i], nr[j]] = [nr[j], nr[i]];
+	    }
+		// nr.map((row, i) => console.log( i, row.join(" ") ));
 		Pipeline = Pipeline.concat(nr);
 	},
 	addRows(i=1) {
@@ -230,43 +229,61 @@ let Arena = {
 			};
 		});
 		
+		let finish = (doAdd) => {
+			this.deleteRows(clear);
+			this.checkDanger();
+			// add rows if user made drag'n drop
+			if (doAdd) setTimeout(() => this.addRows(), 250);
+		};
+
 		if (Object.keys(clear).length) {
 			let pause = false;
 
 			Object.keys(clear).map(y => {
-				let cIndex = clear[+y].indexOf("c");
-				if (cIndex > -1) {
-					// this.matrix.map((row, i) => console.log( i, row.join(" ") ));
+				let rp = this.getRowPieces(+y);
+				Object.keys(rp).map(k => {
+					let piece = rp[k];
+					if (piece.c === "c") {
+						let ns = this.getNeighbours(piece),
+							nA = Object.keys(ns);
+						nA.map((key, i) => {
+							let rPiece = ns[key];
+							this.clearPiece(rPiece);
 
-					let piece = this.getPiece(cIndex, +y),
-						ns = this.getNeighbours(piece),
-						nA = Object.keys(ns);
-					nA.map((key, i) => {
-						this.clearPiece(ns[key]);
+							this.els.rows
+								.find(`.tile[style^="--x: ${rPiece.x}; --y: ${rPiece.y};"]`)
+								.cssSequence("flash", "transitionend", el => {
+									// explode neighbour piece
+									let row = [0, 0, 0, 0, 0, 0, 0, 0];
+									for (let l=0; l<rPiece.s; l++) {
+										row[rPiece.x + l] = rPiece.c;
+									}
+									FX.blast(rPiece.y, row);
 
-						let tEl = this.els.rows.find(`.tile[style^="--x: ${ns[key].x}; --y: ${ns[key].y};"]`);
-						tEl.cssSequence("flash", "transitionend", el => {
-							if (i < nA.length-1) return;
-							// testing
-							this.deleteRows(clear);
-							this.checkDanger();
+									if (i < nA.length-1) return;
+									// final to-do's
+									finish(true);
+								});
 						});
-					});
 
-					let g = 54,
-						mx = 34,
-						x1 = (cIndex * g) + mx,
-						x2 = x1 + (piece.s * g),
-						my = (y * g) + mx;
-					FX.electify(x1, my, x2, my);
+						let g = 54,
+							mx = 34,
+							x1 = (piece.x * g) + mx,
+							x2 = x1 + (piece.s * g),
+							my = (y * g) + mx;
+						FX.electify(x1, my, x2, my);
 
-					pause = true;
-				}
+						// if there is no neighbour pieces
+						if (!nA.length) setTimeout(() => finish(true), 1e3);
+
+						pause = true;
+					}
+				});
 			});
 
 			if (pause) return;
-			this.deleteRows(clear);
-			this.checkDanger();
+			// final to-do's
+			return finish(doAdd);
 		}
 		// add rows if user made drag'n drop
 		if (doAdd) setTimeout(() => this.addRows(), 250);
@@ -283,6 +300,16 @@ let Arena = {
 		for (let l=piece.x; l<piece.x + piece.s; l++) {
 			this.matrix[piece.y][l] = 0;
 		}
+	},
+	getRowPieces(y) {
+		let pieces = {};
+		this.matrix[y].map((col, x) => {
+			let piece = this.getPiece(x, y);
+			piece.x -= piece.p - 1;
+			delete piece.p;
+			pieces[JSON.stringify(piece)] = piece;
+		});
+		return pieces;
 	},
 	getNeighbours(piece) {
 		let neighbours = {};
@@ -316,7 +343,7 @@ let Arena = {
 			if (c === 0) maxX = i;
 			else break;
 		}
-		maxX -= piece.s - 1;
+		if (piece.s) maxX -= piece.s - 1;
 		return { minX, maxX, ...piece };
 	},
 	getPiece(x, y, detach) {

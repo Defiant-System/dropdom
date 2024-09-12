@@ -11,11 +11,6 @@ let FX = {
 		this.cvs.attr({ width, height });
 		this.dim = { width, height };
 
-		// prepare electric
-		this.electric = new Electric(this);
-
-		this.counter = 0;
-
 		let Self = this;
 		this.fpsControl = karaqu.FpsControl({
 			fps: 30,
@@ -30,10 +25,12 @@ let FX = {
 		});
 	},
 	electify(x1, y1, x2, y2) {
-		this.electric.ttl = 50;
-		this.electric.startPoint = new Vector(x1, y1);
-		this.electric.endPoint = new Vector(x2, y2);
-		this.particles.push(this.electric);
+		// prepare electric
+		let electric = new Electric(this);
+		electric.ttl = 50;
+		electric.startPoint = new Vector(x1, y1);
+		electric.endPoint = new Vector(x2, y2);
+		this.particles.push(electric);
 
 		// sound of electric
 		window.audio.play("electric");
