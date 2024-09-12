@@ -221,8 +221,8 @@ let Arena = {
 			let props = vTile.getAttribute("style");
 			if (props.match(/--x: (\d);/) == null) return;
 			let x = +props.match(/--x: (\d);/)[1],
-				y = +props.match(/--y: (\d);/)[1],
-				oY = +props.match(/--oY: (\d);/)[1],
+				y = +props.match(/--y: (\d+);/)[1],
+				oY = +props.match(/--oY: (\d+);/)[1],
 				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]:not(.smooth-drop)`);
 			
 			if (y === oY) return;
