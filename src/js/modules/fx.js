@@ -24,6 +24,10 @@ let FX = {
 			}
 		});
 	},
+	set grayscale(v) {
+		this._grayscale = v;
+		this.cvs.toggleClass("grayscale", !v);
+	},
 	electify(x1, y1, x2, y2) {
 		// prepare electric
 		let electric = new Electric(this);
@@ -50,12 +54,14 @@ let FX = {
 				x = (cell[0] * 54) + 57,
 				y = (cell[1] * 54) + 27,
 				color = cell[2]; // Utils.random(1, 7) | 0;
-			// fog
-			this.particles.push(new Fog(this, x, y, color));
 			// shards
 			while(particleCount--) {
 				this.particles.push(new Shard(this, x, y, color));
 			}
+			// fog
+			this.particles.push(new Fog(this, x, y, color));
+			// no sparks if grayscale
+			if (this._grayscale) return;
 			// sparkle
 			this.particles.push(new Sparkle(this, x, y, color));
 		});

@@ -1,14 +1,14 @@
 
 // let frags = [...Array(7)].map(r => []),
 let frags = {
-		"g": [], // gray
+		"w": [], // gray
 		"b": [],
 		"c": [],
 		"o": [],
 		"g": [],
 		"p": [],
 		"r": [],
-		// "y": // yellow
+		// "y": [], // yellow
 	},
 	shards = [
 		{ w: 13, h: 15, x: 3, y: 26 },

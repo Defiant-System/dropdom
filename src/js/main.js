@@ -44,9 +44,33 @@ const dropdom = {
 			case "game-over":
 				// play sound effect
 				window.audio.play("fail");
+				// set FX layer to grayscale
+				FX.grayscale = true;
 
 				Self.content.find(".board").removeClass("danger");
-				Self.content.find(".game-view").addClass("game-over busy");
+				Self.content.find(".game-view")
+					.cssSequence("game-over busy", "transitionend", el => {
+						Arena.matrix.map((r, y) => {
+							let rowTiles = el.find(`.tile[style*="--y: ${y}"]`);
+							rowTiles.cssSequence("fade-out", "transitionend", tEl => {
+								if (tEl[0] === rowTiles[0]) {
+									// remove dom elements
+									rowTiles.remove();
+									// explode row cells
+									let row = r.map(c => c === 0 ? 0 : c.slice(0,1));
+									FX.blast(y, row);
+									
+									if (y === 9) {
+										setTimeout(() => {
+											console.log("done!");
+											// reset FX layer
+											FX.grayscale = false;
+										}, 1000);
+									}
+								}
+							});
+						});
+					});
 				break;
 			case "output-arena":
 				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
