@@ -50,6 +50,9 @@ const dropdom = {
 				Self.content.find(".board").removeClass("danger");
 				Self.content.find(".game-view")
 					.cssSequence("game-over busy", "transitionend", el => {
+						// start trembling
+						Self.content.find(".board").addClass("tremble");
+
 						Arena.matrix.map((r, y) => {
 							let rowTiles = el.find(`.tile[style*="--y: ${y}"]`);
 							rowTiles.cssSequence("fade-out", "transitionend", tEl => {
@@ -61,6 +64,9 @@ const dropdom = {
 									FX.blast(y, row);
 									
 									if (y === 9) {
+										// stop tremble
+										Self.content.find(".board").removeClass("tremble");
+										
 										setTimeout(() => {
 											console.log("done!");
 											// reset FX layer
