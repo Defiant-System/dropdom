@@ -48,9 +48,13 @@ let Test = {
 		// }, 800);
 
 
-		// Pipeline[0] = ["o31", "o32", "o33", "b21", "b22", 0, 0, 0];
+		setTimeout(() => {
+			APP.dispatch({ type: "add-score", value: 8 });
+		}, 1000);
 
-		APP.content.data({ show: "game-view" });
+		Pipeline[0] = ["c31", "c32", "c33", "b21", "b22", 0, 0, 0];
+
+		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
 		Arena.draw();
 
@@ -58,21 +62,5 @@ let Test = {
 		// 	Arena.checkDanger();
 		// }, 500);
 
-
-		return;
-
-		setTimeout(() => {
-			// let piece = Arena.getPiece(3, 9);
-			// Arena.merge(piece.matrix, 1, 9);
-
-			// let piece = Arena.getPiece(5, 9);
-			// Arena.merge(piece.matrix, 5, 9);
-
-			// let track = Arena.getTrack(0, 9);
-			// let track = Arena.getTrack(6, 9);
-			// console.log(track);
-			// Arena.getPiece(6, 9);
-			// Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
-		}, 1000);
 	}
 };

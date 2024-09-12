@@ -17,7 +17,13 @@
 const dropdom = {
 	init() {
 		// fast references
-		this.content = window.find("content");
+		this.els = {
+			content: window.find("content"),
+			gameView: window.find(".game-view"),
+			board: window.find(".board"),
+			best: window.find(".best span"),
+			score: window.find(".score span"),
+		};
 
 		// init all sub-objects
 		Object.keys(this)
@@ -35,23 +41,36 @@ const dropdom = {
 	dispatch(event) {
 		let Self = dropdom,
 			value,
+			total,
 			el;
 		switch (event.type) {
 			// system events
 			case "window.init":
 				break;
 			// custom events
+			case "add-score":
+				// player bankroll ticker
+				Self.els.score
+					.css({
+						"--value": +Self.els.score.text(),
+						"--total": event.value,
+					})
+					.cssSequence("ticker", "animationend", el => {
+						// update bankroll content
+						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
+					});
+				break;
 			case "game-over":
 				// play sound effect
 				window.audio.play("fail");
 				// set FX layer to grayscale
 				FX.grayscale = true;
 
-				Self.content.find(".board").removeClass("danger");
-				Self.content.find(".game-view")
+				Sels.els.board.removeClass("danger");
+				Self.els.gameView
 					.cssSequence("game-over busy", "transitionend", el => {
 						// start trembling
-						Self.content.find(".board").addClass("tremble");
+						Sels.els.board.addClass("tremble");
 
 						Arena.matrix.map((r, y) => {
 							let rowTiles = el.find(`.tile[style*="--y: ${y}"]`);
@@ -65,8 +84,8 @@ const dropdom = {
 									
 									if (y === 9) {
 										// stop tremble
-										Self.content.find(".board").removeClass("tremble");
-										
+										Sels.els.board.removeClass("tremble");
+
 										setTimeout(() => {
 											console.log("done!");
 											// reset FX layer
@@ -86,7 +105,7 @@ const dropdom = {
 				event.el.toggleClass("off", event.el.hasClass("off"));
 				break;
 			case "start-game":
-				Self.content.data({ show: "game-view" });
+				Self.els.content.data({ show: "game-view" });
 				setTimeout(() => Arena.addRows(4), 500);
 				break;
 			case "open-help":

@@ -467,8 +467,26 @@ content {
 				    background-clip: text;
 				    filter: drop-shadow(0 2px 0 #ba671a)
 				    		drop-shadow(0 1px 4px rgba(#000,.85));
-					// color: #feeb46;
-					// text-shadow: 0 1px 3px rgba(#000,.35);
+
+					&.ticker {
+						background: transparent;
+				   		background-clip: unset;
+						font-size: 0;
+						filter: none;
+
+						&:after {
+							counter-reset: my-counter var( --value );
+							content: counter(my-counter);
+							animation: count 300ms ease-in-out;
+							font-size: 34px;
+							background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
+						    color: transparent;
+						    background-clip: text;
+						    filter: drop-shadow(0 2px 0 #ba671a)
+						    		drop-shadow(0 1px 4px rgba(#000,.85));
+							// text-shadow: 0 0 3px rgba(#fff,.5);
+						}
+					}
 				}
 			}
 
@@ -766,6 +784,17 @@ content {
 	}
 }
 
+
+
+@property --value {
+	syntax: '<integer>';
+	inherits: true;
+	initial-value: 0;
+}
+
+@keyframes count {
+	to { --value: var( --total ); }
+}
 
 @keyframes pulsate {
 	0%   { opacity: 0; }

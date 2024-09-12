@@ -58,13 +58,6 @@ let Arena = {
 		});
 		this.els.preview.html(out.join());
 
-		// setTimeout(() =>
-		// 	this.els.preview
-		// 		.removeClass("fade-in")
-		// 		.cssSequence("fade-out", "transitionend", el => {
-		// 			console.log(el);
-		// 			el.removeClass("fade-out").addClass("fade-in").html(out.join());
-		// 		}), 10);
 		// add more to pipeline if needed
 		if (Pipeline.length < 2) this.refillPreview();
 	},
@@ -297,8 +290,8 @@ let Arena = {
 						});
 
 						let g = 54,
-							mx = 34,
-							x1 = (piece.x * g) + mx,
+							mx = 31,
+							x1 = (piece.x * g) + mx + piece.x,
 							x2 = x1 + (piece.s * g) - piece.s,
 							my = (y * g) + mx + 3;
 						FX.electify(x1, my, x2, my);
