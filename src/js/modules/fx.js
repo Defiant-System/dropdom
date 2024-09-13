@@ -44,9 +44,6 @@ let FX = {
 			this.fpsControl.start();
 		}
 	},
-	refit() {
-		
-	},
 	blast(y, cells, w=54) {
 		let list = cells.map((c, x) => [x, y, c]);
 		this.w = w;

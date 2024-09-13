@@ -70,11 +70,11 @@ const dropdom = {
 				// set FX layer to grayscale
 				FX.grayscale = true;
 
-				Sels.els.board.removeClass("danger");
+				Self.els.board.removeClass("danger");
 				Self.els.gameView
 					.cssSequence("game-over busy", "transitionend", el => {
 						// start trembling
-						Sels.els.board.addClass("tremble");
+						Self.els.board.addClass("tremble");
 
 						Arena.matrix.map((r, y) => {
 							let rowTiles = el.find(`.tile[style*="--y: ${y}"]`);
@@ -88,7 +88,7 @@ const dropdom = {
 									
 									if (y === 9) {
 										// stop tremble
-										Sels.els.board.removeClass("tremble");
+										Self.els.board.removeClass("tremble");
 
 										setTimeout(() => {
 											console.log("done!");
