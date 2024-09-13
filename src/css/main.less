@@ -287,14 +287,13 @@ content {
 		}
 
 		&.off {
-			filter: grayscale(1);
+			filter: sepia(1) saturate(1.15) brightness(.8);
 
 			i[class^="icon-"],
 			i[class*="icon-"] {
-				filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
-						drop-shadow(0 1px 1px rgba(#000,.5))
-						drop-shadow(0 2px 9px rgba(#000,.5))
-						brightness(.9);
+				filter: drop-shadow(0 1px 0 rgba(#666,.95))
+						drop-shadow(0 2px 0 rgba(#666,.95))
+						drop-shadow(0 3px 7px rgba(#000,.85));
 			}
 		}
 
@@ -308,15 +307,15 @@ content {
 			background-size: contain;
 			background-position: 50% 50%;
 			background-repeat: no-repeat;
-			filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
-					drop-shadow(0 1px 1px rgba(#000,.5))
-					drop-shadow(0 2px 9px rgba(#000,.5))
+			filter: drop-shadow(0 1px 0 rgba(#606060,.9))
+					drop-shadow(0 2px 0 rgba(#606060,.9))
+					drop-shadow(0 2px 7px rgba(#000,.75))
 					sepia(1) saturate(3) hue-rotate(175deg);
 
 			&.icon-play  { background-image: url(~/icons/icon-play.png); }
 			&.icon-pause { background-image: url(~/icons/icon-pause.png); }
 			&.icon-back  { background-image: url(~/icons/icon-back.png); }
-			&.icon-music { background-image: url(~/icons/icon-music.png); }
+			&.icon-music { background-image: url(~/icons/icon-music.png); margin-top: -1px; }
 			&.icon-sound { background-image: url(~/icons/icon-sound.png); }
 		}
 	}
@@ -698,7 +697,7 @@ content {
 						filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
 								drop-shadow(0 1px 1px rgba(#000,.5))
 								drop-shadow(0 2px 9px rgba(#000,.5))
-								sepia(1) saturate(3) hue-rotate(330deg);
+								sepia(1) saturate(3) hue-rotate(330deg) brightness(1.2);
 					}
 				}
 
@@ -709,7 +708,7 @@ content {
 					filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
 							drop-shadow(0 1px 1px rgba(#000,.5))
 							drop-shadow(0 2px 9px rgba(#000,.5))
-							sepia(1) saturate(5) hue-rotate(330deg);
+							sepia(1) saturate(2) hue-rotate(330deg) brightness(1.1);
 				}
 			}
 		}

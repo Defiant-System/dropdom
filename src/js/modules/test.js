@@ -57,7 +57,7 @@ let Test = {
 		// 	});
 		// }, 500);
 
-		// return;
+		return;
 		return APP.dispatch({ type: "start-game" });
 
 		// setTimeout(() => {

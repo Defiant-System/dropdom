@@ -98,15 +98,25 @@ const dropdom = {
 					});
 				break;
 			case "output-arena":
+				// play sound effect
+				window.audio.play("grab");
+				
 				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 				// Arena.addRows();
 				break;
-			case "toggle-audio":
+			case "toggle-music":
+				// play sound effect
+				window.audio.play("grab");
+				
 				event.el.toggleClass("off", event.el.hasClass("off"));
 				break;
-			case "start-game":
-				Self.els.content.data({ show: "game-view" });
-				setTimeout(() => Arena.addRows(4), 500);
+			case "toggle-sound-fx":
+				// play sound effect
+				window.audio.play("grab");
+
+				event.el.toggleClass("off", event.el.hasClass("off"));
+				// Self.els.content.data({ show: "game-view" });
+				// setTimeout(() => Arena.addRows(4), 500);
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
