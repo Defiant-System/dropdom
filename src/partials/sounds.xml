@@ -5,4 +5,5 @@
 	<i id="combo" url="~/audio/combo.ogg"/>
 	<i id="electric" url="~/audio/electric.mp3"/>
 	<i id="fail" url="~/audio/fail.mp3"/>
+	<i id="song" url="/cdn/audio/mp3/David Whittaker - Shadow of the Beast.mp3"/>
 </Sounds>

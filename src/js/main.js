@@ -60,6 +60,10 @@ const dropdom = {
 						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;
+			case "start-game":
+				Self.els.content.data({ show: "game-view" });
+				setTimeout(() => Arena.addRows(4), 500);
+				break;
 			case "game-over":
 				// play sound effect
 				window.audio.play("fail");
@@ -107,16 +111,24 @@ const dropdom = {
 			case "toggle-music":
 				// play sound effect
 				window.audio.play("grab");
+				// toggle window audio effects
+				value = event.el.hasClass("off");
+				event.el.toggleClass("off", value);
 				
-				event.el.toggleClass("off", event.el.hasClass("off"));
+				if (!Self.song) {
+					window.audio.play("song").then(song => Self.song = song)
+				} else {
+					Self.song.stop();
+					delete Self.song;
+				}
 				break;
 			case "toggle-sound-fx":
+				// toggle window audio effects
+				value = event.el.hasClass("off");
+				event.el.toggleClass("off", value);
+				window.audio.mute = !value;
 				// play sound effect
 				window.audio.play("grab");
-
-				event.el.toggleClass("off", event.el.hasClass("off"));
-				// Self.els.content.data({ show: "game-view" });
-				// setTimeout(() => Arena.addRows(4), 500);
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");
