@@ -5,7 +5,6 @@
 	init() {
 		// fast references
 		this.els = {
-			doc: $(document),
 			el: window.find(".game-view"),
 			board: window.find(".board"),
 			columns: window.find(".columns"),
@@ -43,7 +42,7 @@
 				// sound effect
 				window.audio.play("grab");
 
-				let doc = Self.els.doc,
+				let doc = $(document),
 					cols = Self.els.columns,
 					grid = 55,
 					el = $(event.target).addClass("dragged"),

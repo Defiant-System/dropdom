@@ -116,7 +116,15 @@ const dropdom = {
 				event.el.toggleClass("off", value);
 				
 				if (!Self.song) {
-					window.audio.play("song").then(song => Self.song = song)
+					let opt = {
+						onend: e => {
+							// turn "off" button
+							Self.els.content.find(`.button[data-click="toggle-music"]`).addClass("off");
+							// reset reference
+							delete Self.song;
+						}
+					};
+					window.audio.play("song", opt).then(song => Self.song = song)
 				} else {
 					Self.song.stop();
 					delete Self.song;

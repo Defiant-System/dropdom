@@ -407,6 +407,10 @@ content {
 				background-position: 0 100%;
 			}
 
+			&.busy .hand {
+				display: none;
+			}
+
 			.bg {
 				background: url(~/img/block.webp);
 				background-size: 46px;
@@ -417,6 +421,22 @@ content {
 				height: 230px;
 				z-index: 2;
 				pointer-events: none;
+			}
+
+			.columns {
+				background: rgba(#fff,.3);
+				position: absolute;
+				top: 3px;
+				bottom: 9px;
+				left: calc( calc( var( --x ) * 45px ) + 7px );
+				width: calc( var( --w ) * 45px );
+				z-index: 2;
+				mix-blend-mode: soft-light;
+				pointer-events: none;
+
+				&.hidden {
+					display: none;
+				}
 			}
 
 			.hand {
@@ -457,25 +477,8 @@ content {
 			}
 
 			.tile {
-				cursor: pointer;
-
-				&:hover,
-				&.dragged {
-					z-index: 4;
-
-					&:before {
-						content: "";
-						position: absolute;
-						top: 0;
-						left: 1px;
-						right: 1px;
-						bottom: 0;
-						border-radius: inherit;
-						box-shadow: 0 0 1px 2px rgba(#fff,.85),
-									0 0 11px rgba(#ddf,.75),
-									0 0 19px rgba(#aaf,.85),
-									0 0 29px rgba(#88f,.9);
-					}
+				&.restore {
+					transition: left 250ms ease-in-out;
 				}
 			}
 		}
@@ -927,6 +930,10 @@ content {
 						opacity 150ms 1500ms linear;
 		}
 
+		&.locked {
+			cursor: default;
+		}
+
 		&:before {
 			content: "";
 			position: absolute;
@@ -951,7 +958,7 @@ content {
 			pointer-events: none;
 		}
 
-		&:hover,
+		&:not(.locked):hover,
 		&.dragged {
 			z-index: 4;
 
