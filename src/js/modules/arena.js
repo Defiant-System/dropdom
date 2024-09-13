@@ -29,6 +29,7 @@ let Arena = {
 		// fast references
 		this.els = {
 			board: window.find(".board"),
+			gameView: window.find(".game-view"),
 			rows: window.find(".wrapper .rows"),
 			points: window.find(".points"),
 			preview: window.find(".preview"),
@@ -208,6 +209,8 @@ let Arena = {
 	syncAnim(doAdd) {
 		let count = 0,
 			tiles = this.draw(true).reverse();
+
+		this.els.gameView.addClass("busy");
 
 		// create virtual dom + make comparison + animate ?
 		tiles.map((vTile, i) => {

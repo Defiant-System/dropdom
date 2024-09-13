@@ -56,7 +56,7 @@ const dropdom = {
 						"--total": event.value,
 					})
 					.cssSequence("ticker", "animationend", el => {
-						// update bankroll content
+						// update score content
 						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;

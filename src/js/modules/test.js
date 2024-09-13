@@ -38,8 +38,27 @@ let State = [
 let Test = {
 	init(APP) {
 
+		// setTimeout(() => {
+		// 	APP.els.content.cssSequence("start-to-game", "transitionend", el => {
+		// 		el.data({ show: "game-view" })
+		// 			.cssSequence("appear-game", "transitionend", el => {
+		// 				el.removeClass("start-to-game appear-game");
+		// 			});
+		// 	});
+		// }, 500);
+
+		// APP.els.content.data({ show: "game-view" })
+		// setTimeout(() => {
+		// 	APP.els.content.cssSequence("game-to-start", "transitionend", el => {
+		// 		el.data({ show: "start-view" })
+		// 			.cssSequence("appear-start", "transitionend", el => {
+		// 				el.removeClass("game-to-start appear-start");
+		// 			});
+		// 	});
+		// }, 500);
+
 		// return;
-		// APP.dispatch({ type: "start-game" });
+		return APP.dispatch({ type: "start-game" });
 
 		// setTimeout(() => {
 		// 	// blast row(s) with effect

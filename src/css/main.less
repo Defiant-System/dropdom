@@ -8,6 +8,7 @@ content {
 	left: 0;
 	right: 0;
 	bottom: 0;
+	min-height: 0;
 	font-family: "Racing Sans One", sans-serif;
 	background: #222 url(~/img/tile.webp);
 
@@ -29,23 +30,171 @@ content {
 		}
 	}
 
-	&[data-show="start-view"] {
+	&.start-to-game {
+		min-height: 1px;
+		transition: min-height 500ms linear;
+
 		.start-view {
-			display: block;
+			.tutorial .hand {
+				display: none;
+			}
+		}
+
+		.start-view {
+			.logo {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 0ms ease-in-out;
+			}
+
+			.tutorial {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 100ms ease-in-out;
+			}
+
+			.options {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 200ms ease-in-out;
+			}
 		}
 
 		.game-view {
-			display: none;
+			.scores {
+				transform: translateX(40px);
+				opacity: 0;
+				transition: all 200ms 0ms ease-in-out;
+			}
+
+			.board {
+				transform: translateX(40px);
+				opacity: 0;
+				transition: all 200ms 100ms ease-in-out;
+			}
+
+			.preview {
+				transform: translateX(40px);
+				opacity: 0;
+				transition: all 200ms 200ms ease-in-out;
+			}
+		}
+
+		&.appear-game {
+			min-height: 0;
+
+			.game-view {
+				.scores {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+
+				.board {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+
+				.preview {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	&.game-to-start {
+		min-height: 1px;
+		transition: min-height 500ms linear;
+
+		.start-view {
+			.tutorial .hand {
+				display: none;
+			}
+		}
+
+		.game-view {
+			.scores {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 0ms ease-in-out;
+			}
+
+			.board {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 100ms ease-in-out;
+			}
+
+			.preview {
+				transform: translateY(-30px);
+				opacity: 0;
+				transition: all 200ms 200ms ease-in-out;
+			}
+		}
+
+		.start-view {
+			.logo {
+				transform: translateX(-40px);
+				opacity: 0;
+				transition: all 200ms 0ms ease-in-out;
+			}
+
+			.tutorial {
+				transform: translateX(-40px);
+				opacity: 0;
+				transition: all 200ms 100ms ease-in-out;
+			}
+
+			.options {
+				transform: translateX(-40px);
+				opacity: 0;
+				transition: all 200ms 200ms ease-in-out;
+			}
+		}
+
+		&.appear-start {
+			min-height: 0;
+
+			.start-view {
+				.logo {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+
+				.tutorial {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+
+				.options {
+					transform: translateX(0px);
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	&[data-show="start-view"] {
+		.start-view {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.game-view {
+			opacity: 0;
+			visibility: hidden;
 		}
 	}
 
 	&[data-show="game-view"] {
 		.start-view {
-			display: none;
+			opacity: 0;
+			visibility: hidden;
 		}
 
 		.game-view {
-			display: block;
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 
@@ -98,10 +247,17 @@ content {
 			box-shadow: 0 0 5px #f00;
 		}
 
-		&:active:before {
-			background-position: -5px -4px;
-			filter: brightness(1);
-			box-shadow: 0 0 2px #f00;
+		&:active {
+			&:before {
+				background-position: -5px -4px;
+				filter: brightness(1);
+				box-shadow: 0 0 2px #f00;
+			}
+
+			i[class^="icon-"],
+			i[class*="icon-"] {
+				top: 13px;
+			}
 		}
 
 		&:before {
@@ -132,6 +288,36 @@ content {
 
 		&.off {
 			filter: grayscale(1);
+
+			i[class^="icon-"],
+			i[class*="icon-"] {
+				filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
+						drop-shadow(0 1px 1px rgba(#000,.5))
+						drop-shadow(0 2px 9px rgba(#000,.5))
+						brightness(.9);
+			}
+		}
+
+		i[class^="icon-"],
+		i[class*="icon-"] {
+			position: absolute;
+			top: 12px;
+			left: 27px;
+			width: 31px;
+			height: 31px;
+			background-size: contain;
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+			filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
+					drop-shadow(0 1px 1px rgba(#000,.5))
+					drop-shadow(0 2px 9px rgba(#000,.5))
+					sepia(1) saturate(3) hue-rotate(175deg);
+
+			&.icon-play  { background-image: url(~/icons/icon-play.png); }
+			&.icon-pause { background-image: url(~/icons/icon-pause.png); }
+			&.icon-back  { background-image: url(~/icons/icon-back.png); }
+			&.icon-music { background-image: url(~/icons/icon-music.png); }
+			&.icon-sound { background-image: url(~/icons/icon-sound.png); }
 		}
 	}
 
@@ -153,6 +339,7 @@ content {
 			margin: 101px auto;
 			width: 467px;
 			height: 116px;
+			opacity: 1;
 
 			svg {
 				position: absolute;
@@ -194,6 +381,7 @@ content {
 			left: 58px;
 			width: 374px;
 			height: 243px;
+			opacity: 1;
 			--size: 45px;
 			--sW: 46px;
 
@@ -240,7 +428,7 @@ content {
 				height: 110px;
 				z-index: 3;
 				filter: drop-shadow(0 0 5px rgba(#fff,.35));
-				animation: hand-slide 4s ease-in-out infinite;
+				animation: hand-slide 6s ease-in-out infinite;
 
 				&:before {
 					content: "";
@@ -298,6 +486,7 @@ content {
 			top: 613px;
 			left: 37px;
 			right: 37px;
+			opacity: 1;
 			text-align: center;
 
 			span.button {
@@ -340,6 +529,7 @@ content {
 		right: 0;
 		bottom: 0;
 		min-height: 0;
+		overflow: hidden;
 		--size: 54px;
 		--sW: 55px;
 
@@ -494,6 +684,14 @@ content {
 				position: absolute;
 				top: 6px;
 				right: 13px;
+
+				i[class^="icon-"],
+				i[class*="icon-"] {
+					filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
+							drop-shadow(0 1px 1px rgba(#000,.5))
+							drop-shadow(0 2px 9px rgba(#000,.5))
+							sepia(.5) saturate(1.5) hue-rotate(345deg);
+				}
 			}
 		}
 
@@ -803,9 +1001,10 @@ content {
 
 @keyframes hand-slide {
 	0%   { opacity: 0; transform: translateX(0px); }
-	5%   { opacity: 1; transform: translateX(0px); }
-	30%  { opacity: 1; transform: translateX(137px); }
-	40%  { opacity: 0; transform: translateX(137px); }
+	15%  { opacity: 0; transform: translateX(0px); }
+	20%  { opacity: 1; transform: translateX(0px); }
+	35%  { opacity: 1; transform: translateX(137px); }
+	45%  { opacity: 0; transform: translateX(137px); }
 	100% { opacity: 0; transform: translateX(137px); }
 }
 
