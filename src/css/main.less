@@ -685,12 +685,31 @@ content {
 				top: 6px;
 				right: 13px;
 
+				&:active {
+					i[class^="icon-"],
+					i[class*="icon-"] {
+						top: 14px;
+					}
+				}
+
+				&:hover {
+					i[class^="icon-"],
+					i[class*="icon-"] {
+						filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
+								drop-shadow(0 1px 1px rgba(#000,.5))
+								drop-shadow(0 2px 9px rgba(#000,.5))
+								sepia(1) saturate(3) hue-rotate(330deg);
+					}
+				}
+
 				i[class^="icon-"],
 				i[class*="icon-"] {
+					top: 13px;
+					left: 28px;
 					filter: drop-shadow(0 -1px 0 rgba(#fff,.65))
 							drop-shadow(0 1px 1px rgba(#000,.5))
 							drop-shadow(0 2px 9px rgba(#000,.5))
-							sepia(.5) saturate(1.5) hue-rotate(345deg);
+							sepia(1) saturate(5) hue-rotate(330deg);
 				}
 			}
 		}
