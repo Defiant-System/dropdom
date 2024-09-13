@@ -44,15 +44,19 @@ let FX = {
 			this.fpsControl.start();
 		}
 	},
-	blast(y, cells) {
+	refit() {
+		
+	},
+	blast(y, cells, w=54) {
 		let list = cells.map((c, x) => [x, y, c]);
+		this.w = w;
 		this.explode(list);
 	},
 	explode(list) {
 		list.filter(c => !!c[2]).map(cell => {
 			var particleCount = Utils.random(2, 4) | 0,
-				x = (cell[0] * 54) + 57,
-				y = (cell[1] * 54) + 27,
+				x = (cell[0] * this.w) + 57,
+				y = (cell[1] * this.w) + (this.w >> 1),
 				color = cell[2]; // Utils.random(1, 7) | 0;
 			// shards
 			while(particleCount--) {

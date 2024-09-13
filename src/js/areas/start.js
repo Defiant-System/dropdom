@@ -79,10 +79,42 @@
 				break;
 			case "mouseup":
 				if (Drag.colX === 4) {
-					Drag.el.css({ "--x": "", left: 189 })
+					// sound effect
+					window.audio.play("drop");
+					// horisontaly align position
+					Drag.el.css({ "--x": "4", left: 189 })
 						.cssSequence("restore", "transitionend", el => {
-							// reset element
-							el.css({ "--x": 4, "--y": 4, left: "" });
+							// verticaly align position
+							el.css({ "--x": 4, "--y": 4 })
+								.cssSequence("down", "transitionend", el => {
+									Self.els.tutorial.find(".tile").cssSequence("tutorial-clear", "transitionend", tEl => {
+										if (tEl.hasClass("purple-2")) {
+											// blast row
+											FX.blast(4, ["b", "r", "r", "r", "o", "o", "p", "p"], 44);
+											// sound effect
+											window.audio.play("line");
+
+											// go to game view
+											setTimeout(() => {
+												APP.els.content.cssSequence("start-to-game", "transitionend", cEl => {
+													cEl.data({ show: "game-view" })
+														.cssSequence("appear-game", "transitionend", cEl => {
+															// reset tutorial view
+															tEl.removeClass("tutorial-clear restore down");
+															Drag.el.css({ "--x": 1, "--y": 3 });
+															// reset element
+															Self.els.tutorial.removeClass("busy");
+
+															// reset content element
+															cEl.removeClass("start-to-game appear-game");
+
+															APP.dispatch({ type: "start-game" });
+														});
+												});
+											}, 500);
+										}
+									});
+								});
 						});
 				} else {
 					Drag.el.css({ "--x": "", left: 51 })
@@ -90,10 +122,11 @@
 							// reset element
 							el.css({ "--x": 1, left: "" }).removeClass("restore");
 						});
+					// reset element
+					Self.els.tutorial.removeClass("busy");
 				}
 				// reset elements
 				Drag.el.removeClass("dragged");
-				Self.els.tutorial.removeClass("busy");
 				// hide show columns
 				Self.drag.cols.addClass("hidden");
 				// uncover app view

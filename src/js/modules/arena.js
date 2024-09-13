@@ -122,7 +122,7 @@ let Arena = {
 
 			this.drop();
 			this.checkDanger();
-			if (i > 1) setTimeout(() => this.addRows(i-1), 250);
+			if (i > 1) setTimeout(() => this.addRows(i-1), 150);
 		});
 	},
 	checkDanger() {
@@ -144,7 +144,7 @@ let Arena = {
 		// update arena
 		this.draw();
 		// drop rows
-		setTimeout(() => this.drop(), 250);
+		setTimeout(() => this.drop(), 150);
 	},
 	draw(vdom) {
 		let out = [];
@@ -210,7 +210,7 @@ let Arena = {
 		let count = 0,
 			tiles = this.draw(true).reverse();
 
-		this.els.gameView.addClass("busy");
+		// this.els.gameView.addClass("busy");
 
 		// create virtual dom + make comparison + animate ?
 		tiles.map((vTile, i) => {
@@ -258,7 +258,7 @@ let Arena = {
 				this.deleteRows(clear);
 				this.checkDanger();
 				// add rows if user made drag'n drop
-				if (doAdd) setTimeout(() => this.addRows(), 250);
+				if (doAdd) setTimeout(() => this.addRows(), 150);
 			};
 
 		if (Object.keys(clear).length) {
@@ -312,7 +312,7 @@ let Arena = {
 			return finish(doAdd);
 		}
 		// add rows if user made drag'n drop
-		if (doAdd) setTimeout(() => this.addRows(), 250);
+		if (doAdd) setTimeout(() => this.addRows(), 150);
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
@@ -370,7 +370,7 @@ let Arena = {
 			if (c === 0) maxX = i;
 			else break;
 		}
-		if (piece.s) maxX -= piece.s - 1;
+		if (piece) maxX -= piece.s - 1;
 		return { minX, maxX, ...piece };
 	},
 	getPiece(x, y, detach) {

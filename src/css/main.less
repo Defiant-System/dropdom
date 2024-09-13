@@ -184,6 +184,12 @@ content {
 			opacity: 0;
 			visibility: hidden;
 		}
+
+		.fx-layer {
+			top: 294px;
+			left: -10px;
+			height: 390px;
+		}
 	}
 
 	&[data-show="game-view"] {
@@ -478,7 +484,8 @@ content {
 
 			.tile {
 				&.restore {
-					transition: left 250ms ease-in-out;
+					transition: top 150ms ease-in-out,
+								left 250ms ease-in-out;
 				}
 			}
 		}
@@ -543,14 +550,6 @@ content {
 				.wrapper {
 					transition: filter 1000ms ease-in-out;
 					filter: grayscale(1);
-
-					// .tile.green-1,
-					// .tile.green-2,
-					// .tile.green-3,
-					// .tile.green-4 {
-					// 	transition: inherit;
-					// 	filter: brightness(0.7) contrast(1.1);
-					// }
 				}
 			}
 		}
@@ -822,7 +821,7 @@ content {
 					transition: transform 0s ease-in-out;
 
 					&.add-row {
-						transition-duration: 300ms;
+						transition-duration: 150ms;
 						transform: translateY(-54px);
 					}
 				}
@@ -928,6 +927,11 @@ content {
 			opacity: 0;
 			transition: filter 200ms 1300ms linear,
 						opacity 150ms 1500ms linear;
+		}
+
+		&.tutorial-clear {
+			opacity: 0;
+			transition: opacity 20ms ease-in;
 		}
 
 		&.locked {

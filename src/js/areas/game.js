@@ -7,7 +7,7 @@
 		this.els = {
 			el: window.find(".game-view"),
 			board: window.find(".board"),
-			columns: window.find(".columns"),
+			columns: window.find(".board .columns"),
 			content: window.find("content"),
 		};
 

@@ -58,7 +58,7 @@ let Test = {
 		// }, 500);
 
 		return;
-		return APP.dispatch({ type: "start-game" });
+		// return APP.dispatch({ type: "start-game" });
 
 		// setTimeout(() => {
 		// 	// blast row(s) with effect
@@ -67,11 +67,11 @@ let Test = {
 		// }, 800);
 
 
-		setTimeout(() => {
-			APP.dispatch({ type: "add-score", value: 8 });
-		}, 1000);
+		// setTimeout(() => {
+		// 	APP.dispatch({ type: "add-score", value: 8 });
+		// }, 1000);
 
-		Pipeline[0] = ["c31", "c32", "c33", "b21", "b22", 0, 0, 0];
+		// Pipeline[0] = ["c31", "c32", "c33", "b21", "b22", 0, 0, 0];
 
 		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
