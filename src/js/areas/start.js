@@ -107,8 +107,8 @@
 
 															// reset content element
 															cEl.removeClass("start-to-game appear-game");
-
-															APP.dispatch({ type: "start-game" });
+															// start new game
+															APP.game.dispatch({ type: "new-game" });
 														});
 												});
 											}, 500);

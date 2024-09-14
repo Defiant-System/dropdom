@@ -60,10 +60,6 @@ const dropdom = {
 						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;
-			case "start-game":
-				Self.els.content.data({ show: "game-view" });
-				setTimeout(() => Arena.addRows(4), 500);
-				break;
 			case "output-arena":
 				// play sound effect
 				window.audio.play("grab");

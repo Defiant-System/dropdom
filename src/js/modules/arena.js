@@ -34,6 +34,10 @@ let Arena = {
 			points: window.find(".points"),
 			preview: window.find(".preview"),
 		};
+		// reset all
+		this.reset();
+	},
+	reset() {
 		// prepare arena matrix
 		this.matrix = this.createMatrix(this.dim.w, this.dim.h);
 		// new rows pipeline

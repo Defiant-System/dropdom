@@ -23,6 +23,11 @@
 		// console.log(event);
 		switch (event.type) {
 			// custom events
+			case "new-game":
+				Arena.reset();
+				Self.els.content.data({ show: "game-view" });
+				setTimeout(() => Arena.addRows(4), 500);
+				break;
 			case "game-over":
 				// play sound effect
 				window.audio.play("fail");
@@ -52,7 +57,9 @@
 										setTimeout(() => {
 											// reset FX layer
 											FX.grayscale = false;
-
+											// reset elements
+											Self.els.gameView.removeClass("game-over busy");
+											// transition sequence 2
 											Self.dispatch({ type: "go-to-start-view" });
 										}, 1000);
 									}
@@ -63,15 +70,13 @@
 				break;
 			case "go-to-start-view":
 				// go to game view
-				setTimeout(() => {
-					APP.els.content.cssSequence("game-to-start", "transitionend", cEl => {
-						cEl.data({ show: "start-view" })
-							.cssSequence("appear-start", "transitionend", cEl => {
-								// reset gmae view
-								cEl.removeClass("game-to-start appear-start");
-							});
-					});
-				}, 500);
+				APP.els.content.cssSequence("game-to-start", "transitionend", cEl => {
+					cEl.data({ show: "start-view" })
+						.cssSequence("appear-start", "transitionend", cEl => {
+							// reset gmae view
+							cEl.removeClass("game-to-start appear-start");
+						});
+				});
 				break;
 		}
 	},
