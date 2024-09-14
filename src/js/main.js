@@ -60,19 +60,13 @@ const dropdom = {
 						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;
-			case "output-arena":
-				// play sound effect
-				window.audio.play("grab");
-				
-				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
-				// Arena.addRows();
-				break;
 			case "toggle-music":
 				// play sound effect
 				window.audio.play("grab");
 				// toggle window audio effects
 				value = event.el.hasClass("off");
-				event.el.toggleClass("off", value);
+				// sync all toggle-music buttons
+				Self.els.content.find(`.button[data-click="toggle-music"]`).toggleClass("off", value);
 				
 				if (!Self.song) {
 					let opt = {
@@ -92,10 +86,18 @@ const dropdom = {
 			case "toggle-sound-fx":
 				// toggle window audio effects
 				value = event.el.hasClass("off");
-				event.el.toggleClass("off", value);
+				// sync all toggle-music buttons
+				Self.els.content.find(`.button[data-click="toggle-sound-fx"]`).toggleClass("off", value);
+				
 				window.audio.mute = !value;
 				// play sound effect
 				window.audio.play("grab");
+				break;
+			case "output-arena":
+				// play sound effect
+				window.audio.play("grab");
+				// output arena rows
+				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

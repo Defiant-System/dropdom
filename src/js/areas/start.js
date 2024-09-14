@@ -100,7 +100,7 @@
 													cEl.data({ show: "game-view" })
 														.cssSequence("appear-game", "transitionend", cEl => {
 															// reset tutorial view
-															tEl.removeClass("tutorial-clear restore down");
+															Self.els.tutorial.find(".tile").removeClass("tutorial-clear restore down").css({ left: "" });
 															Drag.el.css({ "--x": 1, "--y": 3 });
 															// reset element
 															Self.els.tutorial.removeClass("busy");

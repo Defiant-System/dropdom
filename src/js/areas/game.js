@@ -7,6 +7,7 @@
 		this.els = {
 			el: window.find(".game-view"),
 			board: window.find(".board"),
+			scores: window.find(".scores"),
 			gameView: window.find(".game-view"),
 			columns: window.find(".board .columns"),
 			content: window.find("content"),
@@ -67,6 +68,10 @@
 							});
 						});
 					});
+				break;
+			case "toggle-pause":
+				value = Self.els.scores.hasClass("show-buttons");
+				Self.els.scores.toggleClass("show-buttons", value);
 				break;
 			case "go-to-start-view":
 				// go to game view
