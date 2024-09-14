@@ -64,43 +64,6 @@ const dropdom = {
 				Self.els.content.data({ show: "game-view" });
 				setTimeout(() => Arena.addRows(4), 500);
 				break;
-			case "game-over":
-				// play sound effect
-				window.audio.play("fail");
-				// set FX layer to grayscale
-				FX.grayscale = true;
-
-				Self.els.board.removeClass("danger");
-				Self.els.gameView
-					.cssSequence("game-over busy", "transitionend", el => {
-						// start trembling
-						Self.els.board.addClass("tremble");
-
-						Arena.matrix.map((r, y) => {
-							let rowTiles = el.find(`.tile[style*="--y: ${y}"]`);
-							rowTiles.cssSequence("fade-out", "transitionend", tEl => {
-								if (tEl[0] === rowTiles[0]) {
-									// remove dom elements
-									rowTiles.remove();
-									// explode row cells
-									let row = r.map(c => c === 0 ? 0 : c.slice(0,1));
-									FX.blast(y, row);
-									
-									if (y === 9) {
-										// stop tremble
-										Self.els.board.removeClass("tremble");
-
-										setTimeout(() => {
-											console.log("done!");
-											// reset FX layer
-											FX.grayscale = false;
-										}, 1000);
-									}
-								}
-							});
-						});
-					});
-				break;
 			case "output-arena":
 				// play sound effect
 				window.audio.play("grab");

@@ -129,7 +129,7 @@ let Arena = {
 		let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
 		if (free < 0) free = 9;
 		this.els.board.toggleClass("danger", free > 1);
-		if (free === 0) dropdom.dispatch({ type: "game-over" });
+		if (free === 0) dropdom.game.dispatch({ type: "game-over" });
 	},
 	deleteRows(clear) {
 		Object.keys(clear).map(y => {
