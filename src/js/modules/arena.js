@@ -153,7 +153,8 @@ let Arena = {
 		// if (count === 0) this.clear();
 	},
 	clear() {
-		let rows = {};
+		let rows = {},
+			count = 0;
 		this.matrix.map((row, y) => {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
@@ -163,14 +164,22 @@ let Arena = {
 					if (this.matrix[y][x].endsWith("1")) {
 						let [c,s,p] = this.matrix[y][x].split(""),
 							tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
+						count++;
 						// remove element from DOM
-						tile.remove();
+						tile.cssSequence("clear-tile", "transitionend", tEl => {
+							tEl.remove();
+
+							if (count-- > 1) return;
+							this.drop();
+						});
 					}
 					return this.matrix[y][x].slice(0,1);
 				});
 			};
 		});
-		this.deleteRows(rows);
+		if (Object.keys(rows).length) {
+			this.deleteRows(rows);
+		}
 	},
 	deleteRows(rows) {
 		Object.keys(rows).map(y => {
