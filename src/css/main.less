@@ -849,6 +849,30 @@ content {
 				}
 			}
 
+			.combo {
+				position: absolute;
+				top: 31%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-size: 59px;
+				z-index: 11;
+				opacity: 0;
+				background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
+			    color: transparent;
+			    background-clip: text;
+			    filter: drop-shadow(0 2px 0 #ba671a)
+			    		drop-shadow(0 1px 4px rgba(#000,.85));
+
+		    	&:before {
+		    		content: "Combo x";
+		    	}
+
+			    &.show {
+			    	animation: show-combo 1500ms ease-in-out forwards;
+			    }
+			}
+
 			.points {
 				position: absolute;
 				top: 45%;
@@ -1118,6 +1142,15 @@ content {
 	35%  { opacity: 1; transform: translateX(137px); }
 	45%  { opacity: 0; transform: translateX(137px); }
 	100% { opacity: 0; transform: translateX(137px); }
+}
+
+@keyframes show-combo {
+	0%   { opacity: 0; }
+	3%   { opacity: 1; transform: scale(1); }
+	15%  { opacity: 1; transform: scale(1.25); }
+	30%  { opacity: 1; transform: scale(1); }
+	80%  { opacity: 1; }
+	100% { opacity: 0; }
 }
 
 @keyframes show-points {

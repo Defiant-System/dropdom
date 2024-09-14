@@ -159,10 +159,29 @@ let Arena = {
 			row.map(c => remove = remove && !!c);
 			if (remove) {
 				// fx row
-				rows[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
+				rows[y] = this.matrix[0].map((e, x) => {
+					if (this.matrix[y][x].endsWith("1")) {
+						let [c,s,p] = this.matrix[y][x].split(""),
+							tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
+						// remove element from DOM
+						tile.remove();
+					}
+					return this.matrix[y][x].slice(0,1);
+				});
 			};
 		});
-		console.log( rows );
+		this.deleteRows(rows);
+	},
+	deleteRows(rows) {
+		Object.keys(rows).map(y => {
+			this.matrix[0].map((e, x) => {
+				this.matrix[y][x] = 0;
+			});
+			// explode row cells
+			FX.blast(y, rows[y]);
+		});
+		// sound effect
+		window.audio.play("line");
 	},
 	collisionCheck(piece, o) {
 		let m = piece.matrix;

@@ -71,7 +71,11 @@ let Test = {
 		// 	APP.dispatch({ type: "add-score", value: 8 });
 		// }, 1000);
 
-		// Pipeline[0] = ["c31", "c32", "c33", "b21", "b22", 0, 0, 0];
+
+		// setTimeout(() => {
+		// 	APP.els.content.find(".combo").addClass("show");
+		// }, 1000);
+
 
 		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
