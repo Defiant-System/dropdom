@@ -94,8 +94,6 @@ const dropdom = {
 				window.audio.play("grab");
 				break;
 			case "output-arena":
-				// play sound effect
-				window.audio.play("grab");
 				// output arena rows
 				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
 				break;

@@ -37,6 +37,10 @@ let Arena = {
 		// reset all
 		this.reset();
 	},
+	logMatrix() {
+		// output arena rows
+		this.matrix.map((row, i) => console.log( i, row.join(" ") ));
+	},
 	reset() {
 		// prepare arena matrix
 		this.matrix = this.createMatrix(this.dim.w, this.dim.h);
@@ -50,6 +54,15 @@ let Arena = {
 		}
 		return matrix;
 	},
+	refillPreview() {
+		let nr = NewRows.map(r => [...r]);
+		for (let i=nr.length-1; i>0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[nr[i], nr[j]] = [nr[j], nr[i]];
+		}
+		// nr.map((row, i) => console.log( i, row.join(" ") ));
+		Pipeline = Pipeline.concat(nr);
+	},
 	updatePreview() {
 		let row = Pipeline[0],
 			out = [];
@@ -62,93 +75,8 @@ let Arena = {
 			}
 		});
 		this.els.preview.html(out.join());
-
 		// add more to pipeline if needed
 		if (Pipeline.length < 2) this.refillPreview();
-	},
-	refillPreview() {
-		let nr = NewRows.map(r => [...r]);
-		for (let i=nr.length-1; i>0; i--) {
-	        let j = Math.floor(Math.random() * (i + 1));
-	        [nr[i], nr[j]] = [nr[j], nr[i]];
-	    }
-		// nr.map((row, i) => console.log( i, row.join(" ") ));
-		Pipeline = Pipeline.concat(nr);
-	},
-	addRows(i=1) {
-		let row = Pipeline.shift();
-		// make "rainbow" if "lucky"
-		if (Utils.randomInt(0, 50) < 6) {
-			let pieces = [];
-			row.map((col, x) => {
-				if (col) {
-					let [c,s,p] = col.split("").map(i => i == +i ? +i : i);
-					if (p === 1) pieces[x] = col;
-				}
-			});
-			pieces = pieces.filter(i => !!i);
-			let select = pieces[Utils.randomInt(0, pieces.length)],
-				done = +select.split("")[1];
-			// make rainbow
-			row.map((col, x) => {
-				if (col && col.startsWith(select.slice(0,2)) && done) {
-					row[x] = `c${col.slice(1)}`;
-					done--;
-				}
-			});
-		}
-
-		// add new row
-		this.matrix.push(row);
-		// re-draw arena
-		let vdom = this.draw(true);
-		vdom.map((vTile, i) => {
-			let props = vTile.getAttribute("style");
-			if (props.match(/--x: (\d);/) == null) return;
-			let x = +props.match(/--x: (\d);/)[1],
-				y = +props.match(/--y: (\d+);/)[1];
-			if (y < 10) return;
-			this.els.rows.append(vTile);
-		});
-
-		this.els.rows.cssSequence("add-row", "transitionend", el => {
-			// remove top row
-			let out = this.matrix.shift();
-
-			// reset rows element
-			el.removeClass("add-row");
-			// "pull up" tiles
-			el.find(".tile").map(elem => {
-				let tEl = $(elem),
-					tY = +tEl.cssProp("--y") - 1;
-				tEl.css({ "--y": tY });
-			});
-
-			this.drop();
-			this.checkDanger();
-			if (i > 1) setTimeout(() => this.addRows(i-1), 150);
-		});
-	},
-	checkDanger() {
-		let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
-		if (free < 0) free = 9;
-		this.els.board.toggleClass("danger", free > 1);
-		if (free === 0) dropdom.game.dispatch({ type: "game-over" });
-	},
-	deleteRows(clear) {
-		Object.keys(clear).map(y => {
-			this.matrix[0].map((e, x) => {
-				this.matrix[y][x] = 0;
-			});
-			// explode row cells
-			FX.blast(y, clear[y]);
-		});
-		// sound effect
-		window.audio.play("line");
-		// update arena
-		this.draw();
-		// drop rows
-		setTimeout(() => this.drop(), 150);
 	},
 	draw(vdom) {
 		let out = [];
@@ -168,9 +96,6 @@ let Arena = {
 				row[x] = col;
 			});
 		});
-		// update preview row
-		this.updatePreview();
-
 		if (vdom) {
 			return $(out.join(""));
 		} else {
@@ -179,18 +104,12 @@ let Arena = {
 			this.els.rows.append(out.join(""));
 		}
 	},
-	collisionCheck(piece, o) {
-		let m = piece.matrix;
-		for (let x=0; x<piece.s; x++) {
-			if ((this.matrix[o.y] && this.matrix[o.y][x + o.x]) !== 0) {
-				return true;
-			}
-		}
-		return false;
-	},
-	drop(doAdd) {
+	drop() {
+		// "lock" ui/ux
+		this.els.gameView.addClass("busy");
+
 		for (let yl=this.matrix.length-1, y=yl; y>-1; y--) {
-			for (let x=0; x<8; x++) {
+			for (let x=0, xl=this.matrix[y].length; x<xl; x++) {
 				let col = this.matrix[y][x];
 				if (col === 0) continue;
 
@@ -207,116 +126,52 @@ let Arena = {
 				}
 			}
 		}
-		// update arena
-		this.syncAnim(doAdd);
-	},
-	syncAnim(doAdd) {
-		let count = 0,
-			tiles = this.draw(true).reverse();
-
-		// this.els.gameView.addClass("busy");
-
-		// create virtual dom + make comparison + animate ?
-		tiles.map((vTile, i) => {
-			let props = vTile.getAttribute("style");
-			if (props.match(/--x: (\d);/) == null) return;
-			let x = +props.match(/--x: (\d);/)[1],
-				y = +props.match(/--y: (\d+);/)[1],
-				oY = +props.match(/--oY: (\d+);/)[1],
-				tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]:not(.smooth-drop)`);
-			
-			if (y === oY) return;
-			count++;
-			tile.css({ "--y": y }).cssSequence("smooth-drop", "transitionend", tile => {
-				// reset tile
-				tile.removeClass("smooth-drop");
-				// is last ?
-				if (count-- > 1) return;
-				this.clearAdd(doAdd);
+		// smoot drop tiles
+		let count = 0;
+		// get updated arena DOM fragment
+		this.draw(true).reverse()
+			.map((vTile, i) => {
+				let props = vTile.getAttribute("style");
+				if (props.match(/--x: (\d);/) == null) return;
+				let x = +props.match(/--x: (\d);/)[1],
+					y = +props.match(/--y: (\d+);/)[1],
+					oY = +props.match(/--oY: (\d+);/)[1],
+					tile = this.els.rows.find(`.${vTile.className.split(" ").join(".")}[style^="--x: ${x}; --y: ${oY};"]:not(.smooth-drop)`);
+				
+				if (y === oY) return;
+				count++;
+				tile.css({ "--y": y }).cssSequence("smooth-drop", "transitionend", tile => {
+					// reset tile
+					tile.removeClass("smooth-drop");
+					// is last ?
+					if (count-- > 1) return;
+					// clear tiles, if need be
+					this.clear();
+				});
 			});
-		});
-
-		// if nothing is "drop"
-		if (count === 0 && doAdd) this.clearAdd(doAdd);
+		// if nothing is "dropped"
+		// if (count === 0) this.clear();
 	},
-	clearAdd(doAdd) {
-		let score = 8,
-			clear = {};
+	clear() {
+		let rows = {};
 		this.matrix.map((row, y) => {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
 			if (remove) {
 				// fx row
-				clear[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
+				rows[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
 			};
 		});
-		
-		let finish = (doAdd) => {
-				this.els.points
-					.html(score)
-					.cssSequence("show", "animationend", el => {
-						// reset element
-						el.html("").removeClass("show");
-					});
-
-				this.deleteRows(clear);
-				this.checkDanger();
-				// add rows if user made drag'n drop
-				if (doAdd) setTimeout(() => this.addRows(), 150);
-			};
-
-		if (Object.keys(clear).length) {
-			let pause = false;
-
-			Object.keys(clear).map(y => {
-				let rp = this.getRowPieces(+y);
-				Object.keys(rp).map(k => {
-					let piece = rp[k];
-					if (piece.c === "c") {
-						let ns = this.getNeighbours(piece),
-							nA = Object.keys(ns);
-						nA.map((key, i) => {
-							let rPiece = ns[key];
-							this.clearPiece(rPiece);
-
-							this.els.rows
-								.find(`.tile[style^="--x: ${rPiece.x}; --y: ${rPiece.y};"]`)
-								.cssSequence("flash", "transitionend", el => {
-									// explode neighbour piece
-									let row = [0, 0, 0, 0, 0, 0, 0, 0];
-									for (let l=0; l<rPiece.s; l++) {
-										row[rPiece.x + l] = rPiece.c;
-									}
-									// blast row
-									FX.blast(rPiece.y, row);
-
-									if (i < nA.length-1) return;
-									// final to-do's
-									finish(true);
-								});
-						});
-
-						let g = 54,
-							mx = 31,
-							x1 = (piece.x * g) + mx + piece.x,
-							x2 = x1 + (piece.s * g) - piece.s,
-							my = (y * g) + mx + 3;
-						FX.electify(x1, my, x2, my);
-
-						// if there is no neighbour pieces
-						if (!nA.length) setTimeout(() => finish(true), 12e2);
-
-						pause = true;
-					}
-				});
-			});
-
-			if (pause) return;
-			// final to-do's
-			return finish(doAdd);
+		console.log( rows );
+	},
+	collisionCheck(piece, o) {
+		let m = piece.matrix;
+		for (let x=0; x<piece.s; x++) {
+			if ((this.matrix[o.y] && this.matrix[o.y][x + o.x]) !== 0) {
+				return true;
+			}
 		}
-		// add rows if user made drag'n drop
-		if (doAdd) setTimeout(() => this.addRows(), 150);
+		return false;
 	},
 	merge(piece, x, nY, oY) {
 		piece.map((c, i) => {
