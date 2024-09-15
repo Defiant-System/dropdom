@@ -151,7 +151,7 @@
 				Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
 
 				if (Drag.colX !== Drag.piece.x) {
-					Arena.drop(true);
+					Arena.humanDrop();
 				}
 
 				// hide show columns

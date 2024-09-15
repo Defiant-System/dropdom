@@ -100,7 +100,7 @@ let Arena = {
 
 		// update "next" preview
 		this.updatePreview();
-		
+
 		if (vdom) {
 			return $(out.join(""));
 		} else {
@@ -109,10 +109,15 @@ let Arena = {
 			this.els.rows.append(out.join(""));
 		}
 	},
-	drop() {
+	humanDrop() {
+		// reset combo
+		this.combo = 1;
 		// "lock" ui/ux
 		this.els.gameView.addClass("busy");
-
+		// count score
+		this.drop();
+	},
+	drop(noInsert) {
 		for (let yl=this.matrix.length-1, y=yl; y>-1; y--) {
 			for (let x=0, xl=this.matrix[y].length; x<xl; x++) {
 				let col = this.matrix[y][x];
@@ -156,8 +161,12 @@ let Arena = {
 			});
 		// if nothing is "dropped"
 		if (count === 0) {
-			// this.clear();
-			this.insertRows();
+			if (noInsert) {
+				// "lock" ui/ux
+				this.els.gameView.removeClass("busy");
+			} else {
+				this.insertRows();
+			}
 		}
 	},
 	clear() {
@@ -178,7 +187,7 @@ let Arena = {
 							tEl.remove();
 
 							if (count-- > 1) return;
-							this.drop();
+							this.drop(true);
 						});
 					}
 					return this.matrix[y][x].slice(0,1);
@@ -187,7 +196,8 @@ let Arena = {
 		});
 		if (Object.keys(rows).length) {
 			this.deleteRows(rows);
-		} else {
+		} else if (count === 0) {
+			console.log("insert row", count);
 			this.insertRows();
 		}
 	},
@@ -240,10 +250,11 @@ let Arena = {
 			});
 
 			this.checkDanger();
-			if (i > 1) setTimeout(() => this.insertRows(i-1), 150);
-			else {
-				// "lock" ui/ux
-				this.els.gameView.removeClass("busy");
+			if (i > 1) {
+				console.log("hello");
+				setTimeout(() => this.insertRows(i-1), 150);
+			} else {
+				this.drop(true); // no insert
 			}
 		});
 	},
