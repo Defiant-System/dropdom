@@ -93,9 +93,12 @@ const dropdom = {
 				// play sound effect
 				window.audio.play("grab");
 				break;
-			case "output-arena":
+			case "output-pgn":
 				// output arena rows
-				Arena.matrix.map((row, i) => console.log( i, row.join(" ") ));
+				Arena.logMatrix();
+				break;
+			case "tmp-drop":
+				Arena.drop(true);
 				break;
 			case "open-help":
 				karaqu.shell("fs -u '~/help/index.md'");

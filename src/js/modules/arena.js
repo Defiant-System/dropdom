@@ -157,12 +157,7 @@ let Arena = {
 					if (count-- > 1) return;
 					// clear tiles, if need be
 					setTimeout(() => {
-						if (noInsert) {
-							// "lock" ui/ux
-							this.els.gameView.removeClass("busy");
-						} else {
-							this.clear();
-						}
+						this.clear(noInsert);
 					}, 250);
 				});
 			});
@@ -177,7 +172,7 @@ let Arena = {
 			}
 		}
 	},
-	clear() {
+	clear(noInsert) {
 		let rows = {},
 			count = 0;
 		this.matrix.map((row, y) => {
@@ -195,7 +190,8 @@ let Arena = {
 							tEl.remove();
 
 							if (count-- > 1) return;
-							this.drop(true);
+							// console.log("hello");
+							this.drop();
 						});
 					}
 					return this.matrix[y][x].slice(0,1);
@@ -206,7 +202,10 @@ let Arena = {
 			this.deleteRows(rows);
 		} else if (count === 0) {
 			console.log("insert row 2");
-			this.insertRows();
+			
+			if (!noInsert) this.insertRows();
+			// "lock" ui/ux
+			else this.els.gameView.removeClass("busy");
 		}
 	},
 	insertRows(i=1) {

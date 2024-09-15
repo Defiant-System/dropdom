@@ -17,7 +17,7 @@ let State = [
 		[0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, "b21", "b22"],
 		[0, 0, 0, "p31", "p32", "p33", "r21", "r22"],
-		["g21", "g22", "p11", 0, 0, "o21", "o22", 0],
+		["g21", "g22", "p11", 0, 0, 0, "o21", "o22"],
 		["b41", "b42", "b43", "b44", 0, "b21", "b22", 0],
 
 		["b41", "b42", "b43", "b44", "r21", "r22", 0, 0],
@@ -63,12 +63,12 @@ let Test = {
 		// return;
 		// return APP.game.dispatch({ type: "start-game" });
 
-		setTimeout(() => {
+		// setTimeout(() => {
 		// 	// blast row(s) with effect
 		// 	//FX.blast(6, ["g", 0, 0, 0, 0, 0, 0, "o"]);
 		// 	FX.blast(6, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			FX.electify(130, 350, 250, 350);
-		}, 800);
+			// FX.electify(130, 350, 250, 350);
+		// }, 800);
 
 
 		// setTimeout(() => {
@@ -83,7 +83,7 @@ let Test = {
 
 		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
-		Pipeline[0] = ["c31", "c32", "c33", "b21", "b22", 0, 0, 0];
+		Pipeline[0] = ["c31", "c32", "c33", 0, "b21", "b22", 0, 0];
 		Arena.draw();
 
 		// return setTimeout(() => {

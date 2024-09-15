@@ -4,6 +4,14 @@
 		<Menu type="divider"/>
 		<Menu name="Quit Dropdom" shell="win -c"/>
 	</Menu>
+	<Menu name="Game" for="game-view">
+		<Menu name="Start View"/>
+		<Menu name="Game View"/>
+		<Menu name="New Game"/>
+		<Menu type="divider"/>
+		<Menu name="Tmp Drop" click="tmp-drop"/>
+		<Menu name="Output PGN" click="output-pgn"/>
+	</Menu>
 	<Menu name="Help">
 		<Menu name="Help" click="open-help"/>
 		<Menu type="divider"/>
