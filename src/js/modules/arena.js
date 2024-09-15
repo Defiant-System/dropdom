@@ -178,7 +178,8 @@ let Arena = {
 		}
 	},
 	clear(noInsert) {
-		let rows = {},
+		let APP = dropdom,
+			rows = {},
 			count = 0,
 			pause = false,
 			finish = () => {
@@ -188,12 +189,14 @@ let Arena = {
 						// reset element
 						el.html("").removeClass("show");
 						// update score row
-						dropdom.dispatch({ type: "add-score", value: this._score });
+						APP.dispatch({ type: "add-score", value: this._score });
 					});
 
-				setTimeout(() => delete this._to, 2e2);
+				setTimeout(() => delete this._to, 5e2);
 				this.deleteRows(rows);
 				this.els.gameView.removeClass("busy");
+				// restore view
+				APP.els.content.removeClass("electrify");
 			};
 
 		this.matrix.map((row, y) => {
@@ -215,6 +218,10 @@ let Arena = {
 					if (piece.c === "c") {
 						let ns = this.getNeighbours(piece),
 							nA = Object.keys(ns);
+
+						// restore view
+						APP.els.content.addClass("electrify");
+
 						nA.map((key, i) => {
 							let rPiece = ns[key];
 							// add to score

@@ -21,8 +21,6 @@ let FX = {
 				if (!Self.particles.length) {
 					// stop fps control
 					Self.fpsControl.stop();
-					// restore view
-					APP.els.content.removeClass("electrify");
 				}
 			}
 		});
@@ -38,13 +36,8 @@ let FX = {
 		electric.startPoint = new Vector(x1, y1);
 		electric.endPoint = new Vector(x2, y2);
 		this.particles.push(electric);
-
-		// restore view
-		dropdom.els.content.addClass("electrify");
-
 		// sound of electric
 		window.audio.play("electric");
-
 		// start fpsControl
 		if (this.fpsControl._stopped) {
 			this.fpsControl.start();
