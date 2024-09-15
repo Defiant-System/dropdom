@@ -191,6 +191,7 @@ let Arena = {
 						dropdom.dispatch({ type: "add-score", value: this._score });
 					});
 
+				setTimeout(() => delete this._to, 2e2);
 				this.deleteRows(rows);
 				this.els.gameView.removeClass("busy");
 			};
@@ -234,9 +235,9 @@ let Arena = {
 									// blast row
 									FX.blast(rPiece.y, row);
 
-									if (i < nA.length-1) return;
+									if (i < nA.length-1 || this._to) return;
 									// final to-do's
-									finish(true);
+									this._to = setTimeout(() => finish(), 1e2);
 								});
 						});
 						// electrify tile
@@ -248,7 +249,9 @@ let Arena = {
 						FX.electify(x1, my, x2, my);
 						
 						// if there is no neighbour pieces
-						if (!nA.length) setTimeout(() => finish(), 12e2);
+						if (!nA.length && !this._to) {
+							this._to = setTimeout(() => finish(), 12e2);
+						}
 
 						pause = true;
 					}
@@ -261,7 +264,6 @@ let Arena = {
 
 		} else if (count === 0) {
 			// console.log("insert row 2");
-			
 			if (!noInsert) this.insertRows();
 			// "lock" ui/ux
 			else this.els.gameView.removeClass("busy");

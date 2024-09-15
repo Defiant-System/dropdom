@@ -79,7 +79,7 @@ class Electric {
 		// Blur
 		ctx.save();
 		ctx.globalCompositeOperation = "screen";
-		ctx.fillStyle   = "#115";
+		ctx.fillStyle   = "#11115555";
 		ctx.shadowColor = "#ddddff";
 		ctx.shadowBlur  = 23;
 		ctx.beginPath();
