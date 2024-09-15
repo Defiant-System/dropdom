@@ -115,7 +115,8 @@ let Arena = {
 	},
 	humanDrop() {
 		// reset combo
-		this.combo = 1;
+		this._score = 0;
+		this._combo = 1;
 		// "lock" ui/ux
 		this.els.gameView.addClass("busy");
 		// count score
