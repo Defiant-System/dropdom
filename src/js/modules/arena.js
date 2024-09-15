@@ -156,7 +156,14 @@ let Arena = {
 					// is last ?
 					if (count-- > 1) return;
 					// clear tiles, if need be
-					setTimeout(() => this.clear(), 250);
+					setTimeout(() => {
+						if (noInsert) {
+							// "lock" ui/ux
+							this.els.gameView.removeClass("busy");
+						} else {
+							this.clear();
+						}
+					}, 250);
 				});
 			});
 		// if nothing is "dropped"
@@ -165,6 +172,7 @@ let Arena = {
 				// "lock" ui/ux
 				this.els.gameView.removeClass("busy");
 			} else {
+				console.log("insert row 1");
 				this.insertRows();
 			}
 		}
@@ -197,7 +205,7 @@ let Arena = {
 		if (Object.keys(rows).length) {
 			this.deleteRows(rows);
 		} else if (count === 0) {
-			console.log("insert row", count);
+			console.log("insert row 2");
 			this.insertRows();
 		}
 	},
@@ -251,7 +259,6 @@ let Arena = {
 
 			this.checkDanger();
 			if (i > 1) {
-				console.log("hello");
 				setTimeout(() => this.insertRows(i-1), 150);
 			} else {
 				this.drop(true); // no insert

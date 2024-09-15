@@ -63,11 +63,12 @@ let Test = {
 		// return;
 		// return APP.game.dispatch({ type: "start-game" });
 
-		// setTimeout(() => {
+		setTimeout(() => {
 		// 	// blast row(s) with effect
 		// 	//FX.blast(6, ["g", 0, 0, 0, 0, 0, 0, "o"]);
 		// 	FX.blast(6, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-		// }, 800);
+			FX.electify(130, 350, 250, 350);
+		}, 800);
 
 
 		// setTimeout(() => {

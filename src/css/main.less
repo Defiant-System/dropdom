@@ -30,6 +30,13 @@ content {
 		}
 	}
 
+	&.electrify {
+		.game-view .board .wrapper .rows {
+			transition: filter 120ms;
+			filter: brightness(.75);
+		}
+	}
+
 	&.start-to-game {
 		min-height: 1px;
 		transition: min-height 500ms linear;

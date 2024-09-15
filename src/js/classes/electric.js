@@ -77,23 +77,22 @@ class Electric {
 			pi2 = Math.PI * 2;
 
 		// Blur
-		if (this.blur) {
-			ctx.save();
-			ctx.globalCompositeOperation = "screen";
-			ctx.fillStyle   = "#115";
-			ctx.shadowColor = "#ddddff";
-			ctx.shadowBlur  = 23;
-			ctx.beginPath();
+		ctx.save();
+		ctx.globalCompositeOperation = "screen";
+		ctx.fillStyle   = "#115";
+		ctx.shadowColor = "#ddddff";
+		ctx.shadowBlur  = 23;
+		ctx.beginPath();
 
-			points.map((point, i) => {
-				let d = len > 1 ? point.distanceTo(points[i === len - 1 ? i - 1 : i + 1]) : 0;
-				ctx.moveTo(point.x + d, point.y);
-				ctx.arc(point.x, point.y, d, 0, Math.PI * 2, false);
-			});
-			ctx.fill();
-			ctx.restore();
-		}
+		points.map((point, i) => {
+			let d = len > 1 ? point.distanceTo(points[i === len - 1 ? i - 1 : i + 1]) : 0;
+			ctx.moveTo(point.x + d, point.y);
+			ctx.arc(point.x, point.y, d, 0, Math.PI * 2, false);
+		});
+		ctx.fill();
+		ctx.restore();
 
+		// electric
 		ctx.save();
 		ctx.lineWidth = Utils.random(this.lineWidth, 0.5);
 		ctx.strokeStyle = this.color;

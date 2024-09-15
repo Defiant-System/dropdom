@@ -14,7 +14,7 @@ class Shard {
 		this.angle = Utils.random(-1.75, -2.5) + (Math.random() > .5 ? 0 : Math.PI * .33);
 		this.speed = Utils.random(12, 19);
 
-		this.moveRotation = Utils.random(-1, 1);
+		this.moveRotation = Utils.random(-5, 5);
 		this.rotation = 0;
 		this.rad = Math.PI / 180;
 
@@ -36,7 +36,7 @@ class Shard {
 		// fade out the shard
 		this.alpha -= this.decay;
 
-		this.rotation += this.moveRotation;
+		this.rotation += this.moveRotation * 1.5;
 		// this.rotation %= 360;
 
 		// remove the shard once the alpha is low enough, based on the passed in index
@@ -50,7 +50,7 @@ class Shard {
 		ctx.translate(this.x, this.y);
 		ctx.rotate(this.rotation * this.rad);
 
-		ctx.scale(1.35, 1.35);
+		ctx.scale(1.25, 1.25);
 		ctx.globalAlpha = this.alpha;
 		// ctx.globalCompositeOperation = "lighter";
 		ctx.drawImage(this.frag.img, -this.cX, -this.cY);
