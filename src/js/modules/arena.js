@@ -7,6 +7,7 @@ let NewRows = [
 		["p11", 0, 0, "b11", "o21", "o22", "b21", "b22"],
 		["g11", 0, "b21", "b22", "r21", "r22", "b11", 0],
 		["g21", "g22", 0, "b11", "r21", "r22", 0, 0],
+		[0, "b21", "b22", 0, 0, "p21", "p22", 0],
 		["p21", "p22", "r21", "r22", "g11", 0, "o11", 0],
 		["g11", 0, "p21", "p22", "p21", "p22", "o21", "o22"],
 		["o21", "o22", 0, "g11", "p21", "p22", 0, 0],
@@ -96,6 +97,10 @@ let Arena = {
 				row[x] = col;
 			});
 		});
+
+		// update "next" preview
+		this.updatePreview();
+		
 		if (vdom) {
 			return $(out.join(""));
 		} else {
@@ -146,11 +151,14 @@ let Arena = {
 					// is last ?
 					if (count-- > 1) return;
 					// clear tiles, if need be
-					this.clear();
+					setTimeout(() => this.clear(), 250);
 				});
 			});
 		// if nothing is "dropped"
-		// if (count === 0) this.clear();
+		if (count === 0) {
+			// this.clear();
+			this.insertRows();
+		}
 	},
 	clear() {
 		let rows = {},
@@ -179,7 +187,65 @@ let Arena = {
 		});
 		if (Object.keys(rows).length) {
 			this.deleteRows(rows);
+		} else {
+			this.insertRows();
 		}
+	},
+	insertRows(i=1) {
+		let row = Pipeline.shift();
+		// make "rainbow" if "lucky"
+		if (Utils.randomInt(0, 50) < 6) {
+			let pieces = [];
+			row.map((col, x) => {
+				if (col) {
+					let [c,s,p] = col.split("").map(i => i == +i ? +i : i);
+					if (p === 1) pieces[x] = col;
+				}
+			});
+			pieces = pieces.filter(i => !!i);
+			let select = pieces[Utils.randomInt(0, pieces.length)],
+				done = +select.split("")[1];
+			// make rainbow
+			row.map((col, x) => {
+				if (col && col.startsWith(select.slice(0,2)) && done) {
+					row[x] = `c${col.slice(1)}`;
+					done--;
+				}
+			});
+		}
+		// add new row
+		this.matrix.push(row);
+		// re-draw arena
+		let vdom = this.draw(true);
+		vdom.map((vTile, i) => {
+			let props = vTile.getAttribute("style");
+			if (props.match(/--x: (\d);/) == null) return;
+			let x = +props.match(/--x: (\d);/)[1],
+				y = +props.match(/--y: (\d+);/)[1];
+			if (y < 10) return;
+			this.els.rows.append(vTile);
+		});
+
+		this.els.rows.cssSequence("add-row", "transitionend", el => {
+			// remove top row
+			let out = this.matrix.shift();
+
+			// reset rows element
+			el.removeClass("add-row");
+			// "pull up" tiles
+			el.find(".tile").map(elem => {
+				let tEl = $(elem),
+					tY = +tEl.cssProp("--y") - 1;
+				tEl.css({ "--y": tY });
+			});
+
+			this.checkDanger();
+			if (i > 1) setTimeout(() => this.insertRows(i-1), 150);
+			else {
+				// "lock" ui/ux
+				this.els.gameView.removeClass("busy");
+			}
+		});
 	},
 	deleteRows(rows) {
 		Object.keys(rows).map(y => {
@@ -191,6 +257,12 @@ let Arena = {
 		});
 		// sound effect
 		window.audio.play("line");
+	},
+	checkDanger() {
+		let free = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0);
+		if (free < 0) free = 9;
+		this.els.board.toggleClass("danger", free > 1);
+		if (free === 0) dropdom.game.dispatch({ type: "game-over" });
 	},
 	collisionCheck(piece, o) {
 		let m = piece.matrix;
