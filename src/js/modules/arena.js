@@ -224,6 +224,8 @@ let Arena = {
 							this.els.rows
 								.find(`.tile[style^="--x: ${rPiece.x}; --y: ${rPiece.y};"]`)
 								.cssSequence("flash", "transitionend", el => {
+									// delete element
+									el.remove();
 									// explode neighbour piece
 									let row = [0, 0, 0, 0, 0, 0, 0, 0];
 									for (let l=0; l<rPiece.s; l++) {
