@@ -182,6 +182,15 @@ let Arena = {
 			count = 0,
 			pause = false,
 			finish = () => {
+				this.els.points
+					.html(this._score)
+					.cssSequence("show", "animationend", el => {
+						// reset element
+						el.html("").removeClass("show");
+						// update score row
+						dropdom.dispatch({ type: "add-score", value: this._score });
+					});
+
 				this.deleteRows(rows);
 				this.els.gameView.removeClass("busy");
 			};
@@ -192,6 +201,8 @@ let Arena = {
 			if (remove) {
 				// fx row
 				rows[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
+				// add to score
+				this._score += 8;
 			};
 		});
 
@@ -205,6 +216,9 @@ let Arena = {
 							nA = Object.keys(ns);
 						nA.map((key, i) => {
 							let rPiece = ns[key];
+							// add to score
+							this._score += rPiece.s;
+							// remove piece from board
 							this.clearPiece(rPiece);
 
 							this.els.rows

@@ -50,14 +50,15 @@ const dropdom = {
 			// custom events
 			case "add-score":
 				// player bankroll ticker
+				value = +Self.els.score.text();
 				Self.els.score
 					.css({
-						"--value": +Self.els.score.text(),
-						"--total": event.value,
+						"--value": value,
+						"--total": value + event.value,
 					})
 					.cssSequence("ticker", "animationend", el => {
 						// update score content
-						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
+						el.removeClass("ticker").html(value + event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;
 			case "toggle-music":
