@@ -191,22 +191,6 @@ let Arena = {
 			if (remove) {
 				// fx row
 				rows[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
-				// rows[y] = this.matrix[0].map((e, x) => {
-				// 	if (this.matrix[y][x].endsWith("1")) {
-				// 		let [c,s,p] = this.matrix[y][x].split(""),
-				// 			tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
-				// 		count++;
-				// 		// remove element from DOM
-				// 		tile.cssSequence("clear-tile", "transitionend", tEl => {
-				// 			tEl.remove();
-
-				// 			if (count-- > 1) return;
-				// 			// console.log("hello");
-				// 			this.drop();
-				// 		});
-				// 	}
-				// 	return this.matrix[y][x].slice(0,1);
-				// });
 			};
 		});
 
@@ -323,13 +307,28 @@ let Arena = {
 		});
 	},
 	deleteRows(rows) {
+		let count = 0;
+
 		Object.keys(rows).map(y => {
 			this.matrix[0].map((e, x) => {
+				let col = this.matrix[y][x];
+				if (col && col.endsWith("1")) {
+					let [c,s,p] = col.split(""),
+						tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
+					count++;
+					// remove element from DOM
+					tile.cssSequence("clear-tile", "transitionend", tEl => {
+						tEl.remove();
+						if (count-- > 1) return;
+						this.drop();
+					});
+				}
 				this.matrix[y][x] = 0;
 			});
 			// explode row cells
 			FX.blast(y, rows[y]);
 		});
+
 		// sound effect
 		window.audio.play("line");
 	},
