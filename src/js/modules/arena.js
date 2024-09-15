@@ -8,8 +8,12 @@ let NewRows = [
 		["g11", 0, "b21", "b22", "r21", "r22", "b11", 0],
 		["g21", "g22", 0, "b11", "r21", "r22", 0, 0],
 		[0, "b21", "b22", 0, 0, "p21", "p22", 0],
+		[0, 0, "b21", "b22", 0, "p21", "p22", 0],
+		[0, "b31", "b32", "b33", 0, "p21", "p22", 0],
+		[0, "g31", "g32", "g33", 0, "p31", "p32", "p33"],
+		["b41", "b42", "b43", "b44", 0, "p31", "p32", "p33"],
 		["p21", "p22", "r21", "r22", "g11", 0, "o11", 0],
-		["g11", 0, "p21", "p22", "p21", "p22", "o21", "o22"],
+		["g11", 0, "p21", "p22", "g21", "g22", "o21", "o22"],
 		["o21", "o22", 0, "g11", "p21", "p22", 0, 0],
 	];
 
@@ -167,41 +171,95 @@ let Arena = {
 				// "lock" ui/ux
 				this.els.gameView.removeClass("busy");
 			} else {
-				console.log("insert row 1");
+				// console.log("insert row 1");
 				this.insertRows();
 			}
 		}
 	},
 	clear(noInsert) {
 		let rows = {},
-			count = 0;
+			count = 0,
+			pause = false,
+			finish = () => {
+				this.deleteRows(rows);
+				this.els.gameView.removeClass("busy");
+			};
+
 		this.matrix.map((row, y) => {
 			let remove = true;
 			row.map(c => remove = remove && !!c);
 			if (remove) {
 				// fx row
-				rows[y] = this.matrix[0].map((e, x) => {
-					if (this.matrix[y][x].endsWith("1")) {
-						let [c,s,p] = this.matrix[y][x].split(""),
-							tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
-						count++;
-						// remove element from DOM
-						tile.cssSequence("clear-tile", "transitionend", tEl => {
-							tEl.remove();
+				rows[y] = this.matrix[0].map((e, x) => this.matrix[y][x].slice(0,1));
+				// rows[y] = this.matrix[0].map((e, x) => {
+				// 	if (this.matrix[y][x].endsWith("1")) {
+				// 		let [c,s,p] = this.matrix[y][x].split(""),
+				// 			tile = this.els.rows.find(`.tile.${this.palette[c]}-${s}[style*="--x: ${x}; --y: ${y};"]`);
+				// 		count++;
+				// 		// remove element from DOM
+				// 		tile.cssSequence("clear-tile", "transitionend", tEl => {
+				// 			tEl.remove();
 
-							if (count-- > 1) return;
-							// console.log("hello");
-							this.drop();
-						});
-					}
-					return this.matrix[y][x].slice(0,1);
-				});
+				// 			if (count-- > 1) return;
+				// 			// console.log("hello");
+				// 			this.drop();
+				// 		});
+				// 	}
+				// 	return this.matrix[y][x].slice(0,1);
+				// });
 			};
 		});
+
 		if (Object.keys(rows).length) {
-			this.deleteRows(rows);
+			Object.keys(rows).map(y => {
+				let rp = this.getRowPieces(+y);
+				Object.keys(rp).map(k => {
+					let piece = rp[k];
+					if (piece.c === "c") {
+						let ns = this.getNeighbours(piece),
+							nA = Object.keys(ns);
+						nA.map((key, i) => {
+							let rPiece = ns[key];
+							this.clearPiece(rPiece);
+
+							this.els.rows
+								.find(`.tile[style^="--x: ${rPiece.x}; --y: ${rPiece.y};"]`)
+								.cssSequence("flash", "transitionend", el => {
+									// explode neighbour piece
+									let row = [0, 0, 0, 0, 0, 0, 0, 0];
+									for (let l=0; l<rPiece.s; l++) {
+										row[rPiece.x + l] = rPiece.c;
+									}
+									// blast row
+									FX.blast(rPiece.y, row);
+
+									if (i < nA.length-1) return;
+									// final to-do's
+									finish(true);
+								});
+						});
+						// electrify tile
+						let cEl = this.els.rows.find(`.tile.colors-${piece.s}[style^="--x: ${piece.x}; --y: ${piece.y};"]`),
+							cOffset = cEl.offset(),
+							x1 = 23 + cOffset.left,
+							x2 = 23 + cOffset.left + cOffset.width,
+							my = cOffset.top + (cOffset.height >> 1);
+						FX.electify(x1, my, x2, my);
+						
+						// if there is no neighbour pieces
+						if (!nA.length) setTimeout(() => finish(), 12e2);
+
+						pause = true;
+					}
+				});
+			});
+
+			if (pause) return;
+			// final to-do's
+			return finish();
+
 		} else if (count === 0) {
-			console.log("insert row 2");
+			// console.log("insert row 2");
 			
 			if (!noInsert) this.insertRows();
 			// "lock" ui/ux
