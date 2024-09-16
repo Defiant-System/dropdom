@@ -14,6 +14,12 @@
 @import "./modules/test.js"
 
 
+// default settings
+const defaultSettings = {
+	hiscore: 0,
+};
+
+
 const dropdom = {
 	init() {
 		// fast references
@@ -34,6 +40,9 @@ const dropdom = {
 		FX.init();
 		Arena.init();
 
+		// apply settings
+		this.dispatch({ type: "init-settings" });
+
 		// DEV-ONLY-START
 		Test.init(this);
 		// DEV-ONLY-END
@@ -47,10 +56,42 @@ const dropdom = {
 			// system events
 			case "window.init":
 				break;
+			case "window.close":
+				// save settings
+				window.settings.setItem("settings", Self.settings);
+				break;
 			// custom events
+			case "init-settings":
+				// get settings, if any
+				Self.settings = window.settings.getItem("settings") || defaultSettings;
+
+				if (Self.settings.hiscore > 0) {
+					Self.dispatch({ type: "update-hiscore", value: Self.settings.hiscore });
+				}
+				break;
+			case "update-hiscore":
+				// player bankroll ticker
+				value = +Self.els.best.text();
+				Self.settings.hiscore = event.value;
+				// ticker
+				Self.els.best
+					.css({
+						"--value": value,
+						"--total": event.value,
+					})
+					.cssSequence("ticker", "animationend", el => {
+						// update score content
+						el.removeClass("ticker").html(event.value).cssProp({ "--value": "", "--total": "" });
+					});
+				break;
 			case "add-score":
 				// player bankroll ticker
 				value = +Self.els.score.text();
+				// update highscore, if need be
+				if (value + event.value > Self.settings.hiscore) {
+					Self.dispatch({ type: "update-hiscore", value: value + event.value });
+				}
+				// ticker
 				Self.els.score
 					.css({
 						"--value": value,
