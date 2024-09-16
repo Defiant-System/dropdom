@@ -1,19 +1,20 @@
 <Application>
 	<Head>
 		<meta name="id" value="dropdom"/>
-		<meta name="title" value="Dropdom" version="1.12"/>
+		<meta name="title" value="Dropdom" version="1.14"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/dropdom"/>
 		<meta name="width" value="496"/>
 		<meta name="height" value="850"/>
-		<meta name="top" value="160"/>
+		<meta name="top" value="70"/>
 		<meta name="left" value="215"/>
 		<meta name="minimize"/>
 		<meta name="maximize" value="disabled"/>
 		<meta name="resize" value="disabled"/>
 		<meta name="script" value="src/js/main.js"/>
 		<meta name="style" value="src/css/main.less"/>
+		<meta name="themes" value="src/css/themes.less"/>
 		<meta name="icons" value="src/svg/icons.svg"/>
 		<meta name="content" value="src/partials/content.htm"/>
 
