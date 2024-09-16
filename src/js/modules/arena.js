@@ -167,12 +167,11 @@ let Arena = {
 				});
 			});
 		// if nothing is "dropped"
-		if (count === 0) {
+		if (count === 0 && !this.els.gameView.hasClass("game-over")) {
 			if (noInsert) {
 				// "lock" ui/ux
 				this.els.gameView.removeClass("busy");
 			} else {
-				// console.log("insert row 1");
 				this.insertRows();
 			}
 		}
@@ -183,6 +182,8 @@ let Arena = {
 			count = 0,
 			pause = false,
 			finish = () => {
+				if (this.els.gameView.hasClass("game-over")) return;
+
 				this.els.points
 					.html(this._score)
 					.cssSequence("show", "animationend", el => {
@@ -271,9 +272,14 @@ let Arena = {
 
 		} else if (count === 0) {
 			// console.log("insert row 2");
-			if (!noInsert) this.insertRows();
-			// "lock" ui/ux
-			else this.els.gameView.removeClass("busy");
+			if (!noInsert) {
+				let minStack = this.matrix.findIndex(r => r.reduce((a,c) => a + c, 0) !== 0) - 6;
+				if (minStack < 1) minStack = 1;
+				this.insertRows(minStack);
+			} else if (!this.els.gameView.hasClass("game-over")) {
+				// "lock" ui/ux
+				this.els.gameView.removeClass("busy");
+			}
 		}
 	},
 	insertRows(i=1) {
@@ -311,7 +317,11 @@ let Arena = {
 			this.els.rows.append(vTile);
 		});
 
+		// overflow hidden
+		this.els.gameView.addClass("busy");
 		this.els.rows.cssSequence("add-row", "transitionend", el => {
+			// overflow hidden
+			this.els.gameView.removeClass("busy");
 			// remove top row
 			let out = this.matrix.shift();
 

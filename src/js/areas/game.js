@@ -27,7 +27,7 @@
 			case "new-game":
 				Arena.reset();
 				Self.els.content.data({ show: "game-view" });
-				setTimeout(() => Arena.addRows(4), 500);
+				setTimeout(() => Arena.insertRows(4), 500);
 				break;
 			case "game-over":
 				// play sound effect
