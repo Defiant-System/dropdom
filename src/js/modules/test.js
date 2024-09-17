@@ -57,7 +57,7 @@ let Test = {
 		// 	});
 		// }, 500);
 
-		return;
+		// return;
 		// return APP.game.dispatch({ type: "start-game" });
 
 		// setTimeout(() => {
@@ -80,6 +80,7 @@ let Test = {
 
 		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
+		// Pipeline[0] = ["b11", "b11", "b11", "b11", "b11", "b11", "b11", "b11"];
 		Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];
 		Arena.draw();
 

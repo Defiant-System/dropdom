@@ -1008,10 +1008,15 @@ content {
 					border-radius: 10px;
 				}
 
-				&.t4 { width: 219px; }
-				&.t3 { width: 164px; }
-				&.t2 { width: 109px; }
-				&.t1 { width: 54px; }
+				// &.t4 { width: 219px; }
+				// &.t3 { width: 164px; }
+				// &.t2 { width: 109px; }
+				// &.t1 { width: 54px; }
+
+				&.t4 { width: calc( calc( var( --sW ) * 4 ) - 1px ); }
+				&.t3 { width: calc( calc( var( --sW ) * 3 ) - 1px ); }
+				&.t2 { width: calc( calc( var( --sW ) * 2 ) - 1px ); }
+				&.t1 { width: calc( calc( var( --sW ) * 1 ) - 1px ); }
 			}
 		}
 	}

@@ -102,7 +102,7 @@
 
 				let doc = $(document),
 					cols = Self.els.columns,
-					grid = 55,
+					grid = parseInt(Self.els.gameView.cssProp("--sW"), 10),
 					el = $(event.target).addClass("dragged"),
 					offset = el.offset(".board"),
 					// piece
