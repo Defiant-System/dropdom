@@ -442,8 +442,8 @@ content {
 				position: absolute;
 				top: 3px;
 				bottom: 9px;
-				left: calc( calc( var( --x ) * 45px ) + 7px );
-				width: calc( var( --w ) * 45px );
+				left: calc( calc( var( --x ) * var( --size ) ) + 7px );
+				width: calc( var( --w ) * var( --size ) );
 				z-index: 2;
 				mix-blend-mode: soft-light;
 				pointer-events: none;
@@ -846,8 +846,8 @@ content {
 				position: absolute;
 				top: 4px;
 				bottom: 3px;
-				left: calc( calc( var( --x ) * 55px ) + 5px );
-				width: calc( var( --w ) * 55px );
+				left: calc( calc( var( --x ) * var( --sW ) ) + 5px );
+				width: calc( var( --w ) * var( --sW ) );
 				z-index: 2;
 				mix-blend-mode: soft-light;
 				pointer-events: none;
