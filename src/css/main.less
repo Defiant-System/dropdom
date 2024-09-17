@@ -937,8 +937,11 @@ content {
 					left: 0;
 
 					&.add-row {
-						transform: translateY(-54px);
-						transition: transform 150ms ease-in-out;
+						top: -57px;
+						transition: top 150ms ease-in-out;
+						// Safari did not like this:
+						// transform: translateY(-54px);
+						// transition: transform 150ms ease-in-out;
 					}
 				}
 			}

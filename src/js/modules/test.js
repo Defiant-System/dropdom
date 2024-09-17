@@ -74,6 +74,11 @@ let Test = {
 
 
 		// setTimeout(() => {
+		// 	Arena.insertRows();
+		// }, 1000);
+
+
+		// setTimeout(() => {
 		// 	APP.els.content.find(".combo").addClass("show");
 		// }, 1000);
 
@@ -81,12 +86,8 @@ let Test = {
 		APP.els.content.data({ show: "game-view" });
 		Arena.matrix = State;
 		// Pipeline[0] = ["b11", "b11", "b11", "b11", "b11", "b11", "b11", "b11"];
-		Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];
+		// Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];
 		Arena.draw();
-
-		// return setTimeout(() => {
-		// 	Arena.checkDanger();
-		// }, 500);
 
 	}
 };
