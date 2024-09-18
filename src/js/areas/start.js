@@ -46,7 +46,7 @@
 					cols = Self.els.columns,
 					el = tgt.addClass("dragged"),
 					offset = el.offset(".tutorial"),
-					grid = 46,
+					grid = parseInt(Self.els.tutorial.cssProp("--sW"), 10),
 					limit = {
 						minX: (0 * grid) + 5,
 						maxX: (6 * grid) + 5,
@@ -82,7 +82,7 @@
 					// sound effect
 					window.audio.play("drop");
 					// horisontaly align position
-					Drag.el.css({ "--x": "4", left: 189 })
+					Drag.el.css({ "--x": "4", left: (Drag.grid * 4) + 5 })
 						.cssSequence("restore", "transitionend", el => {
 							// verticaly align position
 							el.css({ "--x": 4, "--y": 4 })
