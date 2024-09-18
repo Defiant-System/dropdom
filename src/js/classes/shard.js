@@ -1,6 +1,6 @@
 
 class Shard {
-	constructor(parent, x, y, color) {
+	constructor(parent, x, y, color, scale=1.25) {
 		this.parent = parent;
 		this.x = x;
 		this.y = y;
@@ -50,7 +50,7 @@ class Shard {
 		ctx.translate(this.x, this.y);
 		ctx.rotate(this.rotation * this.rad);
 
-		ctx.scale(1.25, 1.25);
+		ctx.scale(this.scale, this.scale);
 		ctx.globalAlpha = this.alpha;
 		// ctx.globalCompositeOperation = "lighter";
 		ctx.drawImage(this.frag.img, -this.cX, -this.cY);

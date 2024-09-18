@@ -90,7 +90,7 @@
 									Self.els.tutorial.find(".tile").cssSequence("tutorial-clear", "transitionend", tEl => {
 										if (tEl.hasClass("purple-2")) {
 											// blast row
-											FX.blast(4, ["b", "r", "r", "r", "o", "o", "p", "p"], 44);
+											FX.blast(4, ["b", "r", "r", "r", "o", "o", "p", "p"]);
 											// sound effect
 											window.audio.play("line");
 

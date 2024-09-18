@@ -11,6 +11,11 @@ let FX = {
 		this.cvs.attr({ width, height });
 		this.dim = { width, height };
 
+		// 
+		// this.resetDim("desktop-start");
+		// this.resetDim("desktop-game");
+		this.resetDim(`hhd-${window.innerWidth}-game`);
+
 		let APP = dropdom,
 			Self = this;
 		this.fpsControl = karaqu.FpsControl({
@@ -29,6 +34,49 @@ let FX = {
 		this._grayscale = v;
 		this.cvs.toggleClass("grayscale", !v);
 	},
+	resetDim(device_view) {
+		console.log( device_view );
+		switch (device_view) {
+			case "desktop-start":
+				this.dim.oX = 50;
+				this.dim.oY = 125;
+				this.dim.gX = 83;
+				this.dim.grid = 46;
+				break;
+			case "desktop-game":
+				this.dim.oX = 50;
+				this.dim.oY = 0;
+				this.dim.gX = 55;
+				this.dim.grid = 55;
+				break;
+
+			case "hhd-375-start":
+				this.dim.oX = 0;
+				this.dim.oY = 3;
+				this.dim.gX = 44;
+				this.dim.grid = 41;
+				break;
+			case "hhd-375-game":
+				this.dim.oX = 0;
+				this.dim.oY = -3;
+				this.dim.gX = 44;
+				this.dim.grid = 41;
+				break;
+
+			case "hhd-414-start":
+				this.dim.oX = 0;
+				this.dim.oY = 65;
+				this.dim.gX = 47;
+				this.dim.grid = 46;
+				break;
+			case "hhd-414-game":
+				this.dim.oX = 0;
+				this.dim.oY = 65;
+				this.dim.gX = 39;
+				this.dim.grid = 48;
+				break;
+		}
+	},
 	electify(x1, y1, x2, y2) {
 		// prepare electric
 		let electric = new Electric(this);
@@ -43,16 +91,15 @@ let FX = {
 			this.fpsControl.start();
 		}
 	},
-	blast(y, cells, w=54) {
+	blast(y, cells) {
 		let list = cells.map((c, x) => [x, y, c]);
-		this.w = w;
 		this.explode(list);
 	},
 	explode(list) {
 		list.filter(c => !!c[2]).map(cell => {
 			var particleCount = Utils.random(2, 4) | 0,
-				x = (cell[0] * this.w) + 57,
-				y = (cell[1] * this.w) + (this.w >> 1),
+				x = (cell[0] * this.dim.grid) + this.dim.gX,
+				y = (cell[1] * this.dim.grid) + (this.dim.grid >> 1),
 				color = cell[2]; // Utils.random(1, 7) | 0;
 			// shards
 			while(particleCount--) {
@@ -83,7 +130,7 @@ let FX = {
 		this.cvs.attr({ width: this.dim.width });
 		this.ctx.save();
 		// push origo to sync layers
-		this.ctx.translate(50, 0);
+		this.ctx.translate(this.dim.oX, this.dim.oY);
 		// update particles
 		this.update();
 		// draw particle

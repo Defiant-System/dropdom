@@ -27,10 +27,10 @@ class Fog {
 		// apply velocity
 		this.x += Math.cos(1.75) * this.speed;
 		this.y += Math.sin(1.75) * this.speed + this.gravity;
-		// fade out the shard
-		this.alpha -= this.decay;
+		// fade out the fog
+		// this.alpha -= this.decay;
 
-		// remove the shard once the alpha is low enough, based on the passed in index
+		// remove the fog once the alpha is low enough, based on the passed in index
 		if (this.alpha <= 0) {
 			this.parent.particles.splice(index, 1);
 		}
