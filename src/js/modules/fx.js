@@ -39,9 +39,9 @@ let FX = {
 		// console.log( device_view );
 		if ($.isHHD) {
 			let width = window.innerWidth;
-			device_view = shows === "game-view" ? `hhd${width}-start` : `hhd${width}-start`;
+			device_view = shows === "game-view" ? `hhd-${width}-start` : `hhd-${width}-start`;
 		}
-		// console.log(device_view);
+		console.log(device_view);
 		switch (device_view) {
 			case "desktop-start":
 				this.dim.oX = 50;
