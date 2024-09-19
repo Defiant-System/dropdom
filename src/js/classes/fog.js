@@ -28,7 +28,7 @@ class Fog {
 		this.x += Math.cos(1.75) * this.speed;
 		this.y += Math.sin(1.75) * this.speed + this.gravity;
 		// fade out the fog
-		// this.alpha -= this.decay;
+		this.alpha -= this.decay;
 
 		// remove the fog once the alpha is low enough, based on the passed in index
 		if (this.alpha <= 0) {

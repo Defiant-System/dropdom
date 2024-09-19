@@ -38,26 +38,7 @@ let State = [
 let Test = {
 	init(APP) {
 
-		// setTimeout(() => {
-		// 	APP.els.content.cssSequence("start-to-game", "transitionend", el => {
-		// 		el.data({ show: "game-view" })
-		// 			.cssSequence("appear-game", "transitionend", el => {
-		// 				el.removeClass("start-to-game appear-game");
-		// 			});
-		// 	});
-		// }, 500);
-
-		// APP.els.content.data({ show: "game-view" })
-		// setTimeout(() => {
-		// 	APP.els.content.cssSequence("game-to-start", "transitionend", el => {
-		// 		el.data({ show: "start-view" })
-		// 			.cssSequence("appear-start", "transitionend", el => {
-		// 				el.removeClass("game-to-start appear-start");
-		// 			});
-		// 	});
-		// }, 500);
-
-		// return;
+		return;
 		// return APP.game.dispatch({ type: "start-game" });
 
 		setTimeout(() => {
@@ -89,6 +70,8 @@ let Test = {
 
 
 		APP.els.content.data({ show: "game-view" });
+		// reset fx-layer
+		FX.reset();
 		Arena.matrix = State;
 		// Pipeline[0] = ["b11", "b11", "b11", "b11", "b11", "b11", "b11", "b11"];
 		// Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];

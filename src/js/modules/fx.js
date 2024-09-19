@@ -11,10 +11,8 @@ let FX = {
 		this.cvs.attr({ width, height });
 		this.dim = { width, height };
 
-		// 
-		// this.resetDim("desktop-start");
-		// this.resetDim("desktop-game");
-		this.resetDim(`hhd-${window.innerWidth}-game`);
+		// reset dimensions
+		this.reset();
 
 		let APP = dropdom,
 			Self = this;
@@ -34,8 +32,16 @@ let FX = {
 		this._grayscale = v;
 		this.cvs.toggleClass("grayscale", !v);
 	},
-	resetDim(device_view) {
-		console.log( device_view );
+	reset() {
+		let APP = dropdom,
+			shows = APP.els.content.data("show"),
+			device_view = shows === "game-view" ? "desktop-game" : "desktop-start";
+		// console.log( device_view );
+		if ($.isHHD) {
+			let width = window.innerWidth;
+			device_view = shows === "game-view" ? `hhd${width}-start` : `hhd${width}-start`;
+		}
+		// console.log(device_view);
 		switch (device_view) {
 			case "desktop-start":
 				this.dim.oX = 50;

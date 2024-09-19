@@ -71,7 +71,7 @@
 				break;
 			case "mousemove":
 				let left = Drag.offset.left + event.clientX - Drag.click.x;
-				left = Math.max(Drag.limit.minX, Math.min(Drag.limit.maxX, left));
+				left = Math.max(Drag.limit.minX, Math.min(Drag.limit.maxX, left)) + .15;
 				Drag.el.css({ left });
 
 				Drag.colX = Math.round(left / Drag.grid);

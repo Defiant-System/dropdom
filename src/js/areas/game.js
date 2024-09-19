@@ -27,6 +27,8 @@
 			case "new-game":
 				Arena.reset();
 				Self.els.content.data({ show: "game-view" });
+				// reset fx-layer
+				FX.reset();
 				setTimeout(() => Arena.insertRows(4), 500);
 				break;
 			case "game-over":
@@ -80,6 +82,8 @@
 						.cssSequence("appear-start", "transitionend", cEl => {
 							// reset gmae view
 							cEl.removeClass("game-to-start appear-start");
+							// reset fx-layer
+							FX.reset();
 						});
 				});
 				break;
