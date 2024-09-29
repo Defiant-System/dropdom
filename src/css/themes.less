@@ -133,13 +133,19 @@
 							}
 						}
 
-						.pause-options {
+						> div.pause-options {
 							top: 2px;
-							right: 83px;
-							width: 219px;
+							right: 79px;
+							width: 0;
+						}
 
-							span.button {
-								margin-right: 4px;
+						&.show-buttons {
+							> div.pause-options {
+								width: 219px;
+
+								span.button {
+									margin-right: 4px;
+								}
 							}
 						}
 					}
@@ -289,13 +295,19 @@
 							}
 						}
 
-						.pause-options {
+						> div.pause-options {
 							top: 4px;
 							right: 89px;
-							width: 243px;
+							width: 0;
+						}
 
-							span.button {
-								margin-right: 11px;
+						&.show-buttons {
+							> div.pause-options {
+								width: 243px;
+
+								span.button {
+									margin-right: 11px;
+								}
 							}
 						}
 					}

@@ -41,16 +41,16 @@ let Test = {
 		return;
 		// return APP.game.dispatch({ type: "start-game" });
 
-		setTimeout(() => {
-			// blast row(s) with effect
-			//FX.blast(6, ["g", 0, 0, 0, 0, 0, 0, "o"]);
-			FX.blast(0, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			FX.blast(1, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			FX.blast(2, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			FX.blast(3, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			FX.blast(4, ["g", "g", "r", "r", "r", "b", "b", "o"]);
-			// FX.electify(130, 350, 250, 350);
-		}, 800);
+		// setTimeout(() => {
+		// 	// blast row(s) with effect
+		// 	//FX.blast(6, ["g", 0, 0, 0, 0, 0, 0, "o"]);
+		// 	FX.blast(0, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		// 	FX.blast(1, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		// 	FX.blast(2, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		// 	FX.blast(3, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		// 	FX.blast(4, ["g", "g", "r", "r", "r", "b", "b", "o"]);
+		// 	// FX.electify(130, 350, 250, 350);
+		// }, 800);
 		// return;
 
 
