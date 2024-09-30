@@ -56,6 +56,19 @@ let FX = {
 				this.dim.grid = 55;
 				break;
 
+			case "hhd-320-start":
+				this.dim.oX = 0;
+				this.dim.oY = 11;
+				this.dim.gX = 36;
+				this.dim.grid = 34;
+				break;
+			case "hhd-320-game":
+				this.dim.oX = -5;
+				this.dim.oY = 0;
+				this.dim.gX = 34;
+				this.dim.grid = 35;
+				break;
+
 			case "hhd-375-start":
 				this.dim.oX = 0;
 				this.dim.oY = 3;
