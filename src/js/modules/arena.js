@@ -160,16 +160,18 @@ let Arena = {
 					tile.removeClass("smooth-drop");
 					// is last ?
 					if (count-- > 1) return;
+					// make sure to clean up
+					this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
+					// "unlock" ui/ux
+					this.els.gameView.removeClass("busy");
 					// clear tiles, if need be
-					setTimeout(() => {
-						this.clear(noInsert);
-					}, 250);
+					setTimeout(() => this.clear(noInsert), 250);
 				});
 			});
 		// if nothing is "dropped"
 		if (count === 0 && !this.els.gameView.hasClass("game-over")) {
 			if (noInsert) {
-				// "lock" ui/ux
+				// "unlock" ui/ux
 				this.els.gameView.removeClass("busy");
 			} else {
 				this.insertRows();
@@ -243,6 +245,8 @@ let Arena = {
 									FX.blast(rPiece.y, row);
 
 									if (i < nA.length-1 || this._to) return;
+									// "unlock" ui/ux
+									this.els.gameView.removeClass("busy");
 									// final to-do's
 									this._to = setTimeout(() => finish(), 1e2);
 								});
