@@ -30,7 +30,7 @@ let State = [
 		[0, 0, 0, 0, 0, 0, 0, 0],
 		["o11", 0, "p41", "p42", "p43", "p44", "c21", "c22"],
 		["b11", 0, "b11", 0, 0, "p21", "p22", 0],
-		["c41", "c42", "c43", "c44", "c21", "c22", 0, 0],
+		["b41", "b42", "b43", "b44", "o21", "o22", 0, 0],
 		[0, "g31", "g32", "g33", 0, "r31", "r32", "r33"],
 	];
 
@@ -38,7 +38,7 @@ let State = [
 let Test = {
 	init(APP) {
 
-		return;
+		// return;
 		// return APP.game.dispatch({ type: "start-game" });
 
 		// setTimeout(() => {
@@ -74,7 +74,7 @@ let Test = {
 		FX.reset();
 		Arena.matrix = State;
 		// Pipeline[0] = ["b11", "b11", "b11", "b11", "b11", "b11", "b11", "b11"];
-		// Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];
+		Pipeline[0] = [0, 0, "c31", "c32", "c33", "b21", "b22", 0];
 		Arena.draw();
 
 	}

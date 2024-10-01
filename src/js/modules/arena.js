@@ -160,10 +160,10 @@ let Arena = {
 					tile.removeClass("smooth-drop");
 					// is last ?
 					if (count-- > 1) return;
-					// make sure to clean up
-					this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 					// "unlock" ui/ux
 					this.els.gameView.removeClass("busy");
+					// make sure to clean up
+					this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 					// clear tiles, if need be
 					setTimeout(() => this.clear(noInsert), 250);
 				});
@@ -173,6 +173,8 @@ let Arena = {
 			if (noInsert) {
 				// "unlock" ui/ux
 				this.els.gameView.removeClass("busy");
+				// make sure to clean up
+				this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 			} else {
 				this.insertRows();
 			}
@@ -196,6 +198,8 @@ let Arena = {
 				setTimeout(() => delete this._to, 5e2);
 				this.deleteRows(rows);
 				this.els.gameView.removeClass("busy");
+				// make sure to clean up
+				this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 				// restore view
 				APP.els.content.removeClass("electrify");
 			};
@@ -246,6 +250,8 @@ let Arena = {
 									if (i < nA.length-1 || this._to) return;
 									// "unlock" ui/ux
 									this.els.gameView.removeClass("busy");
+									// make sure to clean up
+									this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 									// final to-do's
 									this._to = setTimeout(() => finish(), 1e2);
 								});
@@ -281,6 +287,8 @@ let Arena = {
 			} else if (!this.els.gameView.hasClass("game-over")) {
 				// "lock" ui/ux
 				this.els.gameView.removeClass("busy");
+				// make sure to clean up
+				this.els.rows.find(".smooth-drop").removeClass("smooth-drop");
 			}
 		}
 	},

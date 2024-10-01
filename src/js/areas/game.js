@@ -152,7 +152,7 @@
 
 				// piece was dragged
 				let val = (+Self.drag.cols.cssProp("--x") * Drag.grid) + Drag.limit.minX;
-				setTimeout(() => Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" }), 1);
+				Drag.el.removeClass("dragged").css({ "--x": Drag.colX, left: "" });
 
 				if (Drag.colX !== Drag.piece.x) {
 					Arena.humanDrop();
