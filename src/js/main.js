@@ -102,11 +102,16 @@ const dropdom = {
 						el.removeClass("ticker").html(value + event.value).cssProp({ "--value": "", "--total": "" });
 					});
 				break;
+			case "new-game":
+				Self.game.dispatch({ type: "go-to-start-view" });
+				break;
 			case "toggle-music":
 				// play sound effect
 				window.audio.play("grab");
+				// get button element
+				el = Self.els.content.find(`.button[data-click="toggle-music"]`).get(0);
 				// toggle window audio effects
-				value = event.el.hasClass("off");
+				value = el.hasClass("off");
 				// sync all toggle-music buttons
 				Self.els.content.find(`.button[data-click="toggle-music"]`).toggleClass("off", value);
 				
@@ -126,8 +131,10 @@ const dropdom = {
 				}
 				break;
 			case "toggle-sound-fx":
+				// get button element
+				el = Self.els.content.find(`.button[data-click="toggle-sound-fx"]`).get(0);
 				// toggle window audio effects
-				value = event.el.hasClass("off");
+				value = el.hasClass("off");
 				// sync all toggle-music buttons
 				Self.els.content.find(`.button[data-click="toggle-sound-fx"]`).toggleClass("off", value);
 				

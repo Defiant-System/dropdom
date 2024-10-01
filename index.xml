@@ -1,7 +1,7 @@
 <Application>
 	<Head>
 		<meta name="id" value="dropdom"/>
-		<meta name="title" value="Dropdom" version="1.16"/>
+		<meta name="title" value="Dropdom" version="1.17"/>
 		<meta name="author" value="Hakan Bilgin" namespace="ant"/>
 		<meta name="license" value="AGPL-3.0"/>
 		<meta name="repository" value="https://github.com/Defiant-System/dropdom"/>
