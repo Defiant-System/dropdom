@@ -348,7 +348,7 @@ let Arena = {
 			if (i > 1) {
 				setTimeout(() => this.insertRows(i-1), 150);
 			} else {
-				this.drop(true); // no insert
+				setTimeout(() => this.drop(true), 10); // no insert
 			}
 		});
 	},
@@ -366,7 +366,7 @@ let Arena = {
 					tile.cssSequence("clear-tile", "transitionend", tEl => {
 						tEl.remove();
 						if (count-- > 1) return;
-						this.drop();
+						setTimeout(() => this.drop(), 10);
 					});
 				}
 				this.matrix[y][x] = 0;
