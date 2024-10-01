@@ -119,7 +119,6 @@
 				} else {
 					Drag.el.css({ "--x": "", left: 51 })
 						.cssSequence("restore", "transitionend", el => {
-							console.log(el);
 							// reset element
 							el.css({ "--x": 1, left: "" }).removeClass("restore");
 						});

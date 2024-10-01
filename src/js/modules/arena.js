@@ -185,9 +185,8 @@ let Arena = {
 			pause = false,
 			finish = () => {
 				if (this.els.gameView.hasClass("game-over")) return;
-				this.els.points
-					.html(this._score)
-					.cssSequence("show", "animationend", el => {
+				this.els.points.html(this._score);
+				this.els.points.cssSequence("show", "animationend", el => {
 						// reset element
 						el.html("").removeClass("show");
 						// update score row

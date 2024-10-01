@@ -1,8 +1,8 @@
 <Sounds>
-	<i id="grab" url="~/audio/grab.ogg"/>
+	<i id="grab" url="~/audio/grab.mp3"/>
 	<i id="drop" url="~/audio/drop.mp3"/>
-	<i id="line" url="~/audio/line.ogg"/>
-	<i id="combo" url="~/audio/combo.ogg"/>
+	<i id="line" url="~/audio/line.mp3"/>
+	<i id="combo" url="~/audio/combo.mp3"/>
 	<i id="electric" url="~/audio/electric.mp3"/>
 	<i id="fail" url="~/audio/fail.mp3"/>
 	<i id="song" url="/cdn/audio/mp3/David Whittaker - Shadow of the Beast.mp3"/>
