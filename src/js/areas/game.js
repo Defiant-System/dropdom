@@ -29,7 +29,7 @@
 				Self.els.content.data({ show: "game-view" });
 				// reset fx-layer
 				FX.reset();
-				setTimeout(() => Arena.insertRows(4), 500);
+				setTimeout(() => Arena.insertRows(3), 500);
 				break;
 			case "game-over":
 				// play sound effect
@@ -82,6 +82,8 @@
 						.cssSequence("appear-start", "transitionend", cEl => {
 							// reset gmae view
 							cEl.removeClass("game-to-start appear-start");
+							// reset score
+							APP.els.score.text("0");
 							// reset fx-layer
 							FX.reset();
 						});
