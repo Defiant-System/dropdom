@@ -43,19 +43,6 @@ let FX = {
 		}
 		// console.log(device_view);
 		switch (device_view) {
-			case "desktop-start":
-				this.dim.oX = 50;
-				this.dim.oY = 125;
-				this.dim.gX = 83;
-				this.dim.grid = 46;
-				break;
-			case "desktop-game":
-				this.dim.oX = 50;
-				this.dim.oY = 0;
-				this.dim.gX = 55;
-				this.dim.grid = 55;
-				break;
-
 			case "hhd-320-start":
 				this.dim.oX = 0;
 				this.dim.oY = 11;
@@ -94,6 +81,20 @@ let FX = {
 				this.dim.gX = 39;
 				this.dim.grid = 48;
 				break;
+
+			default:
+				if (device_view.endsWith("start")) {
+					this.dim.oX = 50;
+					this.dim.oY = 125;
+					this.dim.gX = 83;
+					this.dim.grid = 46;
+				}
+				if (device_view.endsWith("game")) {
+					this.dim.oX = 50;
+					this.dim.oY = 0;
+					this.dim.gX = 55;
+					this.dim.grid = 55;
+				}
 		}
 	},
 	electify(x1, y1, x2, y2) {
