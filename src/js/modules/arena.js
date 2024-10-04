@@ -37,6 +37,7 @@ let Arena = {
 			gameView: window.find(".game-view"),
 			rows: window.find(".wrapper .rows"),
 			points: window.find(".points"),
+			combo: window.find(".combo"),
 			preview: window.find(".preview"),
 		};
 		// reset all
@@ -116,7 +117,7 @@ let Arena = {
 	humanDrop() {
 		// reset combo
 		this._score = 0;
-		this._combo = 1;
+		this._combo = 0;
 		// "lock" ui/ux
 		this.els.gameView.addClass("busy");
 		// count score
@@ -194,6 +195,16 @@ let Arena = {
 						// update score row
 						APP.dispatch({ type: "add-score", value: this._score });
 					});
+				
+				// shows combo
+				if (this._combo > 1) {
+					this.els.combo
+						.html(this._combo)
+						.cssSequence("show", "animationend", el => {
+							// reset element
+							el.html("").removeClass("show");
+						});
+				}
 
 				setTimeout(() => delete this._to, 5e2);
 				this.deleteRows(rows);
@@ -215,7 +226,15 @@ let Arena = {
 			};
 		});
 
+		if (noInsert && !Object.keys(rows).length && this._combo > 1) {
+			// update score row
+			APP.dispatch({ type: "add-score", value: this._score * (this._combo - 1) });
+		}
+
 		if (Object.keys(rows).length) {
+			// add to combo
+			this._combo++;
+
 			Object.keys(rows).map(y => {
 				let rp = this.getRowPieces(+y);
 				Object.keys(rp).map(k => {

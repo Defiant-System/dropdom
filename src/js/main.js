@@ -124,7 +124,7 @@ const dropdom = {
 							delete Self.song;
 						}
 					};
-					window.audio.play("song", opt).then(song => Self.song = song)
+					window.audio.play("song", opt).then(song => Self.song = song);
 				} else {
 					Self.song.stop();
 					delete Self.song;

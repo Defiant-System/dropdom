@@ -674,14 +674,14 @@ content {
 
 					span {
 						background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
-					    color: transparent;
-					    background-clip: text;
-					    filter: drop-shadow(0 2px 0 #ba671a)
-					    		drop-shadow(0 1px 4px rgba(#000,.85));
+						color: transparent;
+						background-clip: text;
+						filter: drop-shadow(0 2px 0 #ba671a)
+								drop-shadow(0 1px 4px rgba(#000,.85));
 
 						&.ticker {
 							background: transparent;
-					   		background-clip: unset;
+							background-clip: unset;
 							font-size: 0;
 							filter: none;
 
@@ -691,10 +691,10 @@ content {
 								animation: count 300ms ease-in-out;
 								font-size: 34px;
 								background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
-							    color: transparent;
-							    background-clip: text;
-							    filter: drop-shadow(0 2px 0 #ba671a)
-							    		drop-shadow(0 1px 4px rgba(#000,.85));
+								color: transparent;
+								background-clip: text;
+								filter: drop-shadow(0 2px 0 #ba671a)
+										drop-shadow(0 1px 4px rgba(#000,.85));
 								// text-shadow: 0 0 3px rgba(#fff,.5);
 							}
 						}
@@ -862,7 +862,7 @@ content {
 
 			.combo {
 				position: absolute;
-				top: 31%;
+				top: 29%;
 				left: 0;
 				right: 0;
 				text-align: center;
@@ -871,18 +871,18 @@ content {
 				opacity: 0;
 				pointer-events: none;
 				background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
-			    color: transparent;
-			    background-clip: text;
-			    filter: drop-shadow(0 2px 0 #ba671a)
-			    		drop-shadow(0 1px 4px rgba(#000,.85));
+				color: transparent;
+				background-clip: text;
+				filter: drop-shadow(0 2px 0 #ba671a)
+						drop-shadow(0 1px 4px rgba(#000,.85));
 
-		    	&:before {
-		    		content: "Combo x";
-		    	}
+				&:before {
+					content: "Combo x ";
+				}
 
-			    &.show {
-			    	animation: show-combo 1500ms ease-in-out forwards;
-			    }
+				&.show {
+					animation: show-combo 1000ms ease-in-out forwards;
+				}
 			}
 
 			.points {
@@ -896,14 +896,14 @@ content {
 				opacity: 0;
 				pointer-events: none;
 				background: linear-gradient(180deg, #fee780, #fbde71 50%, #f4cb52 50%, #fdb71d);
-			    color: transparent;
-			    background-clip: text;
-			    filter: drop-shadow(0 2px 0 #ba671a)
-			    		drop-shadow(0 1px 4px rgba(#000,.85));
+				color: transparent;
+				background-clip: text;
+				filter: drop-shadow(0 2px 0 #ba671a)
+						drop-shadow(0 1px 4px rgba(#000,.85));
 
-			    &.show {
-			    	animation: show-points 1000ms ease-in-out forwards;
-			    }
+				&.show {
+					animation: show-points 1000ms ease-in-out forwards;
+				}
 			}
 
 			&.danger {
@@ -1173,8 +1173,8 @@ content {
 	0%   { opacity: 0; }
 	3%   { opacity: 1; transform: scale(1); }
 	15%  { opacity: 1; transform: scale(1.25); }
-	30%  { opacity: 1; transform: scale(1); }
-	80%  { opacity: 1; }
+	60%  { opacity: 1; transform: scale(1); }
+	90%  { opacity: 1; }
 	100% { opacity: 0; }
 }
 
