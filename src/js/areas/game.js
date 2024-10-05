@@ -62,8 +62,17 @@
 											FX.grayscale = false;
 											// reset elements
 											Self.els.gameView.removeClass("game-over busy");
-											// transition sequence 2
-											Self.dispatch({ type: "go-to-start-view" });
+
+											let score = +APP.els.score.text();
+											if (score > APP.settings.hiscore) {
+												// update best score
+												Self.els.content.find(`.fireworks .best-score h2`).html(score);
+												// if best score - show fireworks
+												Self.els.content.addClass("show-fireworks");
+											} else {
+												// transition sequence 2
+												Self.dispatch({ type: "go-to-start-view" });
+											}
 										}, 1000);
 									}
 								}
@@ -75,6 +84,9 @@
 				value = Self.els.scores.hasClass("show-buttons");
 				Self.els.scores.toggleClass("show-buttons", value);
 				break;
+			case "end-fireworks":
+				Self.els.content.removeClass("show-fireworks");
+				/* falls through */
 			case "go-to-start-view":
 				// go to game view
 				APP.els.content.cssSequence("game-to-start", "transitionend", cEl => {
