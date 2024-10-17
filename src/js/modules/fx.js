@@ -43,39 +43,39 @@ let FX = {
 		}
 		// console.log(device_view);
 		switch (device_view) {
-			case "hhd-320-start":
+			case "hhd-321-start":
 				this.dim.oX = 0;
 				this.dim.oY = 11;
 				this.dim.gX = 36;
 				this.dim.grid = 34;
 				break;
-			case "hhd-320-game":
+			case "hhd-321-game":
 				this.dim.oX = -5;
 				this.dim.oY = 0;
 				this.dim.gX = 34;
 				this.dim.grid = 35;
 				break;
 
-			case "hhd-375-start":
+			case "hhd-376-start":
 				this.dim.oX = 0;
 				this.dim.oY = 3;
 				this.dim.gX = 44;
 				this.dim.grid = 41;
 				break;
-			case "hhd-375-game":
+			case "hhd-376-game":
 				this.dim.oX = -5;
 				this.dim.oY = -3;
 				this.dim.gX = 44;
 				this.dim.grid = 41;
 				break;
 
-			case "hhd-414-start":
+			case "hhd-415-start":
 				this.dim.oX = 0;
 				this.dim.oY = 65;
 				this.dim.gX = 47;
 				this.dim.grid = 46;
 				break;
-			case "hhd-414-game":
+			case "hhd-415-game":
 				this.dim.oX = 0;
 				this.dim.oY = 65;
 				this.dim.gX = 39;
